@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/02/26 16:06:21 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/02/26 16:13:58 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
-# include <sys/types.h>
-# include <sys/wait.h>
 # include <string.h>
 
 typedef struct s_redir {
