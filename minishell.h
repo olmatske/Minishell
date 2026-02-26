@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/02/26 16:23:21 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/02/26 16:48:55 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@
 
 typedef struct s_redir {
 	
-} t_redir;
+}	t_redir;
 
 typedef struct s_built_in {
 	
-} t_built_in;
+}	t_built_in;
 
 typedef struct s_cmd {
 	char		**args;
 	t_redir		*redir;
 	t_built_in	built_in;
-} t_cmd;
+}	t_cmd;
 
 typedef struct s_cmd_node {
 	t_cmd				*cmd;
 	struct s_cmd_node	*next;
-} t_cmd_node;
+}	t_cmd_node;
 
 
 int		main(int argc, char **argv, char **envp);
