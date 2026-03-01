@@ -6,7 +6,7 @@
 #    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 15:35:29 by anshuval          #+#    #+#              #
-#    Updated: 2026/02/26 15:36:03 by anshuval         ###   ########.fr        #
+#    Updated: 2026/02/26 17:51:10 by anshuval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,10 @@ MY_OBJECTS		=	$(MY_SOURCES:.c=.o)
 CC				=	cc
 
 CFLAGS			=	-Wall -Wextra -Werror
+READFLAGS		=	-lreadline
 
 $(NAME):	$(MY_OBJECTS)
-	$(CC) $(CFLAGS) $(MY_OBJECTS) -o $(NAME)
+	$(CC) $(CFLAGS) $(READFLAGS) $(MY_OBJECTS) -o $(NAME)
 
 all:	$(NAME)
 
