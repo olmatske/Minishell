@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/02/26 21:08:59 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/09 14:45:20 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	free_list_token(t_token **head)
 	while (current)
 	{
 		next = current->next;
-		free(current->type);
 		free(current->value);
 		free(current);
 		current = next;
@@ -47,73 +46,95 @@ static t_token	*create_node(t_token_type type, char *value)
 	new_node = malloc(sizeof (t_token));
 	if (new_node == NULL)
 		return (NULL);
-	new_node->value = value;
+	new_node->value = ft_strdup(value);
+	if (new_node->value == NULL)
+	{
+		free(new_node);
+		return (NULL);
+	}
 	new_node->type = type;
 	new_node->next = NULL;
 	return (new_node);
 }
 
-static void	add_to_token_linked_list(t_token_type type, t_token *node)
+static void	add_to_token_linked_list(t_token **head, t_token **tail, t_token *node)
 {
-	
+	if (*head == NULL)
+	{
+		*head = node;
+		*tail = node;
+	}
+	else
+	{
+		(*tail)->next = node;
+		*tail = node;
+	}
 }
 
 void	main_parsing(char *line)
 {
 	int		i;
 	t_token	*new_node;
+	t_token	*head;
+	t_token	*tail;
 
 	i = 0;
+	head = NULL;
+	tail = NULL;
 	while (line[i])
 	{
 		while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == 32))
 			i++;
 		if (line[i] == '|')
 		{
-			new_node = create_node(PIPE, "|");
+			new_node = create_node(PIPE, ft_strdup("|"));
 			if (new_node == NULL)
 			{
-				free_list_token(new_node);
-				return (NULL);
+				free_list_token(&head);
+				return ;
 			}
-			add_to_token_linked_list(PIPE, new_node);
+			add_to_token_linked_list(&head, &tail, new_node);
 		}
 		else if (line[i] == '>')
 		{
-			new_node = create_node(IN, ">");
+			new_node = create_node(IN, ft_strdup(">"));
+			if (new_node == NULL)
 			{
-				free_list_token(new_node);
-				return (NULL);
+				free_list_token(&head);
+				return ;
 			}
-			add_to_token_linked_list(IN, new_node);
+			add_to_token_linked_list(&head, &tail, new_node);
 		}
 		else if (line[i] == '<')
 		{
-			new_node = create_node(OUT, "<");
+			new_node = create_node(OUT, ft_strdup("<"));
+			if (new_node == NULL)
 			{
-				free_list_token(new_node);
-				return (NULL);
+				free_list_token(&head);
+				return ;
 			}
-			add_to_token_linked_list(OUT, new_node);
+			add_to_token_linked_list(&head, &tail, new_node);
 		}
 		else if (line[i] == '>' && line[i + 1] == '>')
 		{
-			new_node = create_node(HEREDOC, ">>");
+			new_node = create_node(HEREDOC, ft_strdup(">>"));
+			if (new_node == NULL)
 			{
-				free_list_token(new_node);
-				return (NULL);
+				free_list_token(&head);
+				return ;
 			}
-			add_to_token_linked_list(HEREDOC, new_node);
+			add_to_token_linked_list(&head, &tail, new_node);
 			i++;
 		}
 		else if (line[i] == '<' && line[i + 1] == '<')
 		{
-			new_node = create_node(APPEND, "<<");
+			new_node = create_node(APPEND, ft_strdup("<<"));
+			if (new_node == NULL)
 			{
-				free_list_token(new_node);
-				return (NULL);
+				free_list_token(&head);
+				return ;
 			}
-			add_to_token_linked_list(APPEND, new_node);
+			add_to_token_linked_list(&head, &tail, new_node);
 			i++;
 		}
 		else

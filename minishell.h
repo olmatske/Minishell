@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/02/26 19:57:15 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/09 13:57:53 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ typedef struct s_cmd_node {
 }	t_cmd_node;
 
 typedef struct s_env {
-	char	*name;
-	char	*value;
-	char	*next;
+	char			*name;
+	char			*value;
+	struct s_env	*next;
 }	t_env;
 
 int		main(int argc, char **argv, char **envp);
