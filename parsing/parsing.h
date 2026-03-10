@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/02/26 20:51:55 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/10 09:28:37 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <fcntl.h>
 # include <string.h>
 
-
 typedef enum e_token_type {
 	WORD,
 	PIPE,
@@ -29,7 +28,6 @@ typedef enum e_token_type {
 	APPEND,
 	HEREDOC
 }	t_token_type;
-
 
 typedef struct s_token {
 	char			*value;
@@ -40,4 +38,3 @@ typedef struct s_token {
 void	main_parsing(char *line);
 
 #endif
-
