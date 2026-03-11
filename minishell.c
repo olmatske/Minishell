@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/02/26 21:11:17 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/11 17:18:43 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
-	t_env	*copied_env;
 
 	(void)argv;
+	copied_env = NULL;
 	if (argc != 1)
 	{
-		printf("Minishell does not accept arguments. Type in only ./Minishell\n");
+		printf("Minishell does not accept arguments. "
+			"Type in only ./Minishell to enter Minishell\n");
 		return (1);
 	}
 	copied_env = shell_env(envp);

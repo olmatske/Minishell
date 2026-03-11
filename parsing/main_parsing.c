@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/10 11:39:42 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/11 16:40:08 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,20 +105,20 @@ void	main_parsing(char *line)
 	}
 }
 
-// search for the equal sign in eac separate envp
-// left to the equal sign is the name
-// right to the equal sign is the value
-// pass both to the new node
-// append the nodes
+// 	search for the equal sign in eac separate envp
+// 	left to the equal sign is the name
+// 	right to the equal sign is the value
+// 	pass both to the new node
+// 	append the nodes
 
-// check there is exactly one argument when initially running the program - the ./minishell 123 should not work
-// save the envp into linked list in the shell_env
-// increment the shllvl  for the new envp (and each time the minishell is opened inside minishell)
-// validate the input inside the minishell- in validation
-// by using the delimiter of space or space-like characters (split??)
-// parse input line and search for 5 symbols: | < > << >>, and for words. 
-// save each of the found symbols / words in a separate node
-// create a linked list
+// 	check there is exactly one argument when initially running the program - the ./minishell 123 should not work
+// 	save the envp into linked list in the shell_env
+// 	by using the delimiter of space or space-like characters (split??)
+// 	parse input line and search for 5 symbols: | < > << >>, and for words. 
+// 	save each of the found symbols / words in a separate node
+// 	create a linked list
+// 	increment the shllvl  for the new envp (and each time the minishell is opened inside minishell)
+// validate the input inside the minishell- in validation by nodes
 // validate the input - the pipe can only be between two commands (with arguments), and only one pipe,
 // redirections should have either a filename or a word(that will be turned sowieso into a file name)
 // group tokens into commands in the struct s_cmd

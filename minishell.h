@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/09 13:57:53 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/11 17:12:20 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "get_next_line/get_next_line.h"
+
+extern t_env	*copied_env;
 
 typedef struct s_redir {
 	

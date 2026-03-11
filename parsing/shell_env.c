@@ -6,12 +6,36 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 18:49:22 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/10 11:30:01 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/11 17:18:24 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
+
+void get_new_shlvl(t_env **head)
+{
+	int		level;
+	char	*new_shlvl;
+	t_env	*current;
+
+	current = *head;
+	while (current)
+	{
+		if (ft_strncmp(current->name, "SHLVL", 5) == 0)
+		{
+			level = ft_atoi(current->value);
+			free(current->value);
+			level++;
+			new_shlvl = ft_itoa(level);
+			if (new_shlvl == NULL)
+				return ;
+			current->value = new_shlvl;
+			return ;
+		}
+		current = current->next;
+	}
+}
 
 static t_env	*create_new_env_node(char *envp)
 {
@@ -41,10 +65,9 @@ static t_env	*create_new_env_node(char *envp)
 	return (new_node);
 }
 
-t_env	*shell_env(char **envp)
+static t_env	*get_first_copy_of_env(char **envp)
 {
 	int		i;
-	int		j;
 	t_env	*new_node;
 	t_env	*head;
 	t_env	*tail;
@@ -65,5 +88,15 @@ t_env	*shell_env(char **envp)
 		add_node_to_env_list(&head, &tail, new_node);
 		i++;
 	}
+	get_new_shlvl(&head);
 	return (head);
+}
+
+t_env	*shell_env(char **envp)
+{
+	if (copied_env == NULL)
+		copied_env = get_first_copy_of_env(envp);
+	else
+		get_new_shlvl(&copied_env);
+	return (copied_env);
 }
