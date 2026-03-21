@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/02/26 16:48:55 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/02/26 19:57:15 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <string.h>
+# include <sys/wait.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include "get_next_line/get_next_line.h"
 
 typedef struct s_redir {
 	
@@ -38,6 +42,11 @@ typedef struct s_cmd_node {
 	struct s_cmd_node	*next;
 }	t_cmd_node;
 
+typedef struct s_env {
+	char	*name;
+	char	*value;
+	char	*next;
+}	t_env;
 
 int		main(int argc, char **argv, char **envp);
 
