@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/11 17:12:20 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/22 20:23:51 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <readline/history.h>
 # include "get_next_line/get_next_line.h"
 
-extern t_env	*copied_env;
+// extern t_env	*copied_env;
 
 typedef struct s_redir {
 	
@@ -50,6 +50,12 @@ typedef struct s_env {
 	struct s_env	*next;
 }	t_env;
 
-int		main(int argc, char **argv, char **envp);
+int			main(int argc, char **argv, char **envp);
+t_env		*shell_env(char **envp);
+t_cmd_node	*main_parsing(char *line);
+char		**env_array_for_execution(t_env *copied_env);
+char		**free_env_array(char **env_array);
+void		ft_error(char *s, int exit_code);
+void		ft_perror(char *s);
 
 #endif
