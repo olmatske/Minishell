@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/11 16:40:08 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/22 20:29:16 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,50 +46,80 @@ static int	linked_list_for_token(t_token **head, t_token **tail,
 	return (0);
 }
 
-static void	handle_words(t_token **head, t_token **tail, char *line, int i)
+static int	get_word_length(char *line, int i)
+{
+	int	inside_single_quotes;
+	int	inside_double_quotes;
+	int	len;
+
+	inside_single_quotes = NO;
+	inside_double_quotes = NO;
+	len = 0;
+	while (line[i + len])
+	{
+		if (line[i + len] == '\"' && inside_single_quotes == NO)
+			inside_double_quotes = !inside_double_quotes;
+		else if (line[i + len] == '\'' && inside_double_quotes == NO)
+			inside_single_quotes = !inside_single_quotes;
+		if (inside_single_quotes == NO && inside_double_quotes == NO)
+		{
+			if ((line[i + len] >= 9 && line[i + len] <= 13) || line[i + len] == 32
+				|| line[i + len] == '|' || line[i + len] == '>'
+				|| line[i + len] == '<')
+				break ;
+		}
+		len++;
+	}
+	return (len);
+}
+
+static void	handle_words(t_token **head, t_token **tail, char *line, int *i)
 {
 	int			len;
 	char		*value;
 
-	len = ft_strlen(line);
+	len = get_word_length(line, *i);
 	if (len < 1)
 		return ;
-	value = ft_substr(line, i, len);
+	value = ft_substr(line, *i, len);
 	if (value == NULL)
 		return ;
-	if (linked_list_for_token(&head, &tail, WORD, value) == -1)
+	if (linked_list_for_token(head, tail, WORD, value) == -1)
 		return ;
+	*i = *i + len;
 }
 
 static int	handle_type(t_token **head, t_token **tail, char *line, int *i)
 {
 	if (line[*i] == '|')
-		return (linked_list_for_token(&head, &tail, PIPE, "|"));
+		return (linked_list_for_token(head, tail, PIPE, "|"));
 	else if (line[*i] == '>' && line[*i + 1] == '>')
 	{
 		i++;
-		return (linked_list_for_token(&head, &tail, HEREDOC, ">>"));
+		return (linked_list_for_token(head, tail, HEREDOC, ">>"));
 	}
 	else if (line[*i] == '<' && line[*i + 1] == '<')
 	{
 		i++;
-		return (linked_list_for_token(&head, &tail, APPEND, "<<"));
+		return (linked_list_for_token(head, tail, APPEND, "<<"));
 	}
 	else if (line[*i] == '>')
-		return (linked_list_for_token(&head, &tail, IN, ">"));
+		return (linked_list_for_token(head, tail, IN, ">"));
 	else if (line[*i] == '<')
-		return (linked_list_for_token(&head, &tail, OUT, "<"));
+		return (linked_list_for_token(head, tail, OUT, "<"));
 	else
-		handle_words(&head, &tail, line, i);
+		handle_words(head, tail, line, i);
 	i++;
 }
 
-void	main_parsing(char *line)
+t_cmd_node	*main_parsing(char *line)
 {
 	int		i;
 	t_token	*head;
 	t_token	*tail;
 
+	if (check_quotes(line) == NO)
+		return ;
 	i = 0;
 	head = NULL;
 	tail = NULL;
@@ -97,12 +127,14 @@ void	main_parsing(char *line)
 	{
 		while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == 32))
 			i++;
-		if (line[i] == NULL)
+		if (line[i] == '\0')
 			break ;
 		if (handle_type(&head, &tail, line, &i) == -1)
 			return ;
 		i++;
 	}
+	print_token_list_debug(head);
+	return (head);
 }
 
 // 	search for the equal sign in eac separate envp

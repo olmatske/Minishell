@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 09:14:35 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/10 11:29:17 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/22 20:13:46 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,19 @@ void	add_node_to_env_list(t_env **head, t_env **tail, t_env *node)
 		(*tail)->next = node;
 		*tail = node;
 	}
+}
+
+int	env_list_length(t_env *head)
+{
+	int		len;
+	t_env	*current;
+
+	len = 0;
+	current = head;
+	while (current)
+	{
+		len++;
+		current = current->next;
+	}
+	return (len);
 }

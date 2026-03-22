@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/10 09:28:37 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/22 20:31:14 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <string.h>
+
+# define YES	1
+# define NO		0
 
 typedef enum e_token_type {
 	WORD,
@@ -35,6 +38,12 @@ typedef struct s_token {
 	struct s_token	*next;
 }	t_token;
 
-void	main_parsing(char *line);
+int		check_quotes(char *line);
+void	free_env_list(t_env **head);
+void	free_list_token(t_token **head);
+void	add_node_to_token_list(t_token **head, t_token **tail, t_token *node);
+void	add_node_to_env_list(t_env **head, t_env **tail, t_env *node);
+int		env_list_length(t_env *head);
+void	print_token_list_debug(t_token *head);
 
 #endif
