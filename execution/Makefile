@@ -6,8 +6,9 @@
 #    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/02/26 17:13:30 by olmatske         ###   ########.fr        #
+#    Updated: 2026/03/22 17:56:58 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = exec
+NAME = execution
+

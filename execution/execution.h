@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/03/21 20:09:21 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/03/22 17:56:14 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef struct s_cmd_node {
 }	t_cmd_node;
 
 
-int		main(int argc, char **argv, char **envp);
+// int		main(int argc, char **argv, char **envp);
 
 #endif
 

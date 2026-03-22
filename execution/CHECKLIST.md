@@ -23,7 +23,8 @@
 - [ ] flags (heredoc, pipe, redicrection etc)
 - [ ] struct for built in commands
 - [ ] struct for argumnets and flags
-
+--------------------------------------------------------------------------------
+### Roadmap
 - [ ] start with: echo hi (> hi.txt)
 - [ ] continue with built ins
 - [ ] anything without env vars
