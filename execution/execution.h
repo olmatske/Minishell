@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/03/22 17:56:14 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/03/22 19:11:33 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,27 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <string.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 
 typedef struct s_redir {
 	// types of redirection     OUT (enum)
 	// target                   text.txt
 }	t_redir;
 
-typedef struct s_built_in {
+// typedef struct s_built_in {
 	
-}	t_built_in;
+// }	t_built_in;
+
+enum builtin {
+	// NONE,
+	ECHO
+};
 
 typedef struct s_cmd {
 	char		**args; // args[0] = "cat" -> args[1] = main.c
 	t_redir		*redir; 
-	t_built_in	built_in; // nothing because cat isn't a built in function
+	// enum builtin;		//built_in; // nothing because cat isn't a built in function
 }	t_cmd;
 
 typedef struct s_cmd_node {
@@ -41,6 +48,19 @@ typedef struct s_cmd_node {
 
 
 // int		main(int argc, char **argv, char **envp);
+
+
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTIONS ///////////////////////////////////////////////////////////////////
+
+// builtin.c ///////////////////////////////////////////////////////////////////
+int echo();
+
+
+
+
+
+
 
 #endif
 
