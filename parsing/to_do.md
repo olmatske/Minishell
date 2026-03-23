@@ -1,0 +1,14 @@
+- signals! the signals should be passed before the whole start of the loop.
+	- where should they be passed exactly?
+	- study signals!
+- validation:
+	- thatthere are no more than one pipe simultaneously
+	- pipe is between two commands
+	- that there is an output file after the redirection sign
+	- redirections should have either a filename or a word(that will be turned sowieso into a file name)
+- result!
+	- each t_cmd_node will contain 
+		- a string (array) of arguments (like "echo" "-n" "hello" "NULL")
+		- redirection (like outfile: "outfile.txt", infile: "infile.txt", heredoc_delimeter:"whatever", out_type (append > or overwrite >> or none))
+		- builtin name like echo
+	- if there is a pipe in the input the node will be pointing to the next node. OTHERWISE THERE WILL BE ONLY ONE NODE FOR ONE COMMAND

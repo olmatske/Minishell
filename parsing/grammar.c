@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:52:47 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/22 20:45:56 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/23 14:57:56 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,18 @@ int	check_quotes(char *line)
 		return (NO);
 	}
 	return (YES);
+}
+
+int	is_it_space_only(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != 32 && (line[i] < 9 || line[i] > 13))
+			return (0);
+		i++;
+	}
+	return (1);
 }
