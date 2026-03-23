@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/22 20:23:51 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/23 16:09:46 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,34 @@
 
 // extern t_env	*copied_env;
 
+typedef enum e_out_type {
+	OUT_NONE,
+	OUT_APPEND,
+	OUT_OVERWRITE
+}	t_out_type;
+
 typedef struct s_redir {
-	
+	char		*infile;
+	char		*heredoc_delimiter;
+	char		*outfile;
+	t_out_type	out_type;
 }	t_redir;
 
-typedef struct s_built_in {
-	
-}	t_built_in;
+typedef enum e_built_in_name {
+	BUILTIN_NONE,
+	BUILTIN_ECHO,
+	BUILTIN_CD,
+	BUILTIN_PWD,
+	BUILTIN_EXPORT,
+	BUILTIN_UNSET,
+	BUILTIN_ENV,
+	BUILTIN_EXIT
+}	t_built_in_name;
 
 typedef struct s_cmd {
-	char		**args;
-	t_redir		*redir;
-	t_built_in	built_in;
+	char			**args;
+	t_redir			*redir;
+	t_built_in_name	built_in_name;
 }	t_cmd;
 
 typedef struct s_cmd_node {
@@ -57,5 +73,7 @@ char		**env_array_for_execution(t_env *copied_env);
 char		**free_env_array(char **env_array);
 void		ft_error(char *s, int exit_code);
 void		ft_perror(char *s);
+void		free_cmd_list(t_cmd_node *cmd_list);
+void		free_env_list(t_env **head);
 
 #endif
