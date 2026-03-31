@@ -6,45 +6,12 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/31 17:13:14 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/31 17:29:07 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
-
-static t_token	*create_new_token_node(t_token_type type, char *value)
-{
-	t_token	*new_node;
-
-	new_node = malloc(sizeof (t_token));
-	if (new_node == NULL)
-		return (NULL);
-	new_node->value = ft_strdup(value);
-	if (new_node->value == NULL)
-	{
-		free(new_node);
-		return (NULL);
-	}
-	new_node->type = type;
-	new_node->next = NULL;
-	return (new_node);
-}
-
-static int	linked_list_for_token(t_token **head, t_token **tail,
-	t_token_type type, char *str)
-{
-	t_token	*new_node;
-
-	new_node = create_new_token_node(type, str);
-	if (new_node == NULL)
-	{
-		free_list_token(&head);
-		return (-1);
-	}
-	add_node_to_token_list(&head, &tail, new_node);
-	return (0);
-}
 
 static int	get_word_length(char *line, int i)
 {

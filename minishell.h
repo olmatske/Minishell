@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/31 17:03:31 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/31 17:39:01 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <readline/history.h>
 # include "get_next_line/get_next_line.h"
 
-extern int	signals;
+extern int	g_signal;
 
 typedef enum e_out_type {
 	OUT_NONE,

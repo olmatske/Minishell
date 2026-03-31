@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/31 16:58:49 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/31 17:35:40 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ static void	minishell_loop(t_env *copied_env)
 	{
 		line = readline("Minishell$");
 		if (line == NULL)
-			break;
+			break ;
 		else if (line[0] == '\0' || is_it_space_only(line) == 1)
 		{
 			free(line);
-			continue;
+			continue ;
 		}
 		else
 			add_history(line);

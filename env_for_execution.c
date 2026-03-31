@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:23:09 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/23 14:23:36 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/31 17:36:43 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	**free_env_array(char **env_array)
 {
 	int	i;
 
-	if(env_array == NULL)
+	if (env_array == NULL)
 		return (NULL);
 	i = 0;
 	while (env_array[i])

@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/22 20:46:13 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/31 17:28:43 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,8 @@ void	add_node_to_token_list(t_token **head, t_token **tail, t_token *node);
 void	add_node_to_env_list(t_env **head, t_env **tail, t_env *node);
 int		env_list_length(t_env *head);
 void	print_token_list_debug(t_token *head);
+t_token	*create_new_token_node(t_token_type type, char *value);
+int		linked_list_for_token(t_token **head, t_token **tail,
+			t_token_type type, char *str);
 
 #endif
