@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/23 16:09:46 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/31 17:03:31 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <string.h>
+# include <signal.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "get_next_line/get_next_line.h"
 
-// extern t_env	*copied_env;
+extern int	signals;
 
 typedef enum e_out_type {
 	OUT_NONE,
@@ -73,6 +74,8 @@ char		**env_array_for_execution(t_env *copied_env);
 char		**free_env_array(char **env_array);
 void		ft_error(char *s, int exit_code);
 void		ft_perror(char *s);
+void		replace_signals(void);
+int			is_it_space_only(char *line);
 void		free_cmd_list(t_cmd_node *cmd_list);
 void		free_env_list(t_env **head);
 

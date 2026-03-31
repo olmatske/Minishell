@@ -6,14 +6,14 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 18:49:22 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/23 14:24:03 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/31 17:07:31 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
 
-static void get_new_shlvl(t_env **head)
+static void	get_new_shlvl(t_env **head)
 {
 	int		level;
 	char	*new_shlvl;

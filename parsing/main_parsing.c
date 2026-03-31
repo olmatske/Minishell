@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/23 14:50:57 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/31 17:13:14 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ static int	get_word_length(char *line, int i)
 			inside_single_quotes = !inside_single_quotes;
 		if (inside_single_quotes == NO && inside_double_quotes == NO)
 		{
-			if ((line[i + len] >= 9 && line[i + len] <= 13) || line[i + len] == 32
-				|| line[i + len] == '|' || line[i + len] == '>'
+			if ((line[i + len] >= 9 && line[i + len] <= 13)
+				|| line[i + len] == 32
+				|| line[i + len] == '|'
+				|| line[i + len] == '>'
 				|| line[i + len] == '<')
 				break ;
 		}
@@ -89,27 +91,45 @@ static void	handle_words(t_token **head, t_token **tail, char *line, int *i)
 	*i = *i + len;
 }
 
-static int	handle_type(t_token **head, t_token **tail, char *line, int *i)
+static int	handle_redir(t_token **head, t_token **tail, char *line, int *i)
 {
-	if (line[*i] == '|')
-		return (linked_list_for_token(head, tail, PIPE, "|"));
-	else if (line[*i] == '>' && line[*i + 1] == '>')
+	if (line[*i] == '>' && line[*i + 1] == '>')
 	{
-		i++;
+		(*i) += 2;
 		return (linked_list_for_token(head, tail, HEREDOC, ">>"));
 	}
 	else if (line[*i] == '<' && line[*i + 1] == '<')
 	{
-		i++;
+		(*i) += 2;
 		return (linked_list_for_token(head, tail, APPEND, "<<"));
 	}
 	else if (line[*i] == '>')
+	{
+		(*i)++;
 		return (linked_list_for_token(head, tail, IN, ">"));
+	}
 	else if (line[*i] == '<')
+	{
+		(*i)++;
 		return (linked_list_for_token(head, tail, OUT, "<"));
-	else
-		handle_words(head, tail, line, i);
-	i++;
+	}
+	return (1);
+}
+
+static int	handle_type(t_token **head, t_token **tail, char *line, int *i)
+{
+	int	redir_status;
+
+	if (line[*i] == '|')
+	{
+		(*i)++;
+		return (linked_list_for_token(head, tail, PIPE, "|"));
+	}
+	redir_status = handle_redir(head, tail, line, i);
+	if (redir_status != 1)
+		return (redir_status);
+	handle_words(head, tail, line, i);
+	return (0);
 }
 
 t_cmd_node	*main_parsing(char *line)
@@ -131,7 +151,6 @@ t_cmd_node	*main_parsing(char *line)
 			break ;
 		if (handle_type(&head, &tail, line, &i) == -1)
 			return ;
-		i++;
 	}
 	print_token_list_debug(head);
 	return (head);

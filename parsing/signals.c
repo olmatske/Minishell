@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   al_about_errors.c                                  :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/22 19:50:26 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/22 19:52:28 by anshuval         ###   ########.fr       */
+/*   Created: 2026/03/31 16:48:33 by anshuval          #+#    #+#             */
+/*   Updated: 2026/03/31 17:08:09 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
 
-void	ft_error(char *s, int exit_code)
+static void	handle_sigint(int sig)
 {
-	ft_putstr_fd(s, STDERR_FILENO);
-	exit(exit_code);
+	(void)sig;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
-void	ft_perror(char *s)
+void	replace_signals(void)
 {
-	perror(s);
-	exit(EXIT_FAILURE);
+	signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
 }
-

@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/23 15:19:33 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/03/31 16:58:49 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	minishell_loop(t_env *copied_env)
 	char		*line;
 	t_cmd_node	*cmd_list;
 
+	replace_signals();
 	while (1)
 	{
 		line = readline("Minishell$");
