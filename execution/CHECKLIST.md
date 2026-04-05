@@ -7,7 +7,8 @@
 ### Functions
 - [ ] built ins
 	- [ ] cd
-	- [ ] echo
+	- [X] echo
+	- [X] echo -n (do not output the trailing newline)
 	- [ ] env
 	- [ ] export
 	- [ ] pwd
@@ -25,7 +26,7 @@
 - [ ] struct for argumnets and flags
 --------------------------------------------------------------------------------
 ### Roadmap
-- [ ] start with: echo hi (> hi.txt)
+- [X] start with: echo hi (> hi.txt)
 - [ ] continue with built ins
 - [ ] anything without env vars
 - [ ] figure out

@@ -6,18 +6,19 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/03/22 19:11:33 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/05 17:22:09 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <fcntl.h>
-# include <string.h>
+#include <stdlib.h>
+#include "./libft/libft.h"
+#include <unistd.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <string.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -30,15 +31,21 @@ typedef struct s_redir {
 	
 // }	t_built_in;
 
-enum builtin {
-	// NONE,
-	ECHO
-};
+typedef enum e_builtin {
+	NONE,
+	ECHO,
+	ECHO_N
+
+}	t_builtin;
+
+// typedef s_redirection {
+// 	char *target;
+// }	t_redirection
 
 typedef struct s_cmd {
 	char		**args; // args[0] = "cat" -> args[1] = main.c
-	t_redir		*redir; 
-	// enum builtin;		//built_in; // nothing because cat isn't a built in function
+	// t_redir		*redir; 
+	t_builtin	builtin;		//built_in; // nothing because cat isn't a built in function
 }	t_cmd;
 
 typedef struct s_cmd_node {
@@ -52,9 +59,12 @@ typedef struct s_cmd_node {
 
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
-
+int main(void);
 // builtin.c ///////////////////////////////////////////////////////////////////
-int echo();
+
+int wrapper_builtin(t_cmd cmd);
+void echo(char *str);
+void echo_n(char *str);
 
 
 

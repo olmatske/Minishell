@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/03/22 19:13:25 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/05 17:24:28 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,34 @@
 
 int main(void)
 {
-	if (echo() != 0)
-		return (printf("error\n"), 1);
+	t_cmd cmd;
+	char *str[] = {"Hello World", NULL};
+	cmd.args = str;
+	cmd.builtin = ECHO_N;
+
+	while (1)
+		wrapper_builtin(cmd);
 	return (0);
 }
 
-int echo()
+//  t_cmd *cmd, t_env *env, t_shell *sh
+int wrapper_builtin(t_cmd cmd)
 {
-	char *str;
-	char *builtin = "echo";
-	int	i = 0;
-
-	str = readline("$ ");
-	while (str[i] == builtin[i])
-		i++;
-	if (i < 4)
-		return (printf("error\n"), 1);
-	i += 1;
-	while (str[i])
-	{
-		printf("%c", str[i]);
-		i++;
-	}
-	printf("\n");
+	if (cmd.builtin == NONE)
+		return (1);
+	else if (cmd.builtin == ECHO)
+		echo(readline("$ "));
+	else if (cmd.builtin == ECHO_N)
+		echo_n(readline("$ "));
 	return (0);
 }
 
+void echo(char *str)
+{
+	printf("%s\n", str);
+}
+
+void echo_n(char *str)
+{
+	printf("%s", str);
+}
