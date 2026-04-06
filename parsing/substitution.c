@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validation.c                                       :+:      :+:    :+:   */
+/*   substitution.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/26 18:50:43 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/06 18:37:57 by anshuval         ###   ########.fr       */
+/*   Created: 2026/04/06 18:24:25 by anshuval          #+#    #+#             */
+/*   Updated: 2026/04/06 18:50:53 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
 
-int	input_validation(t_token *list)
+void	variable_substitution(t_token *token_list, t_env *copied_env)
 {
 	
 }

@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validation.c                                       :+:      :+:    :+:   */
+/*   cmd_building.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/26 18:50:43 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/06 18:37:57 by anshuval         ###   ########.fr       */
+/*   Created: 2026/04/06 18:48:16 by anshuval          #+#    #+#             */
+/*   Updated: 2026/04/06 18:49:15 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
 
-int	input_validation(t_token *list)
+t_cmd_node	*cmd_building(t_token *token_list)
 {
 	
 }

@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 18:49:22 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/31 17:07:31 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/06 18:33:01 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,35 @@ static t_env	*create_new_env_node(char *envp)
 	return (new_node);
 }
 
+static void	last_exit_status(t_env **head, t_env **tail)
+{
+	t_env	*last_node;
+
+	last_node = malloc(sizeof (t_env));
+	if (last_node == NULL)
+	{
+		free_env_list(head);
+		return ;
+	}
+	last_node->name = ft_strdup("?");
+	if (last_node->name == NULL)
+	{
+		free(last_node);
+		free_env_list(head);
+		return ;
+	}
+	last_node->value = ft_strdup("0");
+	if (last_node->value == NULL)
+	{
+		free(last_node->name);
+		free(last_node);
+		free_env_list(head);
+		return ;
+	}
+	last_node->next = NULL;
+	add_node_to_env_list(head, tail, last_node);
+}
+
 t_env	*shell_env(char **envp)
 {
 	int		i;
@@ -89,5 +118,6 @@ t_env	*shell_env(char **envp)
 		i++;
 	}
 	get_new_shlvl(&head);
+	last_exit_status(&head, &tail);
 	return (head);
 }

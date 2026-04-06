@@ -6,107 +6,19 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/31 17:29:07 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/06 18:47:02 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
 
-static int	get_word_length(char *line, int i)
-{
-	int	inside_single_quotes;
-	int	inside_double_quotes;
-	int	len;
-
-	inside_single_quotes = NO;
-	inside_double_quotes = NO;
-	len = 0;
-	while (line[i + len])
-	{
-		if (line[i + len] == '\"' && inside_single_quotes == NO)
-			inside_double_quotes = !inside_double_quotes;
-		else if (line[i + len] == '\'' && inside_double_quotes == NO)
-			inside_single_quotes = !inside_single_quotes;
-		if (inside_single_quotes == NO && inside_double_quotes == NO)
-		{
-			if ((line[i + len] >= 9 && line[i + len] <= 13)
-				|| line[i + len] == 32
-				|| line[i + len] == '|'
-				|| line[i + len] == '>'
-				|| line[i + len] == '<')
-				break ;
-		}
-		len++;
-	}
-	return (len);
-}
-
-static void	handle_words(t_token **head, t_token **tail, char *line, int *i)
-{
-	int			len;
-	char		*value;
-
-	len = get_word_length(line, *i);
-	if (len < 1)
-		return ;
-	value = ft_substr(line, *i, len);
-	if (value == NULL)
-		return ;
-	if (linked_list_for_token(head, tail, WORD, value) == -1)
-		return ;
-	*i = *i + len;
-}
-
-static int	handle_redir(t_token **head, t_token **tail, char *line, int *i)
-{
-	if (line[*i] == '>' && line[*i + 1] == '>')
-	{
-		(*i) += 2;
-		return (linked_list_for_token(head, tail, HEREDOC, ">>"));
-	}
-	else if (line[*i] == '<' && line[*i + 1] == '<')
-	{
-		(*i) += 2;
-		return (linked_list_for_token(head, tail, APPEND, "<<"));
-	}
-	else if (line[*i] == '>')
-	{
-		(*i)++;
-		return (linked_list_for_token(head, tail, IN, ">"));
-	}
-	else if (line[*i] == '<')
-	{
-		(*i)++;
-		return (linked_list_for_token(head, tail, OUT, "<"));
-	}
-	return (1);
-}
-
-static int	handle_type(t_token **head, t_token **tail, char *line, int *i)
-{
-	int	redir_status;
-
-	if (line[*i] == '|')
-	{
-		(*i)++;
-		return (linked_list_for_token(head, tail, PIPE, "|"));
-	}
-	redir_status = handle_redir(head, tail, line, i);
-	if (redir_status != 1)
-		return (redir_status);
-	handle_words(head, tail, line, i);
-	return (0);
-}
-
-t_cmd_node	*main_parsing(char *line)
+static t_token	*create_tokens(char *line)
 {
 	int		i;
 	t_token	*head;
 	t_token	*tail;
 
-	if (check_quotes(line) == NO)
-		return ;
 	i = 0;
 	head = NULL;
 	tail = NULL;
@@ -117,10 +29,30 @@ t_cmd_node	*main_parsing(char *line)
 		if (line[i] == '\0')
 			break ;
 		if (handle_type(&head, &tail, line, &i) == -1)
-			return ;
+			return (NULL);
 	}
-	print_token_list_debug(head);
 	return (head);
+}
+
+t_cmd_node	*main_parsing(char *line, t_env *copied_env)
+{
+	t_token		*token_list;
+	t_cmd_node	*cmd_list;
+
+	if (check_quotes(line) == NO)
+		return (NULL);
+	token_list = create_tokens(line);
+	if (token_list == NULL)
+		return (NULL);
+	if (input_validation(token_list) == -1)
+	{
+		free_list_token(&token_list);
+		return (NULL);
+	}
+	variable_substitution(&token_list, copied_env);
+	cmd_list = cmd_building(token_list);
+	free_list_token(&token_list);
+	return (cmd_list);
 }
 
 // 	search for the equal sign in eac separate envp
@@ -136,7 +68,7 @@ t_cmd_node	*main_parsing(char *line)
 // 	save each of the found symbols / words in a separate node
 // 	create a linked list
 // 	increment the shllvl  for the new envp (and each time the minishell is opened inside minishell)
-// validate the input inside the minishell- in validation by nodes
-// validate the input - the pipe can only be between two commands (with arguments), and only one pipe,
-// redirections should have either a filename or a word(that will be turned sowieso into a file name)
+//  validate the input inside the minishell- in validation by nodes
+//  validate the input - the pipe can only be between two commands (with arguments), and only one pipe,
+//  redirections should have either a filename or a word(that will be turned sowieso into a file name)
 // group tokens into commands in the struct s_cmd
