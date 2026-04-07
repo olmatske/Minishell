@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/07 11:07:18 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/07 12:09:11 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,16 +128,3 @@ void unset(char **envp, char *rm_var)
 	perror("Error");
 }
 
-// {
-//     (void)envp;
-//     int i = 0;
-//     char target[1024];
-
-//     while (rm_var[i] && rm_var[i] != '=')
-//     {
-//         target[i] = rm_var[i];
-//         i++;
-//     }
-//     target[i] = '\0';
-//     printf("%s\n", target);
-// }

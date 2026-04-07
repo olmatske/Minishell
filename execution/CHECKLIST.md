@@ -14,7 +14,7 @@
 	- [X] unset ([ ] need to update the env file !!!)
 	- [X] exit
 - [ ] expander
-- [ ] external
+- [ ] external functions
 - [ ] heredoc
 --------------------------------------------------------------------------------
 ### Other
