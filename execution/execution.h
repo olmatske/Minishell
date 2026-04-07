@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/05 17:22:09 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/07 09:37:43 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,11 @@ typedef struct s_redir {
 typedef enum e_builtin {
 	NONE,
 	ECHO,
-	ECHO_N
+	ECHO_N,
+	PWD,
+	EXIT,
+	ENV,
+	CD
 
 }	t_builtin;
 
@@ -59,14 +63,16 @@ typedef struct s_cmd_node {
 
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
-int main(void);
+int main(int argc, char **argv, char **envp);
 // builtin.c ///////////////////////////////////////////////////////////////////
 
-int wrapper_builtin(t_cmd cmd);
+int wrapper_builtin(t_cmd cmd, char **envp);
 void echo(char *str);
 void echo_n(char *str);
-
-
+void pwd(void);
+void ft_exit(void);
+void env(char **envp);
+void cd(char *path);
 
 
 
