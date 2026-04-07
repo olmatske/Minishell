@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/31 17:35:40 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/06 20:03:26 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	minishell_loop(t_env *copied_env)
 		}
 		else
 			add_history(line);
-		cmd_list = main_parsing(line);
+		cmd_list = main_parsing(line, copied_env);
 		if (cmd_list != NULL)
 			shell_loop(copied_env, cmd_list);
 		free(line);

@@ -6,31 +6,43 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:52:47 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/23 14:57:56 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/07 15:28:17 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
 
+int	quote_status(char c, int *in_double, int *in_single)
+{
+	if (c == '\"' && *in_single == NO)
+	{
+		*in_double = !(*in_double);
+		return (YES);
+	}
+	else if (c == '\'' && *in_double == NO)
+	{
+		*in_single = !(*in_single);
+		return (YES);
+	}
+	retuirn (NO);
+}
+
 int	check_quotes(char *line)
 {
-	int	inside_single_quotes;
-	int	inside_double_quotes;
+	int	in_single;
+	int	in_double;
 	int	i;
 
-	inside_single_quotes = NO;
-	inside_double_quotes = NO;
+	in_single = NO;
+	in_double = NO;
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '\"' && inside_single_quotes == NO)
-			inside_double_quotes = !inside_double_quotes;
-		else if (line[i] == '\'' && inside_double_quotes == NO)
-			inside_single_quotes = !inside_single_quotes;
+		quote_status(line[i], &in_double, &in_single);
 		i++;
 	}
-	if (inside_double_quotes == YES || inside_single_quotes == YES)
+	if (in_double == YES || in_single == YES)
 	{
 		printf("Syntax error. unclosed quotes.");
 		return (NO);

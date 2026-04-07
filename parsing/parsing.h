@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/06 18:52:01 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/07 15:29:10 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,6 @@ int			input_validation(t_token *list);
 int			handle_type(t_token **head, t_token **tail, char *line, int *i);
 t_cmd_node	*cmd_building(t_token *token_list);
 void		variable_substitution(t_token *token_list, t_env *copied_env);
+int			quote_status(char c, int *in_double, int *in_single);
 
 #endif
