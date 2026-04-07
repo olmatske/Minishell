@@ -6,12 +6,39 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:30:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/07 16:49:39 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/07 19:02:50 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
+
+void	delete_empty_node(t_token **head, t_token *to_delete)
+{
+	t_token	*current;
+	t_token	*prev;
+
+	current = *head;
+	prev = NULL;
+	while (current)
+	{
+		if (current == to_delete)
+		{
+			if (prev != NULL && (prev->type == IN || prev->type == OUT
+				|| prev->type == APPEND || prev->type == HEREDOC))
+				return (ft_error("Redirection error\n", 1));
+			if (prev == NULL)
+				*head = current->next;
+			else
+				prev->next = current->next;
+			free(current->value);
+			free(current);
+			return ;
+		}
+		prev = current;
+		current = current->next;
+	}
+}
 
 char	*append_str(char *old_w, char suffix)
 {

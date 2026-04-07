@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:25 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/07 15:48:19 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/07 18:56:01 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	just_copy(char *old_w, int *i, char **new_w)
 	(*i)++;
 }
 
-static void	substitute_word(t_token *word, t_env *copied_env)
+static void	substitute_word(t_token **list, t_token *word, t_env *copied_env)
 {
 	int		in_single;
 	int		in_double;
@@ -79,6 +79,8 @@ static void	substitute_word(t_token *word, t_env *copied_env)
 	}
 	free(word->value);
 	word->value = new_line;
+	if (word->value == "" && in_single != YES && in_double != YES)
+		delete_empty_node(list, word);
 }
 
 void	variable_substitution(t_token *token_list, t_env *copied_env)
@@ -89,7 +91,7 @@ void	variable_substitution(t_token *token_list, t_env *copied_env)
 	while (current)
 	{
 		if (current->type == WORD)
-			substitute_word(current, copied_env);
+			substitute_word(&token_list, current, copied_env);
 		current = current->next;
 	}
 }
