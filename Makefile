@@ -3,36 +3,46 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/02/26 15:35:29 by anshuval          #+#    #+#              #
-#    Updated: 2026/02/26 17:51:10 by anshuval         ###   ########.fr        #
+#    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
+#    Updated: 2026/04/07 16:49:52 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			=	minishell
+NAME = execution
+LIBFT_DIR = ./libft
+LIBFT = $(LIBFT_DIR)/libft.a
 
-MY_SOURCES		=	.c	\
-					
+SOURCES = builtin.c
 
-MY_OBJECTS		=	$(MY_SOURCES:.c=.o)
+OBJECTS = $(SOURCES:.c=.o)
 
-CC				=	cc
+CC = cc
 
-CFLAGS			=	-Wall -Wextra -Werror
-READFLAGS		=	-lreadline
+CFLAGS = -Wall -Werror -Wextra
 
-$(NAME):	$(MY_OBJECTS)
-	$(CC) $(CFLAGS) $(READFLAGS) $(MY_OBJECTS) -o $(NAME)
+RM = rm -rf
 
-all:	$(NAME)
+all: $(NAME)
+
+$(NAME): $(OBJECTS) $(LIBFT)
+	$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -o $(NAME) -lreadline
+
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_DIR)
+
+%.o: %.c execution.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm	-f	$(MY_OBJECTS)
+	$(RM) $(OBJECTS)
 
-fclean: clean
-	rm	-f $(NAME)
+fclean:
+	$(RM) $(NAME) $(OBJECTS)
 
-re: fclean all
+re:
+	$(MAKE) fclean
+	$(MAKE) all
 
-.PHONY:	all clean fclean re
+.PHONY: all clean fclean re
