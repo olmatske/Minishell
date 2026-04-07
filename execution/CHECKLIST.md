@@ -6,7 +6,7 @@
 --------------------------------------------------------------------------------
 ### Functions
 - [ ] built ins
-#	- [ ] cd
+	- [X] cd
 	- [X] echo
 	- [X] echo -n (do not output the trailing newline)
 	- [X] env ([ ] need to increment SHLVL !!!)

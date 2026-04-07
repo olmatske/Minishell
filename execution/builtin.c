@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/07 09:41:47 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/07 09:52:05 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ void env(char **envp)
 
 void cd(char *path)
 {
-	if (!chdir(path))
-		return;
-	else
+	if (chdir(path) == -1)
 	{
-		perror("Error: ");
+		perror("Error");
 		return;
 	}
+	// else
+	// 	pwd();
 }
