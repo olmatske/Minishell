@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/07 09:37:43 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/07 10:01:30 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ typedef enum e_builtin {
 	PWD,
 	EXIT,
 	ENV,
-	CD
+	CD,
+	EXPORT,
+	UNSET
 
 }	t_builtin;
 
@@ -73,6 +75,8 @@ void pwd(void);
 void ft_exit(void);
 void env(char **envp);
 void cd(char *path);
+void export(char **envp, char *new_var);
+void unset(char **envp, char *rm_var);
 
 
 

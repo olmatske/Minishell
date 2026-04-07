@@ -5,13 +5,13 @@
 - [ ] hwo do pipes work exactly?
 --------------------------------------------------------------------------------
 ### Functions
-- [ ] built ins
+- [X] built ins
 	- [X] cd
 	- [X] echo
 	- [X] echo -n (do not output the trailing newline)
 	- [X] env ([ ] need to increment SHLVL !!!)
-	- [ ] export
-	- [ ] unset
+	- [X] export ([ ] need to update the env file !!!)
+	- [X] unset ([ ] need to update the env file !!!)
 	- [X] exit
 - [ ] expander
 - [ ] external

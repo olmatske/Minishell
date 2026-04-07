@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/07 09:52:05 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/07 11:07:18 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	t_cmd cmd;
-	char *str[] = {"..", NULL};
+	char *str[] = {"MYVAR", NULL};
 	cmd.args = str;
-	cmd.builtin = CD;
+	cmd.builtin = UNSET;
 
 	wrapper_builtin(cmd, envp);
 	return (0);
@@ -42,6 +42,10 @@ int wrapper_builtin(t_cmd cmd, char **envp)
 		env(envp);
 	else if (cmd.builtin == CD)
 		cd(cmd.args[0]);
+	else if (cmd.builtin == EXPORT)
+		export(envp, *cmd.args);
+	else if (cmd.builtin == UNSET)
+		unset(envp, *cmd.args);
 	return (0);
 }
 
@@ -88,3 +92,52 @@ void cd(char *path)
 	// else
 	// 	pwd();
 }
+// supposed to update the env in shell
+void export(char **envp, char *new_var)
+{
+	int i = 0;
+	char *new_env_var = ft_strdup(new_var);
+
+	while (envp[i])
+		i++;
+	envp[i] = new_env_var;
+	envp[i + 1] = NULL;
+}
+// supposed to update the env in shell
+void unset(char **envp, char *rm_var)
+{
+	export(envp, "MYVAR=Helloo"); // remove later!!
+	int i = 0;
+	int len = ft_strlen(rm_var);
+
+	while (envp[i])
+	{
+		if (!ft_strncmp(envp[i], rm_var, len) && envp[i][len] == '=')
+		{
+			free(envp[i]);
+			while (envp[i])
+			{
+				envp[i] = envp[i + 1];
+				i++;
+			}
+			printf("Successful removal\n"); // remove later!!
+			return;
+		}
+		i++;
+	}
+	perror("Error");
+}
+
+// {
+//     (void)envp;
+//     int i = 0;
+//     char target[1024];
+
+//     while (rm_var[i] && rm_var[i] != '=')
+//     {
+//         target[i] = rm_var[i];
+//         i++;
+//     }
+//     target[i] = '\0';
+//     printf("%s\n", target);
+// }
