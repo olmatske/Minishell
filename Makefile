@@ -3,18 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/04/07 16:49:52 by olmatske         ###   ########.fr        #
+#    Updated: 2026/04/07 16:59:57 by anshuval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = execution
+NAME = minishell
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-SOURCES = builtin.c
+SOURCES = 
 
 OBJECTS = $(SOURCES:.c=.o)
 
@@ -32,7 +32,7 @@ $(NAME): $(OBJECTS) $(LIBFT)
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
-%.o: %.c execution.h
+%.o: %.c minishell.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
