@@ -32,6 +32,26 @@
 - [ ] figure out env stuff
 
 
+
+- [ ] external command path lookup
+
+- [ ] single command fork + execve
+
+- [ ] basic redirections
+
+- [ ] builtin detection
+
+- [ ] parent-only builtins: cd, export, unset, exit
+
+- [ ] pipelines
+
+- [ ] heredoc
+
+- [ ] signal handling
+
+- [ ] exit-status propagation
+
+
 - [ ] execve are for external!!!!
 
 ### Allowed functions
