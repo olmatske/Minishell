@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/07 10:01:30 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/08 19:33:01 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,11 @@ typedef struct s_cmd_node {
 
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
-int main(int argc, char **argv, char **envp);
+
+int main(int argc, char **argv);
+// int main(int argc, char **argv, char **envp);
+
+
 // builtin.c ///////////////////////////////////////////////////////////////////
 
 int wrapper_builtin(t_cmd cmd, char **envp);

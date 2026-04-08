@@ -31,6 +31,7 @@
 - [ ] anything without env vars
 - [ ] figure out env stuff
 
+- [ ] figure out files
 
 
 - [ ] external command path lookup
