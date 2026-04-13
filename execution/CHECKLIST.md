@@ -27,12 +27,20 @@
 --------------------------------------------------------------------------------
 ### Roadmap
 - [X] start with: echo hi (> hi.txt)
-- [ ] continue with built ins
-- [ ] anything without env vars
-- [ ] figure out env stuff
+- [X] continue with built ins
+- [X] anything without env vars
+- [X] figure out env stuff
+# - [ ] files
+- [ ] PreZero (Garbage Collector)
+- [ ] heredoc last
+
+# - [ ] < should redirect input.
+- [ ] > redirects input: cat < file.txt outputs whatever is in file.txt into the shell
+- [ ] << should be given a delimiter, then read the input until a line containing the
+		delimiter is seen. However, it doesn’t have to update the history!
+- [ ] >> should redirect output in append mode.
 
 - [ ] figure out files
-
 
 - [ ] external command path lookup
 
@@ -52,6 +60,8 @@
 
 - [ ] exit-status propagation
 
+- [ ] garbage collecter
+	-> cutsom mallox, mallocs and remembers in an array and frees at the end
 
 - [ ] execve are for external!!!!
 
@@ -111,14 +121,4 @@ strerror
 |||
 |||
 
-, ,
-, , ,
-printf, malloc, free, write, , , read,
-close, fork, wait, 
-, , , ,
-, , , kill, exit,
-, , , , , , ,
-, , , , , ,
-, perror, , , , ,
-, , , , ,
-, , , 
+printf, malloc, free, write, read, close, fork, wait, kill, exit, perror

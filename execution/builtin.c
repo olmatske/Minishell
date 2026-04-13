@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/07 12:09:11 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/13 16:46:52 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int wrapper_builtin(t_cmd cmd, char **envp)
 	if (cmd.builtin == NONE)
 		return (1);
 	else if (cmd.builtin == ECHO)
-		echo(readline("$ "));
+		echo(readline("$ "));                   // put away
 	else if (cmd.builtin == ECHO_N)
-		echo_n(readline("$ "));
+		echo_n(readline("$ "));                 // puy away
 	else if (cmd.builtin == PWD)
 		pwd();
 	else if (cmd.builtin == EXIT)

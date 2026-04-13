@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/08 19:33:01 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/13 17:28:54 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,7 @@
 #include <string.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-
-typedef struct s_redir {
-	// types of redirection     OUT (enum)
-	// target                   text.txt
-}	t_redir;
-
-// typedef struct s_built_in {
-	
-// }	t_built_in;
+#include "./get_next_line/get_next_line.h"
 
 typedef enum e_builtin {
 	NONE,
@@ -44,9 +36,20 @@ typedef enum e_builtin {
 
 }	t_builtin;
 
-// typedef s_redirection {
-// 	char *target;
-// }	t_redirection
+typedef enum e_out_type {
+	OUT_NONE,
+	OUT_APPEND,
+	OUT_OVERWRITE
+}	t_out_type;
+
+
+typedef struct s_redir {
+	char		*infile;                  // filename
+	char		*heredoc_delimiter;
+	char		*outfile;                 // filename
+	t_out_type	out_type;
+}	t_redir;
+
 
 typedef struct s_cmd {
 	char		**args; // args[0] = "cat" -> args[1] = main.c
@@ -87,6 +90,62 @@ void unset(char **envp, char *rm_var);
 
 
 #endif
+
+
+
+
+
+
+
+// typedef enum e_out_type {
+// 	OUT_NONE,
+// 	OUT_APPEND,
+// 	OUT_OVERWRITE
+// }	t_out_type;
+
+// typedef struct s_redir {
+// 	char		*infile;                  // filename
+// 	char		*heredoc_delimiter;
+// 	char		*outfile;                 // filename
+// 	t_out_type	out_type;
+// }	t_redir;
+
+// typedef enum e_built_in_name {
+// 	BUILTIN_NONE,
+// 	BUILTIN_ECHO,
+// 	BUILTIN_CD,
+// 	BUILTIN_PWD,
+// 	BUILTIN_EXPORT,
+// 	BUILTIN_UNSET,
+// 	BUILTIN_ENV,
+// 	BUILTIN_EXIT
+// }	t_built_in_name;
+
+// typedef struct s_cmd {
+// 	char			**args;
+// 	t_redir			*redir;
+// 	t_built_in_name	built_in_name;
+// }	t_cmd;
+
+// typedef struct s_cmd_node {
+// 	t_cmd				*cmd;
+// 	struct s_cmd_node	*next;
+// }	t_cmd_node;
+
+// typedef struct s_env {
+// 	char			*name;
+// 	char			*value;
+// 	struct s_env	*next;
+// }	t_env;
+
+
+
+
+
+
+
+
+
 
 
 // cat main.c > text.txt

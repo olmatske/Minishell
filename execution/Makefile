@@ -6,15 +6,18 @@
 #    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/04/05 16:31:23 by olmatske         ###   ########.fr        #
+#    Updated: 2026/04/13 17:28:50 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = execution
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
+GNL_DIR = ./get_next_line
 
-SOURCES = builtin.c
+SOURCES = files.c \
+	$(GNL_DIR)/get_next_line.c \
+	$(GNL_DIR)/get_next_line_utils.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
