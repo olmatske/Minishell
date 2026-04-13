@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:52:47 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/07 15:28:17 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/13 15:35:29 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	quote_status(char c, int *in_double, int *in_single)
 		*in_single = !(*in_single);
 		return (YES);
 	}
-	retuirn (NO);
+	return (NO);
 }
 
 int	check_quotes(char *line)

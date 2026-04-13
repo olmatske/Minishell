@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 17:31:35 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/31 17:58:30 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/13 15:36:35 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int	linked_list_for_token(t_token **head, t_token **tail,
 	new_node = create_new_token_node(type, str);
 	if (new_node == NULL)
 	{
-		free_list_token(&head);
+		free_list_token(head);
 		return (-1);
 	}
-	add_node_to_token_list(&head, &tail, new_node);
+	add_node_to_token_list(head, tail, new_node);
 	return (0);
 }
 

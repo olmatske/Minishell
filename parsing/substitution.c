@@ -6,12 +6,18 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:25 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/07 18:56:01 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/13 15:44:04 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
+
+static void	just_copy(char *old_w, int *i, char **new_w)
+{
+	*new_w = append_char(*new_w, old_w[*i]);
+	(*i)++;
+}
 
 static void	expand_env(char *old_w, int *i, char **new_w, t_env *env)
 {
@@ -48,12 +54,6 @@ static void	search_for_dollar(char *old_w, int *i, char **new_w, t_env *env)
 		just_copy(old_w, i, new_w);
 }
 
-static void	just_copy(char *old_w, int *i, char **new_w)
-{
-	*new_w = append_char(*new_w, old_w[*i]);
-	(*i)++;
-}
-
 static void	substitute_word(t_token **list, t_token *word, t_env *copied_env)
 {
 	int		in_single;
@@ -79,7 +79,7 @@ static void	substitute_word(t_token **list, t_token *word, t_env *copied_env)
 	}
 	free(word->value);
 	word->value = new_line;
-	if (word->value == "" && in_single != YES && in_double != YES)
+	if (word->value[0] == '\0' && in_single != YES && in_double != YES)
 		delete_empty_node(list, word);
 }
 

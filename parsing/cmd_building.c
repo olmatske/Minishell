@@ -6,14 +6,97 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:48:16 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/06 18:49:15 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/13 15:35:13 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
 
+static void	redir_builder(char **file_type, t_token *current)
+{
+	if (file_type != NULL)
+		free(file_type);
+	*file_type = ft_strdup(current->next->value);
+	if (*file_type == NULL)
+		free(file_type);
+}
+
+static void	distribute_redir(t_cmd_node *new_cmd, t_token *current)
+{
+	if (new_cmd->cmd->redir == NULL)
+	{
+		new_cmd->cmd->redir = ft_calloc(1, sizeof (t_redir));
+		if (new_cmd->cmd->redir == NULL)
+			return ;
+		new_cmd->cmd->redir->out_type = OUT_NONE;
+	}
+	if (current->type == IN)
+		redir_builder(&new_cmd->cmd->redir->infile, current);
+	else if (current->type == OUT || current->type == APPEND)
+	{
+		if (current->type == OUT)
+			new_cmd->cmd->redir->out_type = OUT_OVERWRITE;
+		else if (current->type == APPEND)
+			new_cmd->cmd->redir->out_type = OUT_APPEND;
+		redir_builder(&new_cmd->cmd->redir->outfile, current);
+	}
+	else if (current->type == HEREDOC)
+		redir_builder(&new_cmd->cmd->redir->heredoc_delimiter, current);
+}
+
+static void	distribute_word(t_cmd_node *new_cmd, t_token *current)
+{
+	int	i;
+
+	i = 0;
+	while (new_cmd->cmd->args[i] != NULL)
+		i++;
+	new_cmd->cmd->args[i] = ft_strdup(current->value);
+	if (new_cmd->cmd->args[i] == NULL)
+		free_args(new_cmd->cmd->args);
+}
+
+static t_token	*token_type_distributor(t_cmd_node *new_cmd, t_token *head)
+{
+	while (head != NULL && head->type != PIPE)
+	{
+		if (head->type == WORD)
+			distribute_word(new_cmd, head);
+		else if (head->type == IN || head->type == OUT
+			|| head->type == APPEND || head->type == HEREDOC)
+		{
+			distribute_redir(new_cmd, head);
+			if (head->next != NULL)
+				head = head->next;
+		}
+		head = head->next;
+	}
+	return (head);
+}
+
 t_cmd_node	*cmd_building(t_token *token_list)
 {
-	
+	t_token		*current;
+	t_cmd_node	*new_cmd;
+	t_cmd_node	*head;
+	t_cmd_node	*tail;
+
+	current = token_list;
+	head = NULL;
+	tail = NULL;
+	while (current)
+	{
+		new_cmd = create_empty_cmd_node();
+		if (new_cmd == NULL)
+			return (free_cmd_list(head), NULL);
+		if (malloc_args_array(new_cmd, current) == -1)
+			return (free_cmd_list(head), NULL);
+		current = token_type_distributor(new_cmd, current);
+		add_node_to_cmd_list(&head, &tail, new_cmd);
+		if (current != NULL && current->type == PIPE)
+			current = current->next;
+	}
+	free_list_token(&token_list);
+	return (head);
 }
