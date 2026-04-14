@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/13 15:41:51 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:42:12 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int			linked_list_for_token(t_token **head, t_token **tail,
 int			input_validation(t_token *list);
 int			handle_type(t_token **head, t_token **tail, char *line, int *i);
 t_cmd_node	*cmd_building(t_token *token_list);
-void		variable_substitution(t_token *token_list, t_env *copied_env);
+void		variable_substitution(t_token **token_list, t_env *copied_env);
 int			quote_status(char c, int *in_double, int *in_single);
 void		delete_empty_node(t_token **head, t_token *to_delete);
 int			malloc_args_array(t_cmd_node *new_cmd, t_token *head);
@@ -64,5 +64,6 @@ char		*append_char(char *old_w, char c);
 char		*search_env(t_env *env, char *name);
 char		*append_str(char *old_w, char *suffix);
 void		delete_empty_node(t_token **head, t_token *to_delete);
+void		check_for_builtin(t_cmd_node *node);
 
 #endif

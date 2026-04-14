@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 17:33:49 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/13 15:31:33 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/13 16:09:50 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_cmd_node	*create_empty_cmd_node(void)
 	new_node->cmd = ft_calloc(1, sizeof (t_cmd));
 	if (new_node->cmd == NULL)
 		return (free(new_node), NULL);
+	new_node->cmd->built_in_name = BUILTIN_NONE;
 	return (new_node);
 }
 

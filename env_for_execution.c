@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:23:09 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/31 17:36:43 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:17:50 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**env_array_for_execution(t_env *copied_env)
 	int		len;
 
 	len = env_list_length(copied_env);
-	env_array = malloc(sizeof(char *) * (len + 1));
+	env_array = ft_calloc((len + 1), sizeof(char *));
 	if (env_array == NULL)
 		return (NULL);
 	current = copied_env;
@@ -52,6 +52,5 @@ char	**env_array_for_execution(t_env *copied_env)
 		current = current->next;
 		i++;
 	}
-	env_array[i] = NULL;
 	return (env_array);
 }

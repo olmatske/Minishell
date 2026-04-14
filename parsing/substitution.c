@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:25 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/13 15:44:04 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:45:32 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,29 +69,29 @@ static void	substitute_word(t_token **list, t_token *word, t_env *copied_env)
 	{
 		if (quote_status(word->value[i], &in_double, &in_single) == YES)
 			i++;
+		else if (in_single == YES)
+			just_copy(word->value, &i, &new_line);
 		else
-		{
-			if (in_single == YES)
-				just_copy(word->value, &i, &new_line);
-			else
-				search_for_dollar(word->value, &i, &new_line, copied_env);
-		}
+			search_for_dollar(word->value, &i, &new_line, copied_env);
 	}
 	free(word->value);
 	word->value = new_line;
-	if (word->value[0] == '\0' && in_single != YES && in_double != YES)
+	if (word->value == NULL || (word->value[0] == '\0'
+			&& in_single != YES && in_double != YES))
 		delete_empty_node(list, word);
 }
 
-void	variable_substitution(t_token *token_list, t_env *copied_env)
+void	variable_substitution(t_token **token_list, t_env *copied_env)
 {
 	t_token	*current;
+	t_token	*next;
 
-	current = token_list;
+	current = *token_list;
 	while (current)
 	{
+		next = current->next;
 		if (current->type == WORD)
-			substitute_word(&token_list, current, copied_env);
-		current = current->next;
+			substitute_word(token_list, current, copied_env);
+		current = next;
 	}
 }

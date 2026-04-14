@@ -6,7 +6,7 @@
 #    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/04/13 15:29:11 by anshuval         ###   ########.fr        #
+#    Updated: 2026/04/14 13:41:50 by anshuval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ LIBFT = $(LIBFT_DIR)/libft.a
 SOURCES =	minishell.c \
 			env_for_execution.c \
 			parsing/all_about_errors.c \
+			parsing/builtins.c \
 			parsing/cmd_building.c \
 			parsing/grammar.c \
 			parsing/list_utils_cmd.c \

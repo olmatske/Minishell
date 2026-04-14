@@ -36,8 +36,8 @@
 	- [x] remove the quotes - after the quotes have been checked for correctness they can be safely removed from the WORD
 ### result!
 	- [ ] each t_cmd_node will contain 
-		- [ ] a string (array) of arguments (like "echo" "-n" "hello" "NULL")
-		- [ ] redirection (like outfile: "outfile.txt", infile: "infile.txt", heredoc_delimeter:"whatever", out_type (append > or overwrite >> or none))
+		- [x] a string (array) of arguments (like "echo" "-n" "hello" "NULL")
+		- [x] redirection (like outfile: "outfile.txt", infile: "infile.txt", heredoc_delimeter:"whatever", out_type (append > or overwrite >> or none))
 		- [ ] builtin name like echo
 	- [ ] if there is a pipe in the input the node will be pointing to the next node. OTHERWISE THERE WILL BE ONLY ONE NODE FOR ONE COMMAND
 ### heredoc handling!!! to be studied and added later

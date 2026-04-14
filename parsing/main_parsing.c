@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/13 15:53:13 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:45:43 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_cmd_node	*main_parsing(char *line, t_env *copied_env)
 	}
 	printf("before substitution\n");
 	print_token_list_debug(token_list);
-	variable_substitution(token_list, copied_env);
+	variable_substitution(&token_list, copied_env);
 	printf("after substitution\n");
 	print_token_list_debug(token_list);
 	cmd_list = cmd_building(token_list);

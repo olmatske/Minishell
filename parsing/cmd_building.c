@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:48:16 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/13 15:35:13 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:22:33 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,10 @@ t_cmd_node	*cmd_building(t_token *token_list)
 		if (malloc_args_array(new_cmd, current) == -1)
 			return (free_cmd_list(head), NULL);
 		current = token_type_distributor(new_cmd, current);
+		check_for_builtin(new_cmd);
 		add_node_to_cmd_list(&head, &tail, new_cmd);
 		if (current != NULL && current->type == PIPE)
 			current = current->next;
 	}
-	free_list_token(&token_list);
 	return (head);
 }
