@@ -40,28 +40,12 @@
 		delimiter is seen. However, it doesn’t have to update the history!
 - [ ] >> should redirect output in append mode.
 
-- [ ] figure out files
-
-- [ ] external command path lookup
-
-- [ ] single command fork + execve
-
-- [ ] basic redirections
-
-- [ ] builtin detection
-
-- [ ] parent-only builtins: cd, export, unset, exit
-
-- [ ] pipelines
-
-- [ ] heredoc
-
-- [ ] signal handling
-
-- [ ] exit-status propagation
-
 - [ ] garbage collecter
 	-> cutsom mallox, mallocs and remembers in an array and frees at the end
+	- [X] gc_malloc — allocates memory and registers it
+	- [X] gc_free — frees a single pointer and removes it from the list
+	- [X] gc_free_all — frees every tracked pointer (call on exit or error)
+	- [X] gc_add — adds a pointer to the tracking list
 
 - [ ] execve are for external!!!!
 

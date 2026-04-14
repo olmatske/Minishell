@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/13 17:28:54 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/14 16:40:45 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,17 @@ typedef enum e_out_type {
 	OUT_OVERWRITE
 }	t_out_type;
 
+// shell struct will have a gc variable
+typedef struct s_shell {
+	t_env	**env;
+	pre_zero *gc;
+	int		exit;
+}	t_shell;
+
+typedef struct s_pre_zero {
+	void *ptr;
+	struct s_pre_zero *next;
+}	pre_zero;
 
 typedef struct s_redir {
 	char		*infile;                  // filename
@@ -50,6 +61,11 @@ typedef struct s_redir {
 	t_out_type	out_type;
 }	t_redir;
 
+typedef struct s_env {
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
 
 typedef struct s_cmd {
 	char		**args; // args[0] = "cat" -> args[1] = main.c
