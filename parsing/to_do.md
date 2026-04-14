@@ -38,6 +38,7 @@
 	- [ ] each t_cmd_node will contain 
 		- [x] a string (array) of arguments (like "echo" "-n" "hello" "NULL")
 		- [x] redirection (like outfile: "outfile.txt", infile: "infile.txt", heredoc_delimeter:"whatever", out_type (append > or overwrite >> or none))
-		- [ ] builtin name like echo
-	- [ ] if there is a pipe in the input the node will be pointing to the next node. OTHERWISE THERE WILL BE ONLY ONE NODE FOR ONE COMMAND
-### heredoc handling!!! to be studied and added later
+		- [x] builtin name like echo
+	- [x] if there is a pipe in the input the node will be pointing to the next node. OTHERWISE THERE WILL BE ONLY ONE NODE FOR ONE COMMAND
+### hleaks
+	- [ ] memory leaks at exit
