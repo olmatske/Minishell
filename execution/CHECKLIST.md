@@ -18,12 +18,11 @@
 - [ ] heredoc
 --------------------------------------------------------------------------------
 ### Other
-- [ ] structs
+- [X] structs
 --------------------------------------------------------------------------------
-### Library
-- [ ] flags (heredoc, pipe, redicrection etc)
-- [ ] struct for built in commands
-- [ ] struct for argumnets
+### Header
+- [X] flags (heredoc, pipe, redicrection etc)
+- [X] struct for built in commands
 --------------------------------------------------------------------------------
 ### Roadmap
 - [X] start with: echo hi (> hi.txt)
@@ -31,16 +30,17 @@
 - [X] anything without env vars
 - [X] figure out env stuff
 # - [ ] files
-- [ ] PreZero (Garbage Collector)
+#	 - [ ] < should redirect input.
+	- [ ] > redirects input: cat < file.txt outputs whatever is in file.txt into the shell
+	- [ ] << should be given a delimiter, then read the input until a line containing the
+			delimiter is seen. However, it doesn’t have to update the history!
+	- [ ] >> should redirect output in append mode.
+- [ ] Pipes
+- [X] PreZero (Garbage Collector)
 - [ ] heredoc last
 
-# - [ ] < should redirect input.
-- [ ] > redirects input: cat < file.txt outputs whatever is in file.txt into the shell
-- [ ] << should be given a delimiter, then read the input until a line containing the
-		delimiter is seen. However, it doesn’t have to update the history!
-- [ ] >> should redirect output in append mode.
 
-- [ ] garbage collecter
+- [X] garbage collecter
 	-> cutsom mallox, mallocs and remembers in an array and frees at the end
 	- [X] gc_malloc — allocates memory and registers it
 	- [X] gc_free — frees a single pointer and removes it from the list
