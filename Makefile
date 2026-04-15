@@ -6,7 +6,7 @@
 #    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/04/14 13:41:50 by anshuval         ###   ########.fr        #
+#    Updated: 2026/04/15 18:24:10 by anshuval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ OBJECTS = $(SOURCES:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g3
 
 RM = rm -rf
 
@@ -56,6 +56,7 @@ clean:
 
 fclean:
 	$(RM) $(NAME) $(OBJECTS)
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re:
 	$(MAKE) fclean

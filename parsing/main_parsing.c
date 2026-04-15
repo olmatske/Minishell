@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/14 13:45:43 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/15 14:25:35 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,7 @@ t_cmd_node	*main_parsing(char *line, t_env *copied_env)
 	printf("cmd_list created:\n");
 	print_token_list_debug(token_list);
 	free_list_token(&token_list);
+	printf("CMD LIST CREATED:\n");
+	print_cmd_list_debug(cmd_list);
 	return (cmd_list);
 }

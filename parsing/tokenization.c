@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:18 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/06 18:36:54 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/15 18:38:11 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,12 @@ static void	handle_words(t_token **head, t_token **tail, char *line, int *i)
 	if (value == NULL)
 		return ;
 	if (linked_list_for_token(head, tail, WORD, value) == -1)
+	{
+		free(value);
 		return ;
+	}
 	*i = *i + len;
+	free(value);
 }
 
 static int	handle_redir(t_token **head, t_token **tail, char *line, int *i)
