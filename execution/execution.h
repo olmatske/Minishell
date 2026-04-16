@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/14 16:40:45 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/16 14:30:07 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_env {
 
 typedef struct s_cmd {
 	char		**args; // args[0] = "cat" -> args[1] = main.c
-	// t_redir		*redir; 
+	t_redir		*redir; 
 	t_builtin	builtin;		//built_in; // nothing because cat isn't a built in function
 }	t_cmd;
 

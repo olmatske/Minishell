@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 15:32:56 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/14 16:54:15 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/16 14:46:47 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // valgrind --leak-check=full ./minishell
 
-void *gc_malloc(t_shell *shell, size_t size)
+void *gc_malloc(t_shell *shell, size_t size) // size used with sizeof(xyz)
 {
 	void *ptr;
 
@@ -33,6 +33,18 @@ void *gc_malloc(t_shell *shell, size_t size)
 		exit(1);
 	}
 	return(ptr);
+}
+
+void *gc_calloc(t_shell *shell, int count, size_t size) // size used with sizeof(xyz) - count is how much you need
+{
+	void *ptr;
+
+	if (size != 0 && count > SIZE_MAX / size)
+		return (NULL);
+	ptr = gc_malloc(shell, count * size);
+	if (ptr)
+		ft_memset(ptr, 0, count * size);
+	return (ptr);
 }
 
 int gc_add(t_shell *shell, void *ptr)

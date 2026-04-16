@@ -45,7 +45,8 @@
 	- [X] gc_malloc — allocates memory and registers it
 	- [X] gc_free — frees a single pointer and removes it from the list
 	- [X] gc_free_all — frees every tracked pointer (call on exit or error)
-	- [X] gc_add — adds a pointer to the tracking list
+	- [X] gc_add — adds a pointer to the tracking list\
+	- [X] gc_calloc - same as gc_malloc but fills space with NULL
 
 - [ ] execve are for external!!!!
 
