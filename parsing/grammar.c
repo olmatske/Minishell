@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:52:47 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/13 15:35:29 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/16 15:15:52 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	check_quotes(char *line)
 	}
 	if (in_double == YES || in_single == YES)
 	{
-		printf("Syntax error. unclosed quotes.");
+		printf("Syntax error. Unclosed quotes.");
 		return (NO);
 	}
 	return (YES);

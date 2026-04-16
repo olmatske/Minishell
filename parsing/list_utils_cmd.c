@@ -6,12 +6,25 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 17:33:49 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/13 16:09:50 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/16 15:11:13 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
+
+static void	free_redir(t_redir *redir)
+{
+	if (redir == NULL)
+		return ;
+	if (redir->infile != NULL)
+		free(redir->infile);
+	if (redir->outfile != NULL)
+		free(redir->outfile);
+	if (redir->heredoc_delimiter != NULL)
+		free(redir->heredoc_delimiter);
+	free(redir);
+}
 
 void	free_args(char **args)
 {
@@ -41,7 +54,8 @@ void	free_cmd_list(t_cmd_node *head)
 		{
 			if (current->cmd->args)
 				free_args(current->cmd->args);
-			free(current->cmd->redir);
+			if (current->cmd->redir)
+				free_redir(current->cmd->redir);
 			free(current->cmd);
 		}
 		free(current);

@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/15 14:25:35 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/16 15:14:59 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_token	*create_tokens(char *line)
 		if (line[i] == '\0')
 			break ;
 		if (handle_type(&head, &tail, line, &i) == -1)
-			return (NULL);
+			return (free_list_token(&head), NULL);
 	}
 	return (head);
 }

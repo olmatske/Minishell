@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:48:16 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/14 13:22:33 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/16 15:14:08 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 static void	redir_builder(char **file_type, t_token *current)
 {
-	if (file_type != NULL)
-		free(file_type);
+	if (*file_type != NULL)
+		free(*file_type);
 	*file_type = ft_strdup(current->next->value);
 	if (*file_type == NULL)
-		free(file_type);
+		ft_error("Error: Memory allocation failed\n", 1);
 }
 
 static void	distribute_redir(t_cmd_node *new_cmd, t_token *current)
@@ -28,7 +28,7 @@ static void	distribute_redir(t_cmd_node *new_cmd, t_token *current)
 	{
 		new_cmd->cmd->redir = ft_calloc(1, sizeof (t_redir));
 		if (new_cmd->cmd->redir == NULL)
-			return ;
+			ft_error("Error: Memory allocation failed\n", 1);
 		new_cmd->cmd->redir->out_type = OUT_NONE;
 	}
 	if (current->type == IN)
@@ -54,7 +54,10 @@ static void	distribute_word(t_cmd_node *new_cmd, t_token *current)
 		i++;
 	new_cmd->cmd->args[i] = ft_strdup(current->value);
 	if (new_cmd->cmd->args[i] == NULL)
+	{
 		free_args(new_cmd->cmd->args);
+		ft_error("Error: Memory allocation failed\n", 1);
+	}
 }
 
 static t_token	*token_type_distributor(t_cmd_node *new_cmd, t_token *head)
