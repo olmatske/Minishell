@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/13 16:46:52 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/20 13:06:09 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main(int argc, char **argv, char **envp)
 //  t_cmd *cmd, t_env *env, t_shell *sh
 int wrapper_builtin(t_cmd cmd, char **envp)
 {
-	if (cmd.builtin == NONE)
+	if (cmd.builtin == NONE_B)
 		return (1);
 	else if (cmd.builtin == ECHO)
 		echo(readline("$ "));                   // put away

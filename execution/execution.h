@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/16 14:30:07 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/20 14:00:15 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 #include "./get_next_line/get_next_line.h"
 
 typedef enum e_builtin {
-	NONE,
+	NONE_B,
 	ECHO,
 	ECHO_N,
 	PWD,
@@ -36,18 +36,14 @@ typedef enum e_builtin {
 
 }	t_builtin;
 
-typedef enum e_out_type {
-	OUT_NONE,
-	OUT_APPEND,
-	OUT_OVERWRITE
-}	t_out_type;
+typedef enum e_redir_type {
+	NONE_R,
+	INPUT,
+	OVERWRITE,
+	HEREDOC,
+	APPEND
+}	t_redir_type;
 
-// shell struct will have a gc variable
-typedef struct s_shell {
-	t_env	**env;
-	pre_zero *gc;
-	int		exit;
-}	t_shell;
 
 typedef struct s_pre_zero {
 	void *ptr;
@@ -58,7 +54,7 @@ typedef struct s_redir {
 	char		*infile;                  // filename
 	char		*heredoc_delimiter;
 	char		*outfile;                 // filename
-	t_out_type	out_type;
+	t_redir_type	redir_type;
 }	t_redir;
 
 typedef struct s_env {
@@ -67,9 +63,17 @@ typedef struct s_env {
 	struct s_env	*next;
 }	t_env;
 
+// shell struct will have a gc variable
+typedef struct s_shell {
+	t_env	**env;
+	pre_zero *gc;
+	int		exit;
+}	t_shell;
+
 typedef struct s_cmd {
 	char		**args; // args[0] = "cat" -> args[1] = main.c
-	t_redir		*redir; 
+	// t_redir		*redir; 
+	t_redir_type	redir;
 	t_builtin	builtin;		//built_in; // nothing because cat isn't a built in function
 }	t_cmd;
 
@@ -85,7 +89,7 @@ typedef struct s_cmd_node {
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
 
-int main(int argc, char **argv);
+// int main(int argc, char **argv);
 // int main(int argc, char **argv, char **envp);
 
 
@@ -102,8 +106,14 @@ void export(char **envp, char *new_var);
 void unset(char **envp, char *rm_var);
 
 
+// files.c /////////////////////////////////////////////////////////////////////
 
-
+int main(int argc, char **argv);
+void wrapper(char **argv, t_cmd cmd);
+int create_file(char *filename);
+void input(int fd);
+void overwrite(char **text);
+void append(char **argv);
 
 #endif
 

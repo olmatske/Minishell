@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:09:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/13 18:28:36 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/20 14:16:54 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,38 @@ void	input(int fd);
 
 int main(int argc, char **argv)
 {
-	char	*file_name;
-	int		fd;
+	(void)argc;
+	t_cmd cmd;
+	char *str[] = {NULL};
+	cmd.args = str;
+	cmd.builtin = NONE_B;
+	cmd.redir = APPEND;
 
-	if (argc != 2)
-	{
-		printf("not enough arguments", argv[0]);
-		return (1);
-	}
-	file_name = argv[1];
-	fd = open(file_name, O_CREAT | O_RDWR, 0644);
+	wrapper(argv, cmd);
+	return (0);
+}
+
+void wrapper(char **argv, t_cmd cmd)
+{
+	if (cmd.redir == INPUT)
+		input(open(argv[1], O_RDONLY));
+	else if (cmd.redir == OVERWRITE)
+		overwrite(argv);
+	else if (cmd.redir == APPEND)
+		append(argv);
+}
+
+
+int create_file(char *filename)
+{
+	int		fd;
+	
+	fd = open(filename, O_CREAT | O_RDWR, 0644);
 	if (fd < 0)
 	{
 		perror("open");
 		return (1);
 	}
-	input(fd);
 	if (close(fd) < 0)
 	{
 		perror("close");
@@ -40,6 +56,8 @@ int main(int argc, char **argv)
 	return (0);
 }
 // open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644)
+
+// cat < file.txt outputs file content to shell
 void input(int fd)
 {
 	char	*line;
@@ -47,10 +65,53 @@ void input(int fd)
 	line = get_next_line(fd);
 	while (line)
 	{
+		if (line == NULL)
+		{
+			perror("Error:");
+			return;
+		}
 		printf("%s", line);
 		free(line);
 		line = get_next_line(fd);
 	}
 }
 
+void overwrite(char **argv)
+{
+	int fd;
+	char *text;
 
+	text = readline("");
+
+	fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	write(fd, text, ft_strlen(text));
+}
+
+void append(char **argv)
+{
+	int fd;
+	char *text;
+
+	text = readline("");
+	fd = open(argv[1], O_WRONLY | O_CREAT | O_APPEND, 0644);
+
+	write(fd, text, ft_strlen(text));
+}
+
+
+
+
+
+
+
+
+	// int fd;
+	// if (argc <= 2)
+	// {
+	// 	printf("not enough arguments");
+	// 	return (1);
+	// }
+	// if (argc == 3)
+		
+	// fd = open(argv[1], O_RDONLY);
+	// input(fd);

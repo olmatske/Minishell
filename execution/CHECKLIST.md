@@ -9,13 +9,18 @@
 	- [X] cd
 	- [X] echo
 	- [X] echo -n (do not output the trailing newline)
-	- [X] env ([ ] need to increment SHLVL !!!)
+	- [X] env ([X] need to increment SHLVL !!!)
 	- [X] export ([ ] need to update the env file !!!)
 	- [X] unset ([ ] need to update the env file !!!)
-	- [X] exit
+	- [ ] exit
 - [ ] expander
 - [ ] external functions
 - [ ] heredoc
+	-> cat << EOF
+		hello
+		world
+		EOF
+		-> printf until the delimiter
 --------------------------------------------------------------------------------
 ### Other
 - [X] structs
@@ -30,11 +35,13 @@
 - [X] anything without env vars
 - [X] figure out env stuff
 # - [ ] files
-#	 - [ ] < should redirect input.
-	- [ ] > redirects input: cat < file.txt outputs whatever is in file.txt into the shell
-	- [ ] << should be given a delimiter, then read the input until a line containing the
+	- [X] < "input" redirects input: cat < file.txt outputs file content to shell
+	- [X] > "overwrite" redirects input into a file
+		-> signals for exiting write mode!
+	- [ ] << "heredoc" should be given a delimiter, then read the input until a line containing the
 			delimiter is seen. However, it doesn’t have to update the history!
-	- [ ] >> should redirect output in append mode.
+	- [X] >> "append" should redirect output in append mode.
+		-> [ ] signals for exiting write mode!
 - [ ] Pipes
 - [X] PreZero (Garbage Collector)
 - [ ] heredoc last
