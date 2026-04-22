@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/20 14:00:15 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/04/20 15:43:12 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef struct s_cmd_node {
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
 
 // int main(int argc, char **argv);
-// int main(int argc, char **argv, char **envp);
+int main(int argc, char **argv, char **envp);
 
 
 // builtin.c ///////////////////////////////////////////////////////////////////
@@ -108,7 +108,7 @@ void unset(char **envp, char *rm_var);
 
 // files.c /////////////////////////////////////////////////////////////////////
 
-int main(int argc, char **argv);
+// int main(int argc, char **argv);
 void wrapper(char **argv, t_cmd cmd);
 int create_file(char *filename);
 void input(int fd);

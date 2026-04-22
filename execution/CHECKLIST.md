@@ -9,7 +9,7 @@
 	- [X] cd
 	- [X] echo
 	- [X] echo -n (do not output the trailing newline)
-	- [X] env ([X] need to increment SHLVL !!!)
+	- [X] env ([ ] redo and only use the env struct)
 	- [X] export ([ ] need to update the env file !!!)
 	- [X] unset ([ ] need to update the env file !!!)
 	- [ ] exit
