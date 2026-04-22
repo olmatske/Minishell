@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/07 17:06:11 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/13 15:26:44 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "get_next_line/get_next_line.h"
-#include "./libft/libft.h"
+# include "./libft/libft.h"
 
 extern int	g_signal;
 
@@ -79,5 +79,6 @@ void		replace_signals(void);
 int			is_it_space_only(char *line);
 void		free_cmd_list(t_cmd_node *cmd_list);
 void		free_env_list(t_env **head);
+int			env_list_length(t_env *head);
 
 #endif

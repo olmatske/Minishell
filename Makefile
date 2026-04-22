@@ -6,7 +6,7 @@
 #    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/04/07 16:59:57 by anshuval         ###   ########.fr        #
+#    Updated: 2026/04/15 18:24:10 by anshuval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,29 @@ NAME = minishell
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-SOURCES = 
+SOURCES =	minishell.c \
+			env_for_execution.c \
+			parsing/all_about_errors.c \
+			parsing/builtins.c \
+			parsing/cmd_building.c \
+			parsing/grammar.c \
+			parsing/list_utils_cmd.c \
+			parsing/list_utils_env.c \
+			parsing/list_utils_token.c \
+			parsing/main_parsing.c \
+			parsing/shell_env.c \
+			parsing/signals.c \
+			parsing/substitution_utils.c \
+			parsing/substitution.c \
+			parsing/tokenization.c \
+			parsing/validation.c \
+			parsing/debug.c
 
 OBJECTS = $(SOURCES:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g3
 
 RM = rm -rf
 
@@ -40,6 +56,7 @@ clean:
 
 fclean:
 	$(RM) $(NAME) $(OBJECTS)
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re:
 	$(MAKE) fclean

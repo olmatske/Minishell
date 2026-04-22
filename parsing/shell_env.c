@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 18:49:22 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/06 18:33:01 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:20:34 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_env	*create_new_env_node(char *envp)
 	equal_sign = ft_strchr(envp, '=');
 	if (equal_sign == NULL)
 		return (NULL);
-	new_node = malloc(sizeof (t_env));
+	new_node = ft_calloc(1, sizeof (t_env));
 	if (new_node == NULL)
 		return (NULL);
 	new_node->name = ft_substr(envp, 0, (equal_sign - envp));
@@ -61,7 +61,6 @@ static t_env	*create_new_env_node(char *envp)
 		free(new_node);
 		return (NULL);
 	}
-	new_node->next = NULL;
 	return (new_node);
 }
 
@@ -69,7 +68,7 @@ static void	last_exit_status(t_env **head, t_env **tail)
 {
 	t_env	*last_node;
 
-	last_node = malloc(sizeof (t_env));
+	last_node = ft_calloc(1, sizeof (t_env));
 	if (last_node == NULL)
 	{
 		free_env_list(head);
@@ -90,7 +89,6 @@ static void	last_exit_status(t_env **head, t_env **tail)
 		free_env_list(head);
 		return ;
 	}
-	last_node->next = NULL;
 	add_node_to_env_list(head, tail, last_node);
 }
 

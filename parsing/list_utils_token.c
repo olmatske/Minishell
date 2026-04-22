@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 17:31:35 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/31 17:58:30 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/14 13:27:33 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_token	*create_new_token_node(t_token_type type, char *value)
 {
 	t_token	*new_node;
 
-	new_node = malloc(sizeof (t_token));
+	new_node = ft_calloc(1, sizeof (t_token));
 	if (new_node == NULL)
 		return (NULL);
 	new_node->value = ft_strdup(value);
@@ -27,7 +27,6 @@ t_token	*create_new_token_node(t_token_type type, char *value)
 		return (NULL);
 	}
 	new_node->type = type;
-	new_node->next = NULL;
 	return (new_node);
 }
 
@@ -39,10 +38,10 @@ int	linked_list_for_token(t_token **head, t_token **tail,
 	new_node = create_new_token_node(type, str);
 	if (new_node == NULL)
 	{
-		free_list_token(&head);
+		free_list_token(head);
 		return (-1);
 	}
-	add_node_to_token_list(&head, &tail, new_node);
+	add_node_to_token_list(head, tail, new_node);
 	return (0);
 }
 

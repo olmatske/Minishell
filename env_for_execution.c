@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:23:09 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/31 17:36:43 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/16 13:01:24 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,28 @@ char	**free_env_array(char **env_array)
 char	**env_array_for_execution(t_env *copied_env)
 {
 	char	**env_array;
+	char	*tmp;
 	t_env	*current;
 	int		i;
 	int		len;
 
 	len = env_list_length(copied_env);
-	env_array = malloc(sizeof(char *) * (len + 1));
+	env_array = ft_calloc((len + 1), sizeof(char *));
 	if (env_array == NULL)
 		return (NULL);
 	current = copied_env;
 	i = 0;
 	while (i < len)
 	{
-		env_array[i] = ft_strjoin(current->name, "=");
+		tmp = ft_strjoin(current->name, "=");
+		if (tmp == NULL)
+			return (free_env_array(env_array));
+		env_array[i] = ft_strjoin(tmp, current->value);
 		if (env_array[i] == NULL)
 			return (free_env_array(env_array));
-		env_array[i] = ft_strjoin(env_array[i], current->value);
-		if (env_array[i] == NULL)
-			return (free_env_array(env_array));
+		free(tmp);
 		current = current->next;
 		i++;
 	}
-	env_array[i] = NULL;
 	return (env_array);
 }
