@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/13 15:26:44 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/04/22 16:19:19 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <signal.h>
+# include <limits.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
