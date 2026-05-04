@@ -64,6 +64,7 @@
 - [ ] exit signals
 - [ ] add functions to header and clean up
 - [ ] increment and execute commands if pipes
+- [ ] norminette
 
 
 - [X] garbage collecter

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/04 11:36:39 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/04 16:54:10 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,14 @@ int create_file(char *filename);
 void input(int fd);
 void overwrite(char **text);
 void append(char **argv);
+
+// garbage_collector.c /////////////////////////////////////////////////////////
+void *gc_malloc(t_shell *shell, size_t size);
+void *gc_calloc(t_shell *shell, int count, size_t size);
+int gc_add(t_shell *shell, void *ptr);
+int gc_add(t_shell *shell, void *ptr);
+void gc_single_free(t_shell *shell, void *ptr);
+void gc_free_all(t_shell *shell);
 
 #endif
 
