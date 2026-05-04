@@ -34,7 +34,7 @@
 - [X] continue with built ins
 - [X] anything without env vars
 - [X] figure out env stuff
-# - [ ] files
+ - [ ] files
 	- [X] < "input" redirects input: cat < file.txt outputs file content to shell
 	- [X] > "overwrite" redirects input into a file
 		-> signals for exiting write mode!
@@ -42,9 +42,28 @@
 			delimiter is seen. However, it doesn’t have to update the history!
 	- [X] >> "append" should redirect output in append mode.
 		-> [ ] signals for exiting write mode!
+
+- [ ] externals
+	- [ ] 
+	- [ ] absolute path
+	- [ ] relative path
+	- [ ] command
+		-> search until :
+		-> yoink the string
+		-> append yoinked string + '/' + command
+		-> check if it exists
+			> if no iterate further and repeat process
+			> if yes, return path
 - [ ] Pipes
 - [X] PreZero (Garbage Collector)
 - [ ] heredoc last
+# - [ ] link to main
+- [ ] change builtin.c
+	- [ ] envp to struct
+	- [ ] args
+- [ ] exit signals
+- [ ] add functions to header and clean up
+- [ ] increment and execute commands if pipes
 
 
 - [X] garbage collecter

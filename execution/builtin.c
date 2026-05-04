@@ -6,46 +6,46 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/20 13:06:09 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/04 11:36:23 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int main(int argc, char **argv, char **envp)
-{
-	(void)argc;
-	(void)argv;
-	t_cmd cmd;
-	char *str[] = {"MYVAR", NULL};
-	cmd.args = str;
-	cmd.builtin = UNSET;
+// int main(int argc, char **argv, char **envp)
+// {
+// 	(void)argc;
+// 	(void)argv;
+// 	t_cmd cmd;
+// 	char *str[] = {"MYVAR", NULL};
+// 	cmd.args = str;
+// 	cmd.builtin = UNSET;
 
-	wrapper_builtin(cmd, envp);
-	return (0);
-}
+// 	wrapper_builtin(cmd, envp);
+// 	return (0);
+// }
 
 //  t_cmd *cmd, t_env *env, t_shell *sh
-int wrapper_builtin(t_cmd cmd, char **envp)
+int wrapper_builtin(t_cmd *cmd, char **envp)
 {
-	if (cmd.builtin == NONE_B)
+	if (cmd->builtin == NONE_B)
 		return (1);
-	else if (cmd.builtin == ECHO)
+	else if (cmd->builtin == ECHO)
 		echo(readline("$ "));                   // put away
-	else if (cmd.builtin == ECHO_N)
+	else if (cmd->builtin == ECHO_N)
 		echo_n(readline("$ "));                 // puy away
-	else if (cmd.builtin == PWD)
+	else if (cmd->builtin == PWD)
 		pwd();
-	else if (cmd.builtin == EXIT)
+	else if (cmd->builtin == EXIT)
 		ft_exit();
-	else if (cmd.builtin == ENV)
+	else if (cmd->builtin == ENV)
 		env(envp);
-	else if (cmd.builtin == CD)
-		cd(cmd.args[0]);
-	else if (cmd.builtin == EXPORT)
-		export(envp, *cmd.args);
-	else if (cmd.builtin == UNSET)
-		unset(envp, *cmd.args);
+	else if (cmd->builtin == CD)
+		cd(cmd->args[0]);
+	else if (cmd->builtin == EXPORT)
+		export(envp, *cmd->args);
+	else if (cmd->builtin == UNSET)
+		unset(envp, *cmd->args);
 	return (0);
 }
 

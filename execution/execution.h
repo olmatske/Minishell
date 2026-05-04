@@ -6,12 +6,12 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/20 15:43:12 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/04 11:36:39 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef EXECUTION_H
+# define EXECUTION_H
 
 #include <stdlib.h>
 #include "./libft/libft.h"
@@ -71,10 +71,10 @@ typedef struct s_shell {
 }	t_shell;
 
 typedef struct s_cmd {
-	char		**args; // args[0] = "cat" -> args[1] = main.c
-	// t_redir		*redir; 
+	char		**args;
+	t_redir		*redir; 
 	t_redir_type	redir;
-	t_builtin	builtin;		//built_in; // nothing because cat isn't a built in function
+	t_builtin	builtin;
 }	t_cmd;
 
 typedef struct s_cmd_node {
@@ -95,7 +95,7 @@ int main(int argc, char **argv, char **envp);
 
 // builtin.c ///////////////////////////////////////////////////////////////////
 
-int wrapper_builtin(t_cmd cmd, char **envp);
+int wrapper_builtin(t_cmd *cmd, char **envp);
 void echo(char *str);
 void echo_n(char *str);
 void pwd(void);
