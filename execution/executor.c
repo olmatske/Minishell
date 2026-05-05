@@ -6,56 +6,73 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 12:39:56 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/04 17:00:22 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/05 14:50:36 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-int	exec_pipeline(t_shell *shell, t_cmd_node *cmd_list, int cmd_count)
+void	exec_pipeline(t_shell *shell, t_cmd_node *cmd_list, int cmd_count)
 {
 	pid_t		*pids;
 	t_cmd_node	*curr;
-	int			pipe_fd[2];
+	int			pipe_fd[2]; // pipe_fd[0] read - pipde_fd[1] write
 	int			prev_read;
 	int			i;
 
 	i = 0;
 	prev_read = -1;
 	pids = gc_malloc(shell, sizeof(pid_t) * cmd_count);
+	curr = cmd_list;
 	while (i < cmd_count)
 	{
-		if (i < cmd_count - 1 && pipe(pipe_fd) == - 1)
+		if (i < cmd_count - 1 && pipe(pipe_fd) == - 1) // new pipe if not last command
 			return (perror("pipes"), 1);
 		pids[i] = fork();
 		if (pids[i] == -1)
 			return (perror("fork"), 1);
-		if (pids[i] == 0)
-			
+		// if (extra(i, cmd_count, &pipe_fd, pids[i]) == 1)
+		// 	exit(127);
+		if (pids[i] == 0) // child proccess
+		{
+			child_loop(i, cmd_count, &pipe_fd, prev_read);
+			execution(curr->cmd, shell->env); 
+			exit(127);
+		}
+		else
+			parent_loop(i, cmd_count, *pipe_fd, prev_read);
+		curr = curr->next;
+		i++;
 	}
 }
 
-int	pipe_count(t_cmd_node *cmd_list)
+static int	extra(int i, int cmd_count, int *pipe_fd, int *pids)
 {
-	t_cmd_node	*curr;
-	int	i;
-	
-	curr = cmd_list;
-	i = 0;
-	if (curr->next)
-	{
-		i = 1;
-		while (curr->next != NULL)
-		{
-			curr = curr->next;
-			i++;
-		}
-	}
-	return (i);
+	if (i < cmd_count - 1 && pipe(pipe_fd) == - 1) // new pipe if not last command
+			return (perror("pipes"), 1);
+		pids[i] = fork();
+	if (pids[i] == -1)
+		return (perror("fork"), 1);
 }
-	int	exec_single_cmd(t_env *environment, t_cmd_node *cmd_list)
-	{
-		if (cmd_list->cmd->builtin == NONE_B)
-			return (exec_external(env, cmd_list->cmd));
-		return (wrapper_builtin(cmd_list->cmd, environment));
-	}
+
+static void	child_loop(int i, int cmd_count, int *pipe_fd, int prev_read)
+{
+	if (prev_read != -1)
+		redirect_input(prev_read);
+	if (i < cmd_count - 1)
+		redirect_output(pipe_fd[1]);
+	if (i < cmd_count - 1)
+		close(pipe_fd[0]);
+}
+
+static void	parent_loop(int i, int cmd_count, int *pipe_fd, int prev_read)
+{
+	if (i < cmd_count - 1)
+		close(pipe_fd[1]);
+	if (prev_read != -1)
+		close(prev_read);
+	if (i < cmd_count - 1)
+		prev_read = pipe_fd[0];
+	else
+		prev_read = -1;
+}

@@ -57,7 +57,7 @@
 - [ ] Pipes
 - [X] PreZero (Garbage Collector)
 - [ ] heredoc last
-# - [ ] link to main
+# - [X] link to main
 - [ ] change builtin.c
 	- [ ] envp to struct
 	- [ ] args
