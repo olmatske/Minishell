@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/05 14:30:44 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/05 17:11:37 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,16 @@ typedef struct s_shell {
 	int		exit;
 }	t_shell;
 
+typedef struct s_pipex {
+	t_cmd_node	*curr;
+	t_shell		*shell;
+	pid_t		*pids;
+	int			i;
+	int			cmd_count;
+	int			pipe_fd[2];	// pipe_fd[0] read - pipde_fd[1] write
+	int			prev_read;
+}	t_pipex;
+
 typedef struct s_cmd {
 	char		**args;
 	t_redir		*redir; 
@@ -122,6 +132,14 @@ int gc_add(t_shell *shell, void *ptr);
 int gc_add(t_shell *shell, void *ptr);
 void gc_single_free(t_shell *shell, void *ptr);
 void gc_free_all(t_shell *shell);
+
+
+
+void	execute_piped_cmd(char *cmd, char **envp);
+int		open_file(char *file, int mode);
+int		pipe_count(t_cmd_node *cmd_list);
+void	redirect_input(int fd);
+void	redirect_output(int fd);
 
 #endif
 

@@ -58,6 +58,7 @@
 - [X] PreZero (Garbage Collector)
 - [ ] heredoc last
 # - [X] link to main
+#	- [ ] norm
 - [ ] change builtin.c
 	- [ ] envp to struct
 	- [ ] args
