@@ -3,20 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/15 18:51:46 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/08 13:19:24 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_shell	*shell_init(t_shell *shell, t_env **env)
+{
+	shell->env = env;
+	shell->gc = NULL;
+	shell->exit = 0;
+	return (shell);
+}
+
 static void	minishell_loop(t_env *copied_env)
 {
 	char		*line;
 	t_cmd_node	*cmd_list;
+	t_shell		*shell;
 
+	shell = NULL;
 	replace_signals();
 	while (1)
 	{
@@ -30,9 +40,10 @@ static void	minishell_loop(t_env *copied_env)
 		}
 		else
 			add_history(line);
+		shell = shell_init(shell, &copied_env);
 		cmd_list = main_parsing(line, copied_env);
 		if (cmd_list != NULL)
-			shell_loop(copied_env, cmd_list);
+			shell_loop(shell, cmd_list);
 		free(line);
 		free_cmd_list(cmd_list);
 	}

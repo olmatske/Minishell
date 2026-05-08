@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/22 16:19:19 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/08 13:18:59 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,21 @@ typedef struct s_env {
 	struct s_env	*next;
 }	t_env;
 
+////////////////////////////////////////////////////////////////////////////////
+
+typedef struct s_pre_zero {
+	void *ptr;
+	struct s_pre_zero *next;
+}	pre_zero;
+
+typedef struct s_shell {
+	t_env	**env;
+	pre_zero *gc;
+	int		exit;
+}	t_shell;
+
+////////////////////////////////////////////////////////////////////////////////
+
 int			main(int argc, char **argv, char **envp);
 t_env		*shell_env(char **envp);
 t_cmd_node	*main_parsing(char *line, t_env *copied_env);
@@ -82,4 +97,8 @@ void		free_cmd_list(t_cmd_node *cmd_list);
 void		free_env_list(t_env **head);
 int			env_list_length(t_env *head);
 
+////////////////////////////////////////////////////////////////////////////////
+int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);
+
+////////////////////////////////////////////////////////////////////////////////
 #endif

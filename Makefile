@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/04/15 18:24:10 by anshuval         ###   ########.fr        #
+#    Updated: 2026/05/08 13:02:50 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
 
-SOURCES =	minishell.c \
+PARSING =	minishell.c \
 			env_for_execution.c \
 			parsing/all_about_errors.c \
 			parsing/builtins.c \
@@ -32,7 +32,22 @@ SOURCES =	minishell.c \
 			parsing/validation.c \
 			parsing/debug.c
 
-OBJECTS = $(SOURCES:.c=.o)
+EXECUTION =	execution/builtin.c \
+			execution/checkers.c \
+			execution/executor.c \
+			execution/externals.c \
+			execution/garbace_collector.c \
+			execution/main_execution.c \
+			execution/orchestrator.c \
+			execution/path.c \
+			execution/pipe_helpers.c \
+			execution/pipes.c \
+			execution/redirections.c
+
+GNL =		get_next_line/get_next_line.c \
+			get_next_line/get_next_line_utils.c
+
+OBJECTS = $(PARSING:.c=.o) $(EXECUTION:.c=.o) $(GNL:.c=.o)
 
 CC = cc
 

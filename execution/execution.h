@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/05 17:11:37 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/08 13:34:05 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "./get_next_line/get_next_line.h"
+#include <sys/types.h>
+#include <sys/wait.h>
 
 typedef enum e_builtin {
 	NONE_B,
@@ -70,6 +72,18 @@ typedef struct s_shell {
 	int		exit;
 }	t_shell;
 
+typedef struct s_cmd {
+	char			**args;
+	t_redir			*redir; 
+	t_redir_type	type_redir;
+	t_builtin		builtin;
+}	t_cmd;
+
+typedef struct s_cmd_node {
+	t_cmd				*cmd;
+	struct s_cmd_node	*next;
+}	t_cmd_node;
+
 typedef struct s_pipex {
 	t_cmd_node	*curr;
 	t_shell		*shell;
@@ -80,17 +94,7 @@ typedef struct s_pipex {
 	int			prev_read;
 }	t_pipex;
 
-typedef struct s_cmd {
-	char		**args;
-	t_redir		*redir; 
-	t_redir_type	redir;
-	t_builtin	builtin;
-}	t_cmd;
 
-typedef struct s_cmd_node {
-	t_cmd				*cmd;
-	struct s_cmd_node	*next;
-}	t_cmd_node;
 
 
 // int		main(int argc, char **argv, char **envp);
@@ -106,40 +110,49 @@ int main(int argc, char **argv, char **envp);
 // builtin.c ///////////////////////////////////////////////////////////////////
 
 int wrapper_builtin(t_cmd *cmd, char **envp);
-void echo(char *str);
-void echo_n(char *str);
-void pwd(void);
-void ft_exit(void);
-void env(char **envp);
-void cd(char *path);
-void export(char **envp, char *new_var);
-void unset(char **envp, char *rm_var);
+void	echo(char *str);
+void	echo_n(char *str);
+void	pwd(void);
+void	ft_exit(void);
+void	env(char **envp);
+void	cd(char *path);
+void	export(char **envp, char *new_var);
+void	unset(char **envp, char *rm_var);
 
 
 // files.c /////////////////////////////////////////////////////////////////////
 
 // int main(int argc, char **argv);
-void wrapper(char **argv, t_cmd cmd);
-int create_file(char *filename);
-void input(int fd);
-void overwrite(char **text);
-void append(char **argv);
+void	wrapper(char **argv, t_cmd cmd);
+int		create_file(char *filename);
+void	input(int fd);
+void	overwrite(char **text);
+void	append(char **argv);
 
 // garbage_collector.c /////////////////////////////////////////////////////////
-void *gc_malloc(t_shell *shell, size_t size);
-void *gc_calloc(t_shell *shell, int count, size_t size);
-int gc_add(t_shell *shell, void *ptr);
-int gc_add(t_shell *shell, void *ptr);
-void gc_single_free(t_shell *shell, void *ptr);
-void gc_free_all(t_shell *shell);
+void	*gc_malloc(t_shell *shell, size_t size);
+void	*gc_calloc(t_shell *shell, int count, size_t size);
+int		gc_add(t_shell *shell, void *ptr);
+int		gc_add(t_shell *shell, void *ptr);
+void	gc_single_free(t_shell *shell, void *ptr);
+void	gc_free_all(t_shell *shell);
 
+// executor.c //////////////////////////////////////////////////////////////////
+int		exec_pipeline(t_shell *shell, t_cmd_node *cmd_list);
 
-
-void	execute_piped_cmd(char *cmd, char **envp);
+// pipe_helpers.c //////////////////////////////////////////////////////////////
 int		open_file(char *file, int mode);
 int		pipe_count(t_cmd_node *cmd_list);
 void	redirect_input(int fd);
 void	redirect_output(int fd);
+
+// void	execute_piped_cmd(char *cmd, char **envp);
+int		open_file(char *file, int mode);
+int		pipe_count(t_cmd_node *cmd_list);
+void	redirect_input(int fd);
+void	redirect_output(int fd);
+
+void	execution(t_cmd *cmd, t_env **env);
 
 #endif
 

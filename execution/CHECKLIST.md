@@ -44,7 +44,6 @@
 		-> [ ] signals for exiting write mode!
 
 - [ ] externals
-	- [ ] 
 	- [ ] absolute path
 	- [ ] relative path
 	- [ ] command
