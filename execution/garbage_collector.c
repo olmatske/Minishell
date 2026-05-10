@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 15:32:56 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/08 16:21:09 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 15:25:15 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // valgrind --leak-check=full ./minishell
 
-void *gc_malloc(t_shell *shell, size_t size) // size used with sizeof(xyz)
+void	*gc_malloc(t_shell *shell, size_t size) // size used with sizeof(xyz)
 {
 	void *ptr;
 
@@ -35,11 +35,11 @@ void *gc_malloc(t_shell *shell, size_t size) // size used with sizeof(xyz)
 	return(ptr);
 }
 
-void *gc_calloc(t_shell *shell, size_t count, size_t size) // size used with sizeof(xyz) - count is how much you need
+void	*gc_calloc(t_shell *shell, size_t count, size_t size) // size used with sizeof(xyz) - count is how much you need
 {
 	void *ptr;
 
-	if (size != 0 && count > SIZE_MAX / size)
+	if (size != 0 && count > __SIZE_MAX__ / size)
 		return (NULL);
 	ptr = gc_malloc(shell, count * size);
 	if (ptr)
@@ -47,7 +47,7 @@ void *gc_calloc(t_shell *shell, size_t count, size_t size) // size used with siz
 	return (ptr);
 }
 
-int gc_add(t_shell *shell, void *ptr)
+int	gc_add(t_shell *shell, void *ptr)
 {
 	pre_zero *new;
 
@@ -60,7 +60,7 @@ int gc_add(t_shell *shell, void *ptr)
 	return (0);
 }
 
-void gc_single_free(t_shell *shell, void *ptr)
+void	gc_single_free(t_shell *shell, void *ptr)
 {
 	pre_zero	*curr;
 	pre_zero	*prev;
@@ -82,7 +82,7 @@ void gc_single_free(t_shell *shell, void *ptr)
 	free(curr);
 }
 
-void gc_free_all(t_shell *shell)
+void	gc_free_all(t_shell *shell)
 {
 	pre_zero	*curr;
 	pre_zero	*kill;
@@ -99,3 +99,4 @@ void gc_free_all(t_shell *shell)
 	}
 	shell->gc = NULL;
 }
+

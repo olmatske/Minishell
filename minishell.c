@@ -6,13 +6,13 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/10 13:54:03 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 15:53:52 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_shell	*shell_init(t_shell *shell, t_env **env)
+static t_shell	*shell_init(t_shell *shell, t_env **env)
 {
 	if (!shell) // added
 	{
@@ -26,14 +26,12 @@ t_shell	*shell_init(t_shell *shell, t_env **env)
 	return (shell);
 }
 
-static void	minishell_loop(t_env *copied_env)
+static void	minishell_loop(t_env *copied_env, t_shell *shell)
 {
 	char		*line;
 	t_cmd_node	*cmd_list;
-	t_shell		*shell;
 
-	shell = malloc(sizeof(t_shell)); // prev: shell = NULL;
-	shell = shell_init(NULL, &copied_env); // prev after else statement in while loop
+	// shell = malloc(sizeof(t_shell)); // prev: shell = NULL;
 	replace_signals();
 	while (1)
 	{
@@ -53,24 +51,28 @@ static void	minishell_loop(t_env *copied_env)
 		free(line);
 		free_cmd_list(cmd_list);
 	}
+	free_all(shell, NULL, NULL);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_env		*copied_env;
+	t_shell		*shell;
 
 	(void)argv;
 	copied_env = NULL;
+	shell = shell_init(NULL, &copied_env); // prev after else statement in while loop
 	if (argc != 1)
 	{
 		printf("Minishell does not accept arguments. "
 			"Type in only ./Minishell to enter Minishell\n");
+		free(shell);
 		return (1);
 	}
 	copied_env = shell_env(envp);
 	if (copied_env == NULL)
 		ft_error("Failed to copy environment.\n", 1);
-	minishell_loop(copied_env);
+	minishell_loop(copied_env, shell);
 	clear_history(); // changed from rl_clear_history to clear_history
 	free_env_list(&copied_env);
 	return (0);

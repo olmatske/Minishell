@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 14:07:56 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 15:24:38 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,10 @@ int main(int argc, char **argv, char **envp);
 
 
 // builtin.c ///////////////////////////////////////////////////////////////////
-int 	wrapper_builtin(t_shell *shell, t_cmd *cmd, t_env *env);
+int		wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env);
 void	echo(char **str);
-void	echo_n(char **str);
 void	pwd(void);
-void	ft_exit(void);
+void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd);
 void	ft_env(t_env *env);
 void	cd(char *path);
 void	export(t_shell *shell, t_env *env, char **split);
@@ -129,12 +128,13 @@ int		exec_external(t_cmd *cmd, t_env *env);
 void	*gc_malloc(t_shell *shell, size_t size);
 void	*gc_calloc(t_shell *shell, size_t count, size_t size);
 int		gc_add(t_shell *shell, void *ptr);
-int		gc_add(t_shell *shell, void *ptr);
 void	gc_single_free(t_shell *shell, void *ptr);
 void	gc_free_all(t_shell *shell);
 
 // orchestrator /////////////////////////////////////////////////////////////////
-int	exec_single_cmd(t_shell *shell, t_env *environment, t_cmd_node *cmd_list);
+int		shell_loop(t_shell *shell, t_cmd_node *cmd_list);
+int		exec_single_cmd(t_shell *shell, t_env *environment, t_cmd_node *cmd_list);
+void	free_all(t_shell *shell, t_env **env, t_cmd_node *cmd);
 
 // pipe_helpers.c //////////////////////////////////////////////////////////////
 int		open_file(char *file, int mode);

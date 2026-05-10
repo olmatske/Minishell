@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/10 13:41:56 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 15:22:35 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_redir {
 typedef enum e_built_in_name {
 	BUILTIN_NONE,
 	BUILTIN_ECHO,
-	BUILTIN_ECHO_N,
 	BUILTIN_CD,
 	BUILTIN_PWD,
 	BUILTIN_EXPORT,
@@ -111,6 +110,6 @@ int			env_list_length(t_env *head);
 
 ////////////////////////////////////////////////////////////////////////////////
 int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);
-
+void		free_all(t_shell *shell, t_env **env, t_cmd_node *cmd);
 ////////////////////////////////////////////////////////////////////////////////
 #endif

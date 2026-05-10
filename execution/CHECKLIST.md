@@ -40,6 +40,24 @@
 - [ ] echo -n: -n is in args and not initialized
 
 
+~/Curriculum/Minishell (execution*) » ./minishell                                                                                                                                                                                                                                                                                       olmatske@3-F-12
+Minishell$ echo hi hello
+hi hello
+Minishell$ echo -n hi hello
+-n hi hello
+Minishell$ exit
+
+=================================================================
+==229973==ERROR: LeakSanitizer: detected memory leaks
+
+Direct leak of 24 byte(s) in 1 object(s) allocated from:
+    #0 0x49a23d in malloc (/home/olmatske/Curriculum/Minishell/minishell+0x49a23d)
+    #1 0x4cb6be in minishell_loop /home/olmatske/Curriculum/Minishell/minishell.c:35:10
+    #2 0x4cb548 in main /home/olmatske/Curriculum/Minishell/minishell.c:73:2
+    #3 0x77288c229d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+
+SUMMARY: AddressSanitizer: 24 byte(s) leaked in 1 allocation(s).
+
 
 
 

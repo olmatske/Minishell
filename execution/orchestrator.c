@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:57:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 13:02:52 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 15:50:38 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,16 @@ int	exec_single_cmd(t_shell *shell, t_env *environment, t_cmd_node *cmd_list)
 {
 	if (cmd_list->cmd->built_in_name == BUILTIN_NONE)
 		return (exec_external(cmd_list->cmd, environment));
-	return (wrapper_builtin(shell, cmd_list->cmd, environment));
+	return (wrapper_builtin(shell, cmd_list, &environment));
+}
+
+void	free_all(t_shell *shell, t_env **env, t_cmd_node *cmd)
+{
+	if (cmd)
+		free_cmd_list(cmd);
+	gc_free_all(shell);
+	if (shell)
+		free(shell);
+	if (env)
+		free_env_list(env);
 }
