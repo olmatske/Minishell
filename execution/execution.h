@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/08 13:34:05 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 12:48:20 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,37 +108,32 @@ int main(int argc, char **argv, char **envp);
 
 
 // builtin.c ///////////////////////////////////////////////////////////////////
-
-int wrapper_builtin(t_cmd *cmd, char **envp);
+int 	wrapper_builtin(t_shell *shell, t_cmd *cmd, t_env *env);
 void	echo(char *str);
 void	echo_n(char *str);
 void	pwd(void);
 void	ft_exit(void);
-void	env(char **envp);
+void	ft_env(t_env *env);
 void	cd(char *path);
-void	export(char **envp, char *new_var);
-void	unset(char **envp, char *rm_var);
+void	export(t_shell *shell, t_env *env, char **split);
+void	unset(t_env **env, char *rm_var);
 
+// executor.c //////////////////////////////////////////////////////////////////
+int		exec_pipeline(t_shell *shell, t_cmd_node *cmd_list);
 
-// files.c /////////////////////////////////////////////////////////////////////
-
-// int main(int argc, char **argv);
-void	wrapper(char **argv, t_cmd cmd);
-int		create_file(char *filename);
-void	input(int fd);
-void	overwrite(char **text);
-void	append(char **argv);
+// externals.c /////////////////////////////////////////////////////////////////
+int		exec_external(t_cmd *cmd, t_env *env);
 
 // garbage_collector.c /////////////////////////////////////////////////////////
 void	*gc_malloc(t_shell *shell, size_t size);
-void	*gc_calloc(t_shell *shell, int count, size_t size);
+void	*gc_calloc(t_shell *shell, size_t count, size_t size);
 int		gc_add(t_shell *shell, void *ptr);
 int		gc_add(t_shell *shell, void *ptr);
 void	gc_single_free(t_shell *shell, void *ptr);
 void	gc_free_all(t_shell *shell);
 
-// executor.c //////////////////////////////////////////////////////////////////
-int		exec_pipeline(t_shell *shell, t_cmd_node *cmd_list);
+// orchestrator /////////////////////////////////////////////////////////////////
+int	exec_single_cmd(t_shell *shell, t_env *environment, t_cmd_node *cmd_list);
 
 // pipe_helpers.c //////////////////////////////////////////////////////////////
 int		open_file(char *file, int mode);
@@ -146,13 +141,15 @@ int		pipe_count(t_cmd_node *cmd_list);
 void	redirect_input(int fd);
 void	redirect_output(int fd);
 
-// void	execute_piped_cmd(char *cmd, char **envp);
-int		open_file(char *file, int mode);
-int		pipe_count(t_cmd_node *cmd_list);
-void	redirect_input(int fd);
-void	redirect_output(int fd);
+// redirections.c ////////////////////////////////////////////////////////////////
+void	wrapper(char **argv, t_cmd *cmd);
+int		create_file(char *filename);
+void	input(int fd);
+void	overwrite(char **text);
+void	append(char **argv);
 
-void	execution(t_cmd *cmd, t_env **env);
+
+
 
 #endif
 

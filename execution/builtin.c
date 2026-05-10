@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/04 11:36:23 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 12:35:47 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 // }
 
 //  t_cmd *cmd, t_env *env, t_shell *sh
-int wrapper_builtin(t_cmd *cmd, char **envp)
+int wrapper_builtin(t_shell *shell, t_cmd *cmd, t_env *env)
 {
 	if (cmd->builtin == NONE_B)
 		return (1);
@@ -39,13 +39,13 @@ int wrapper_builtin(t_cmd *cmd, char **envp)
 	else if (cmd->builtin == EXIT)
 		ft_exit();
 	else if (cmd->builtin == ENV)
-		env(envp);
+		ft_env(env);
 	else if (cmd->builtin == CD)
 		cd(cmd->args[0]);
 	else if (cmd->builtin == EXPORT)
-		export(envp, *cmd->args);
+		export(shell, env, ft_split(*cmd->args, '='));
 	else if (cmd->builtin == UNSET)
-		unset(envp, *cmd->args);
+		unset(&env, *cmd->args);
 	return (0);
 }
 
@@ -75,11 +75,16 @@ void ft_exit(void)
 	printf("exit\n");
 	exit(0);
 }
-void env(char **envp)
+void ft_env(t_env *env)
 {
-	int	i = 0;
-	while (envp[i])
-		printf("%s\n", envp[i++]);
+	t_env *curr;
+
+	curr = env;
+	while (curr->next)
+	{
+		printf("%s%s\n", curr->name, curr->value);
+		curr = curr->next;
+	}
 }
 
 void cd(char *path)
@@ -92,39 +97,49 @@ void cd(char *path)
 	// else
 	// 	pwd();
 }
-// supposed to update the env in shell
-void export(char **envp, char *new_var)
-{
-	int i = 0;
-	char *new_env_var = ft_strdup(new_var);
 
-	while (envp[i])
-		i++;
-	envp[i] = new_env_var;
-	envp[i + 1] = NULL;
+// adds variable in shell: NAME=value
+// updates variable's value if it already exists
+// validate split
+void export(t_shell *shell, t_env *env, char **split)
+{
+	t_env	*curr;
+	t_env	*new;
+
+	new = gc_malloc(shell, sizeof(t_env));
+	curr = env;
+	while (curr->next)
+		curr = curr->next;
+	new->name = split[0];
+	new->value = split[1];
+	new->next = NULL;
+	curr->next = new;
 }
-// supposed to update the env in shell
-void unset(char **envp, char *rm_var)
-{
-	export(envp, "MYVAR=Helloo"); // remove later!!
-	int i = 0;
-	int len = ft_strlen(rm_var);
 
-	while (envp[i])
+// removes variable in shell
+void unset(t_env **env, char *rm_var)
+{
+	t_env	*curr;
+	t_env	*prev;
+	t_env	*target;
+
+	curr = *env;
+	prev = NULL;
+	while (curr)
 	{
-		if (!ft_strncmp(envp[i], rm_var, len) && envp[i][len] == '=')
-		{
-			free(envp[i]);
-			while (envp[i])
-			{
-				envp[i] = envp[i + 1];
-				i++;
-			}
-			printf("Successful removal\n"); // remove later!!
-			return;
-		}
-		i++;
+		if (ft_strlen(curr->name) == ft_strlen(rm_var)
+			&& ft_strncmp(curr->name, rm_var, ft_strlen(curr->name)) == 0)
+			break;
+		prev = curr;
+		curr = curr->next;
 	}
-	perror("Error");
+	if (!curr)
+		return ;
+	target = curr;
+	if (!prev)
+		*env = curr->next;
+	else
+		prev->next = curr->next;
+	free(target);
 }
 

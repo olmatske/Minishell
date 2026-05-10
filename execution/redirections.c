@@ -1,42 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   files.c                                            :+:      :+:    :+:   */
+/*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:09:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/20 14:16:54 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 12:41:19 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void	input(int fd);
-
-int main(int argc, char **argv)
+void wrapper(char **argv, t_cmd *cmd)
 {
-	(void)argc;
-	t_cmd cmd;
-	char *str[] = {NULL};
-	cmd.args = str;
-	cmd.builtin = NONE_B;
-	cmd.redir = APPEND;
-
-	wrapper(argv, cmd);
-	return (0);
-}
-
-void wrapper(char **argv, t_cmd cmd)
-{
-	if (cmd.redir == INPUT)
+	if (cmd->redir == INPUT)
 		input(open(argv[1], O_RDONLY));
-	else if (cmd.redir == OVERWRITE)
+	else if (cmd->redir == OVERWRITE)
 		overwrite(argv);
-	else if (cmd.redir == APPEND)
+	else if (cmd->redir == APPEND)
 		append(argv);
 }
-
 
 int create_file(char *filename)
 {

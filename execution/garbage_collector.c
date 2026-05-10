@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 15:32:56 by olmatske          #+#    #+#             */
-/*   Updated: 2026/04/16 14:46:47 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/08 16:21:09 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void *gc_malloc(t_shell *shell, size_t size) // size used with sizeof(xyz)
 	return(ptr);
 }
 
-void *gc_calloc(t_shell *shell, int count, size_t size) // size used with sizeof(xyz) - count is how much you need
+void *gc_calloc(t_shell *shell, size_t count, size_t size) // size used with sizeof(xyz) - count is how much you need
 {
 	void *ptr;
 

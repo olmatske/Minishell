@@ -6,7 +6,7 @@
 #    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/05/08 13:02:50 by olmatske         ###   ########.fr        #
+#    Updated: 2026/05/08 16:19:58 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,15 +33,11 @@ PARSING =	minishell.c \
 			parsing/debug.c
 
 EXECUTION =	execution/builtin.c \
-			execution/checkers.c \
 			execution/executor.c \
 			execution/externals.c \
-			execution/garbace_collector.c \
-			execution/main_execution.c \
+			execution/garbage_collector.c \
 			execution/orchestrator.c \
-			execution/path.c \
 			execution/pipe_helpers.c \
-			execution/pipes.c \
 			execution/redirections.c
 
 GNL =		get_next_line/get_next_line.c \

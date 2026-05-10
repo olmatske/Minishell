@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/04 11:41:53 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/08 16:24:33 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,49 +19,44 @@
 // Bare command: ls, cat, grep. Contains no /; search PATH
 
 
-int	decide_path(t_cmd cmd);
-char *resolve_path(t_cmd *cmd, char **envp);
+static int	decide_path(t_cmd cmd);
+static char *resolve_path(t_cmd *cmd, t_env *env);
 
 int exec_external(t_cmd *cmd, t_env *env)
 {
-	(void)envp;
-	(void)argc;
-	(void)argv;
-
-	t_cmd	cmd;
 	char	*path;
 	// char	*str[] = {"./hi.sh", NULL};
 	char	*str[] = {"ls", NULL};
 	int		id;
 
-	cmd.args = str;
-	cmd.builtin = UNSET;
+	cmd->args = str;
+	cmd->builtin = UNSET;
 	id = 0;
 
-	if (decide_path(cmd) == 1)
+	if (decide_path(*cmd) == 1)
 	{
-		if (access(cmd.args[0], X_OK) != 0)
+		if (access(cmd->args[0], X_OK) != 0)
 			return(perror("access"), 1);
 		id = fork();
 		if (id < 0)
 			return(perror("fork"), 1);
 		if (id == 0)
 		{
-			execve(cmd.args[0], cmd.args, envp);
+			// execve(cmd->args[0], cmd->args, env);
 			perror("execve");
 		}
 	}
 	else
 	{
-		path = resolve_path(&cmd, envp);
+		path = resolve_path(cmd, env);
 		if (!path)
 			return(perror("no path like that"), 1);
-		execve(path, cmd.args, envp);
+		// execve(path, cmd->args, env);
 	}
 	return (0);
 }
 
-int	decide_path(t_cmd cmd)
+static int	decide_path(t_cmd cmd)
 {
 	// int	pid;
 	// char *path;
@@ -77,26 +72,28 @@ int	decide_path(t_cmd cmd)
 }
 
 
-char *resolve_path(t_cmd *cmd, char **envp)
+static char *resolve_path(t_cmd *cmd, t_env *env)
 {
-	int	i;
-	char *path;
+	(void)cmd;
+	(void)env;
+	// int	i;
+	// char *path;
 
-	i = 0;
-	while (envp[i])
-	{
-		path = ft_strnstr(envp[i], ":", ft_strlen(envp[i]));
-		printf("%d: %s\n", i, path);
-		path = ft_strjoin(path, cmd->args[0]);
-		if (access(path, X_OK) != 0)
-		{
-			free(path);
-			i++;
-		}
-		else
-			return (printf("Found path: %s\n", path), path);
+	// i = 0;
+	// while (env[i])
+	// {
+	// 	path = ft_strnstr(env[i], ":", ft_strlen(envp[i]));
+	// 	printf("%d: %s\n", i, path);
+	// 	path = ft_strjoin(path, cmd->args[0]);
+	// 	if (access(path, X_OK) != 0)
+	// 	{
+	// 		free(path);
+	// 		i++;
+	// 	}
+	// 	else
+	// 		return (printf("Found path: %s\n", path), path);
 
-	}
+	// }
 	return (NULL);
 }
 
