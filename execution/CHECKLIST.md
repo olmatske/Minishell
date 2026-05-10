@@ -12,7 +12,7 @@
 	- [X] echo -n (do not output the trailing newline)
 	- [X] env ([ ] redo and only use the env struct)
 #	- [X] export
-#		- [ ] fix updating variable if it exists
+#		- [X] fix updating variable if it exists
 	- [X] unset
 	- [X] exit
 #	- [ ] externals paths etc

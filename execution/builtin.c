@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 15:16:54 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 17:38:12 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	pwd(void)
 //probably will need args to free all of them etc
 void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 {
-	// printf("exit\n");
 	free_all(shell, env, cmd);
 	exit(0);
 }
@@ -108,14 +107,25 @@ void	export(t_shell *shell, t_env *env, char **split)
 	t_env	*curr;
 	t_env	*new;
 
-	new = gc_malloc(shell, sizeof(t_env));
 	curr = env;
-	while (curr->next)
+	while (curr)
+	{
+		if (ft_strlen(curr->name) == ft_strlen(split[0])
+			&& ft_strncmp(curr->name, split[0], ft_strlen(curr->name)) == 0)
+			break;
 		curr = curr->next;
-	new->name = split[0];
+	}
+	if (curr)
+		return (curr->value = split[1]);
+	new = gc_malloc(shell, sizeof(t_env));
+	new->name = ft_strdup(split[0]);
 	new->value = split[1];
 	new->next = NULL;
-	curr->next = new;
+	if (split[1])
+		new->value = ft_strdup(split[1]);
+	while (env->next)
+		env->next;
+	env->next = new;
 }
 
 // removes variable in shell
