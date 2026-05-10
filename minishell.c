@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/10 13:48:20 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 13:54:03 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_shell	*shell_init(t_shell *shell, t_env **env)
 {
-	if (!shell)
+	if (!shell) // added
 	{
 		shell = malloc(sizeof(t_shell));
 		if (!shell)

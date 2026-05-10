@@ -6,34 +6,21 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 13:02:03 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 14:21:35 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-// int main(int argc, char **argv, char **envp)
-// {
-// 	(void)argc;
-// 	(void)argv;
-// 	t_cmd cmd;
-// 	char *str[] = {"MYVAR", NULL};
-// 	cmd.args = str;
-// 	cmd.builtin = UNSET;
-
-// 	wrapper_builtin(cmd, envp);
-// 	return (0);
-// }
-
-//  t_cmd *cmd, t_env *env, t_shell *sh
 int wrapper_builtin(t_shell *shell, t_cmd *cmd, t_env *env)
 {
+	// printf("%s\n", *cmd->args);
 	if (cmd->built_in_name == BUILTIN_NONE)
 		return (1);
 	else if (cmd->built_in_name == BUILTIN_ECHO)
-		echo(readline("$ "));                   // put away
+		echo(cmd->args);                   // put away
 	else if (cmd->built_in_name == BUILTIN_ECHO_N)
-		echo_n(readline("$ "));                 // puy away
+		echo_n(cmd->args);                 // puy away
 	else if (cmd->built_in_name == BUILTIN_PWD)
 		pwd();
 	else if (cmd->built_in_name == BUILTIN_EXIT)
@@ -49,14 +36,32 @@ int wrapper_builtin(t_shell *shell, t_cmd *cmd, t_env *env)
 	return (0);
 }
 
-void echo(char *str)
+void echo(char **str)
 {
-	printf("%s\n", str);
+	int	i;
+
+	i = 1;
+	while (str[i])
+	{
+		printf("%s", str[i]);
+		if (str[i + 1])
+			printf(" ");
+		i++;
+	}
+	printf("\n");
 }
 
-void echo_n(char *str)
+void echo_n(char **str)
 {
-	printf("%s", str);
+	int	i;
+
+	i = 1;
+	while (str[i])
+	{
+		printf("%s", str[i]);
+		if (str[i + 1])
+			printf(" ");
+	}
 }
 void pwd(void)
 {
@@ -72,7 +77,7 @@ void pwd(void)
 //probably will need args to free all of them etc
 void ft_exit(void)
 {
-	printf("exit\n");
+	// printf("exit\n");
 	exit(0);
 }
 void ft_env(t_env *env)

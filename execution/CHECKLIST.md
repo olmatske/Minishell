@@ -30,7 +30,20 @@
 ### Header
 - [X] flags (heredoc, pipe, redicrection etc)
 - [X] struct for built in commands
---------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+### Errors
+- [ ] externals leak (example: ls)
+- [ ] when writing "exit" it prints exit again
+- [ ] are args supposed to have the builtin in them??
+- [ ] wrong command doesn't work (example: rxiy)
+- [ ] echo -n: -n is in args and not initialized
+
+
+
+
+
+
 ### Roadmap
 - [X] start with: echo hi (> hi.txt)
 - [X] continue with built ins
