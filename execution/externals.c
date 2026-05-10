@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 15:36:51 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 17:08:33 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,10 @@ int exec_external(t_cmd *cmd, t_env *env)
 {
 	char	*path;
 	char	**env_array;
-	// char	*str[] = {"./hi.sh", NULL};
-	char	*str[] = {"ls", NULL};
 	int		id;
 
-	cmd->args = str;
-	cmd->built_in_name = BUILTIN_UNSET;
 	env_array = env_array_for_execution(env);
 	id = 0;
-
 	if (decide_path(*cmd) == 1)
 	{
 		if (access(cmd->args[0], X_OK) != 0)

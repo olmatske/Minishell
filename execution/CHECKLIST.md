@@ -7,14 +7,15 @@
 ### Functions
 - [X] built ins
 	- [X] cd
-#	- [X] echo
-#		- [ ] fix
+	- [X] echo
+		- [X] fix -n
 	- [X] echo -n (do not output the trailing newline)
 	- [X] env ([ ] redo and only use the env struct)
 #	- [X] export
 #		- [ ] fix updating variable if it exists
 	- [X] unset
-	- [ ] exit
+	- [X] exit
+#	- [ ] externals paths etc
 - [ ] expander
 - [ ] external functions
 - [ ] heredoc
@@ -33,11 +34,15 @@
 -------------------------------------------------------------------------------
 
 ### Errors
-- [ ] externals leak (example: ls)
-- [ ] when writing "exit" it prints exit again
-- [ ] are args supposed to have the builtin in them??
-- [ ] wrong command doesn't work (example: rxiy)
-- [ ] echo -n: -n is in args and not initialized
+- [X] externals leak (example: ls)
+- [X] when writing "exit" it prints exit again
+	- [X] leaks
+- [X] are args supposed to have the builtin in them??
+	-> yes, kind of
+- [X] wrong command doesn't work (example: rxiy)
+	- [X] leaks
+- [X] echo -n: -n is in args and not initialized
+	 -[X] supposed to be this way, added checker in echo function
 
 
 ~/Curriculum/Minishell (execution*) » ./minishell                                                                                                                                                                                                                                                                                       olmatske@3-F-12
