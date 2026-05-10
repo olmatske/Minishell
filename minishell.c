@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/08 16:16:53 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 13:48:20 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 t_shell	*shell_init(t_shell *shell, t_env **env)
 {
+	if (!shell)
+	{
+		shell = malloc(sizeof(t_shell));
+		if (!shell)
+			ft_error("shell malloc failure\n", 1);
+	}
 	shell->env = env;
 	shell->gc = NULL;
 	shell->exit = 0;
@@ -26,7 +32,8 @@ static void	minishell_loop(t_env *copied_env)
 	t_cmd_node	*cmd_list;
 	t_shell		*shell;
 
-	shell = NULL;
+	shell = malloc(sizeof(t_shell)); // prev: shell = NULL;
+	shell = shell_init(NULL, &copied_env); // prev after else statement in while loop
 	replace_signals();
 	while (1)
 	{
@@ -40,7 +47,6 @@ static void	minishell_loop(t_env *copied_env)
 		}
 		else
 			add_history(line);
-		shell = shell_init(shell, &copied_env);
 		cmd_list = main_parsing(line, copied_env);
 		if (cmd_list != NULL)
 			shell_loop(shell, cmd_list);

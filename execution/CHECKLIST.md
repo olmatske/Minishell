@@ -7,11 +7,13 @@
 ### Functions
 - [X] built ins
 	- [X] cd
-	- [X] echo
+#	- [X] echo
+#		- [ ] fix
 	- [X] echo -n (do not output the trailing newline)
 	- [X] env ([ ] redo and only use the env struct)
-	- [X] export ([ ] need to update the env file !!!)
-	- [X] unset ([ ] need to update the env file !!!)
+#	- [X] export
+#		- [ ] fix updating variable if it exists
+	- [X] unset
 	- [ ] exit
 - [ ] expander
 - [ ] external functions
@@ -53,14 +55,14 @@
 		-> check if it exists
 			> if no iterate further and repeat process
 			> if yes, return path
-- [ ] Pipes
+- [X] Pipes
 - [X] PreZero (Garbage Collector)
 - [ ] heredoc last
-# - [X] link to main
-#	- [ ] norm
-- [ ] change builtin.c
-	- [ ] envp to struct
-	- [ ] args
+- [X] link to main
+	- [X] norm
+- [X] change builtin.c
+	- [X] envp to struct
+	- [X] args
 - [ ] exit signals
 - [ ] add functions to header and clean up
 - [ ] increment and execute commands if pipes
