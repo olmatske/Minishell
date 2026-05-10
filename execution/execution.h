@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 12:48:20 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 13:00:28 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,75 +24,76 @@
 #include "./get_next_line/get_next_line.h"
 #include <sys/types.h>
 #include <sys/wait.h>
+#include "../minishell.h"
 
-typedef enum e_builtin {
-	NONE_B,
-	ECHO,
-	ECHO_N,
-	PWD,
-	EXIT,
-	ENV,
-	CD,
-	EXPORT,
-	UNSET
+// typedef enum e_builtin {
+// 	NONE_B,
+// 	ECHO,
+// 	ECHO_N,
+// 	PWD,
+// 	EXIT,
+// 	ENV,
+// 	CD,
+// 	EXPORT,
+// 	UNSET
 
-}	t_builtin;
+// }	t_builtin;
 
-typedef enum e_redir_type {
-	NONE_R,
-	INPUT,
-	OVERWRITE,
-	HEREDOC,
-	APPEND
-}	t_redir_type;
+// typedef enum e_redir_type {
+// 	NONE_R,
+// 	INPUT,
+// 	OVERWRITE,
+// 	HEREDOC,
+// 	APPEND
+// }	t_redir_type;
 
 
-typedef struct s_pre_zero {
-	void *ptr;
-	struct s_pre_zero *next;
-}	pre_zero;
+// typedef struct s_pre_zero {
+// 	void *ptr;
+// 	struct s_pre_zero *next;
+// }	pre_zero;
 
-typedef struct s_redir {
-	char		*infile;                  // filename
-	char		*heredoc_delimiter;
-	char		*outfile;                 // filename
-	t_redir_type	redir_type;
-}	t_redir;
+// typedef struct s_redir {
+// 	char		*infile;                  // filename
+// 	char		*heredoc_delimiter;
+// 	char		*outfile;                 // filename
+// 	t_redir_type	redir_type;
+// }	t_redir;
 
-typedef struct s_env {
-	char			*name;
-	char			*value;
-	struct s_env	*next;
-}	t_env;
+// typedef struct s_env {
+// 	char			*name;
+// 	char			*value;
+// 	struct s_env	*next;
+// }	t_env;
 
 // shell struct will have a gc variable
-typedef struct s_shell {
-	t_env	**env;
-	pre_zero *gc;
-	int		exit;
-}	t_shell;
+// typedef struct s_shell {
+// 	t_env	**env;
+// 	pre_zero *gc;
+// 	int		exit;
+// }	t_shell;
 
-typedef struct s_cmd {
-	char			**args;
-	t_redir			*redir; 
-	t_redir_type	type_redir;
-	t_builtin		builtin;
-}	t_cmd;
+// typedef struct s_cmd {
+// 	char			**args;
+// 	t_redir			*redir; 
+// 	t_redir_type	type_redir;
+// 	t_builtin		builtin;
+// }	t_cmd;
 
-typedef struct s_cmd_node {
-	t_cmd				*cmd;
-	struct s_cmd_node	*next;
-}	t_cmd_node;
+// typedef struct s_cmd_node {
+// 	t_cmd				*cmd;
+// 	struct s_cmd_node	*next;
+// }	t_cmd_node;
 
-typedef struct s_pipex {
-	t_cmd_node	*curr;
-	t_shell		*shell;
-	pid_t		*pids;
-	int			i;
-	int			cmd_count;
-	int			pipe_fd[2];	// pipe_fd[0] read - pipde_fd[1] write
-	int			prev_read;
-}	t_pipex;
+// typedef struct s_pipex {
+// 	t_cmd_node	*curr;
+// 	t_shell		*shell;
+// 	pid_t		*pids;
+// 	int			i;
+// 	int			cmd_count;
+// 	int			pipe_fd[2];	// pipe_fd[0] read - pipde_fd[1] write
+// 	int			prev_read;
+// }	t_pipex;
 
 
 

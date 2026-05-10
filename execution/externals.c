@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/08 16:24:33 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 13:02:25 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int exec_external(t_cmd *cmd, t_env *env)
 	int		id;
 
 	cmd->args = str;
-	cmd->builtin = UNSET;
+	cmd->built_in_name = BUILTIN_UNSET;
 	id = 0;
 
 	if (decide_path(*cmd) == 1)

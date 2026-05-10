@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 12:35:47 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 13:02:03 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,23 @@
 //  t_cmd *cmd, t_env *env, t_shell *sh
 int wrapper_builtin(t_shell *shell, t_cmd *cmd, t_env *env)
 {
-	if (cmd->builtin == NONE_B)
+	if (cmd->built_in_name == BUILTIN_NONE)
 		return (1);
-	else if (cmd->builtin == ECHO)
+	else if (cmd->built_in_name == BUILTIN_ECHO)
 		echo(readline("$ "));                   // put away
-	else if (cmd->builtin == ECHO_N)
+	else if (cmd->built_in_name == BUILTIN_ECHO_N)
 		echo_n(readline("$ "));                 // puy away
-	else if (cmd->builtin == PWD)
+	else if (cmd->built_in_name == BUILTIN_PWD)
 		pwd();
-	else if (cmd->builtin == EXIT)
+	else if (cmd->built_in_name == BUILTIN_EXIT)
 		ft_exit();
-	else if (cmd->builtin == ENV)
+	else if (cmd->built_in_name == BUILTIN_ENV)
 		ft_env(env);
-	else if (cmd->builtin == CD)
+	else if (cmd->built_in_name == BUILTIN_CD)
 		cd(cmd->args[0]);
-	else if (cmd->builtin == EXPORT)
+	else if (cmd->built_in_name == BUILTIN_EXPORT)
 		export(shell, env, ft_split(*cmd->args, '='));
-	else if (cmd->builtin == UNSET)
+	else if (cmd->built_in_name == BUILTIN_UNSET)
 		unset(&env, *cmd->args);
 	return (0);
 }

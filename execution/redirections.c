@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:09:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 12:41:19 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 13:15:47 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 void wrapper(char **argv, t_cmd *cmd)
 {
-	if (cmd->redir == INPUT)
+	if (cmd->redir->out_type == OUT_NONE)
 		input(open(argv[1], O_RDONLY));
-	else if (cmd->redir == OVERWRITE)
+	else if (cmd->redir->out_type == OUT_OVERWRITE)
 		overwrite(argv);
-	else if (cmd->redir == APPEND)
+	else if (cmd->redir->out_type == OUT_APPEND)
 		append(argv);
 }
 

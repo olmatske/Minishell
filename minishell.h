@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/10 12:47:47 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/10 13:00:32 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,12 @@
 # include <readline/history.h>
 # include "get_next_line/get_next_line.h"
 # include "./libft/libft.h"
+// # include "./execution/execution.h"
 
 extern int	g_signal;
 
 typedef enum e_out_type {
-	OUT_NONE,
+	OUT_NONE, // -> input
 	OUT_APPEND,
 	OUT_OVERWRITE
 }	t_out_type;
@@ -44,6 +45,7 @@ typedef struct s_redir {
 typedef enum e_built_in_name {
 	BUILTIN_NONE,
 	BUILTIN_ECHO,
+	BUILTIN_ECHO_N,
 	BUILTIN_CD,
 	BUILTIN_PWD,
 	BUILTIN_EXPORT,
@@ -81,6 +83,16 @@ typedef struct s_shell {
 	pre_zero *gc;
 	int		exit;
 }	t_shell;
+
+typedef struct s_pipex {
+	t_cmd_node	*curr;
+	t_shell		*shell;
+	pid_t		*pids;
+	int			i;
+	int			cmd_count;
+	int			pipe_fd[2];	// pipe_fd[0] read - pipde_fd[1] write
+	int			prev_read;
+}	t_pipex;
 
 ////////////////////////////////////////////////////////////////////////////////
 
