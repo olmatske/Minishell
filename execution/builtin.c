@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 17:38:12 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/11 13:41:32 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,20 @@
 
 int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 {
-	// printf("%s\n", *cmd->args);
 	if (cmd_node->cmd->built_in_name == BUILTIN_NONE)
 		return (1);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_ECHO)
-		echo(cmd_node->cmd->args);                   // put away
+		echo(cmd_node->cmd->args);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_PWD)
 		pwd();
 	else if (cmd_node->cmd->built_in_name == BUILTIN_EXIT)
 		ft_exit(shell, env, cmd_node);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_ENV)
-		ft_env(*env);
+		ft_env(env);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_CD)
-		cd(cmd_node->cmd->args[0]);
+		cd(cmd_node->cmd->args[1]);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_EXPORT)
-		export(shell, *env, ft_split(*cmd_node->cmd->args, '='));
+		export(shell, env, ft_split(*cmd_node->cmd->args, '='));
 	else if (cmd_node->cmd->built_in_name == BUILTIN_UNSET)
 		unset(env, *cmd_node->cmd->args);
 	return (0);
@@ -76,20 +75,29 @@ void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 	free_all(shell, env, cmd);
 	exit(0);
 }
-void	ft_env(t_env *env)
+void	ft_env(t_env **env)
 {
 	t_env *curr;
 
-	curr = env;
-	while (curr->next)
+	curr = *env;
+	while (curr)
+	// {
+	// 	printf("%s=%s\n", curr->name, curr->value);
+	// 	curr = curr->next;
+	// }
 	{
-		printf("%s%s\n", curr->name, curr->value);
+		if (curr->name && curr->value)
+			printf("%s=%s\n", curr->name, curr->value);
+		else if (curr->name)
+			printf("%s=(null)\n", curr->name);
 		curr = curr->next;
 	}
+	printf("\n");
 }
 
 void	cd(char *path)
 {
+	printf("Searched directory: %s\n", path);
 	if (chdir(path) == -1)
 	{
 		perror("Error");
@@ -102,12 +110,12 @@ void	cd(char *path)
 // adds variable in shell: NAME=value
 // updates variable's value if it already exists
 // validate split
-void	export(t_shell *shell, t_env *env, char **split)
+void	export(t_shell *shell, t_env **env, char **split)
 {
 	t_env	*curr;
 	t_env	*new;
 
-	curr = env;
+	curr = *env;
 	while (curr)
 	{
 		if (ft_strlen(curr->name) == ft_strlen(split[0])
@@ -116,16 +124,21 @@ void	export(t_shell *shell, t_env *env, char **split)
 		curr = curr->next;
 	}
 	if (curr)
-		return (curr->value = split[1]);
+	{
+		curr->value = split[1];
+		return ;
+	}
 	new = gc_malloc(shell, sizeof(t_env));
 	new->name = ft_strdup(split[0]);
-	new->value = split[1];
-	new->next = NULL;
+	gc_add(shell, new->name);
+	new->value = NULL;
 	if (split[1])
+	{
 		new->value = ft_strdup(split[1]);
-	while (env->next)
-		env->next;
-	env->next = new;
+		gc_add(shell, new->value);
+	}
+	new->next = *env;
+	*env = new;
 }
 
 // removes variable in shell
@@ -133,7 +146,6 @@ void	unset(t_env **env, char *rm_var)
 {
 	t_env	*curr;
 	t_env	*prev;
-	t_env	*target;
 
 	curr = *env;
 	prev = NULL;
@@ -147,11 +159,10 @@ void	unset(t_env **env, char *rm_var)
 	}
 	if (!curr)
 		return ;
-	target = curr;
 	if (!prev)
 		*env = curr->next;
 	else
 		prev->next = curr->next;
-	free(target);
+	free(curr);
 }
 

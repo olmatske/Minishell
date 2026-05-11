@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 15:24:38 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/11 13:40:08 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,9 +113,9 @@ int		wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env);
 void	echo(char **str);
 void	pwd(void);
 void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd);
-void	ft_env(t_env *env);
+void	ft_env(t_env **env);
 void	cd(char *path);
-void	export(t_shell *shell, t_env *env, char **split);
+void	export(t_shell *shell, t_env **env, char **split);
 void	unset(t_env **env, char *rm_var);
 
 // executor.c //////////////////////////////////////////////////////////////////

@@ -6,21 +6,95 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 17:59:10 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/11 12:39:44 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-// Absolute path: /bin/ls, /usr/bin/env. Starts with /; execute directly.
+static int	decide_path(t_cmd *cmd)
+{
+	char	*arg;
 
-// Relative path: ./a.out, ../prog, dir/tool. Contains /; execute directly.
+	if (!cmd || !cmd->args)
+		return (0);
+	arg = cmd->args[0];
+	if (!arg || arg[0] == '\0')
+		return (0);
+	return (ft_strchr(arg, '/') != NULL);
+}
 
-// Bare command: ls, cat, grep. Contains no /; search PATH
+char	*get_path_value(char **env)
+{
+	int	i;
 
+	i = 0;
+	if (!env)
+		return (NULL);
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+			return (env[i] + 5);
+		i++;
+	}
+	return (NULL);
+}
 
-static int	decide_path(t_cmd cmd);
-static char *resolve_path(t_cmd *cmd, char **env);
+char	*join_path(char *dir, char *cmd)
+{
+	char	*tmp;
+	char	*full;
+
+	if (!dir || dir[0] == '\0')
+		return (ft_strjoin("./", cmd));
+	tmp = ft_strjoin(dir, "/");
+	if (!tmp)
+		return (NULL);
+	full = ft_strjoin(tmp, cmd);
+	free(tmp);
+	return (full);
+}
+
+void	free_split(char **str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+
+static char *resolve_path(t_cmd *cmd, char **env)
+{
+	char	*path_value;
+	char	**paths;
+	char	*full_path;
+	int		i;
+
+	i = 0;
+	path_value = get_path_value(env);
+	if (!path_value || !cmd || !cmd->args || !cmd->args[0])
+		return (NULL);
+	paths = ft_split(path_value, ':');
+	if (!paths)
+		return (NULL);
+	while (paths[i])
+	{
+		full_path = join_path(paths[i], cmd->args[0]);
+		if (full_path && access(full_path, X_OK) == 0)
+			return (free_split(paths), full_path);
+		free(full_path);
+		i++;
+	}
+	free_split(paths);
+	return (NULL);
+}
 
 int exec_external(t_cmd *cmd, t_env *env)
 {
@@ -31,66 +105,22 @@ int exec_external(t_cmd *cmd, t_env *env)
 
 	env_array = env_array_for_execution(env);
 	path = NULL;
-	if (decide_path(*cmd) == 1)
+	if (decide_path(cmd))
 		path = cmd->args[0];
 	else
 		path = resolve_path(cmd, env_array);
 	if (!path)
-		return (perror("command not found"), 1);
+		return (fprintf(stderr, "command not found\n"), 1);
 	pid = fork();
 	if (pid < 0)
-		return (perror("fork"), 1);
+		return (free_split(env_array), fprintf(stderr, "fork\n"), 1);
 	if (pid == 0)
 	{
 		execve(path, cmd->args, env_array);
-		perror("execve");
+		fprintf(stderr, "execve\n");
 		exit(1);
 	}
 	waitpid(pid, &status, 0);
+	free_split(env_array);
 	return (0);
 }
-
-static int	decide_path(t_cmd cmd)
-{
-	if (cmd.args[0][0] == '/' || (cmd.args[0][0] == '.' && cmd.args[0][1] == '/'))
-		return (1);
-	else
-		return (2);
-}
-
-
-static char *resolve_path(t_cmd *cmd, char **env)
-{
-	(void)cmd;
-	(void)env;
-	int	i;
-	char *path;
-
-	i = 0;
-	while (env[i])
-	{
-		path = ft_strnstr(env[i], ":", ft_strlen(env[i]));
-		printf("%d: %s\n", i, path);
-		path = ft_strjoin(path, cmd->args[0]);
-		if (access(path, X_OK) != 0)
-		{
-			free(path);
-			i++;
-		}
-		else
-			return (printf("Found path: %s\n", path), path);
-	}
-	return (NULL);
-}
-
-
-
-// Resolve the path.
-
-// Check it with access(path, X_OK) or access(path, F_OK) depending on what you want to know.
-
-// If it passes, fork().
-
-// In the child, call execve().
-
-// In the parent, waitpid().

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/10 15:22:35 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/11 12:43:15 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@
 # include "get_next_line/get_next_line.h"
 # include "./libft/libft.h"
 // # include "./execution/execution.h"
+
+#ifdef __APPLE__
+# ifndef rl_clear_history
+#  define rl_clear_history clear_history
+# endif
+#endif
 
 extern int	g_signal;
 

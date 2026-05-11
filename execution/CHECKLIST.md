@@ -43,6 +43,7 @@
 	- [X] leaks
 - [X] echo -n: -n is in args and not initialized
 	 -[X] supposed to be this way, added checker in echo function
+- [ ] env does not get updated and prints garbage like ?=0
 
 
 ~/Curriculum/Minishell (execution*) » ./minishell                                                                                                                                                                                                                                                                                       olmatske@3-F-12

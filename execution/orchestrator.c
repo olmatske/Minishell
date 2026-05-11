@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:57:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 15:50:38 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/11 13:13:58 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ void	free_all(t_shell *shell, t_env **env, t_cmd_node *cmd)
 {
 	if (cmd)
 		free_cmd_list(cmd);
-	gc_free_all(shell);
+	if (shell)
+		gc_free_all(shell);
 	if (shell)
 		free(shell);
 	if (env)
-		free_env_list(env);
+		*env = NULL;
 }
