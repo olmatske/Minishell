@@ -1,0 +1,40 @@
+- [ ]  /bin/echo """""""'"$USER"'""""""
+		should wait for the quotes to be closed then write out the user name with
+		anything put after the > prompt on a new line 
+- [ ]  cat << "$US"E"R” 
+		delimiter is $USER. - all the quotes should be deleted,
+		but as $US is not set it should not print out any user name 
+- [ ]  echo "" "" "" -n -n -n
+		should just print out    -n -n -n
+- [ ]  cd ~/Desktop/
+		should return to the folder under Desktop
+- [ ]  /bin/echo '"'$USER'"'
+		should return "username"
+- [ ]  /bin/echo "'"'$USER'"'"
+		should return '$USER'
+- [ ]  env
+		should print out the env without the ? node at thhe end 
+- [ ]  export
+		should print out the env list in alphabetical order without the ? 
+		node at thhe end and with prefix declare -x 
+- [ ]  +echo "" "" "" -n -n -n -n
+		command not found 127
+		
+- [ ]  exit with “exit cat” 
+- [ ]  echo arsch~ sollte nicht expanden
+- [ ]  exit nur mit 1 numeric argument möglich, wenn non numeric argument → still exit
+- [ ]  heredoc should ignore ctrl + z
+- [ ]  single within double quotes gets interpreted as syntax error
+- [ ]  quotation doesn’t work properly
+- [ ]  here doc mit gleihen delimiter gehene nicht
+- [ ]  cd - darf beim starten der minishel funktiononieren
+- [ ]  asdas | ls gibt exit code 141 raus
+- [ ]  bei error messages gefailten command angeben
+- [ ]  e printed export
+- [ ]  en printed env
+- [ ]  p printed pwd
+- [ ]  c src macht cd into src
+- [ ]  ec hey printed hey
+- [ ]  u USER unsetted USER
+- [ ]  echohey lol → command not found (error message anpassen)
+- [ ]  seg fault bei execute_utils.c line 24 wegen cmd_node→cmd[1]
