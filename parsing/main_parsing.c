@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/22 15:19:41 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/11 14:19:03 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ t_cmd_node	*main_parsing(char *line, t_env *copied_env)
 	t_token		*token_list;
 	t_cmd_node	*cmd_list;
 
-	if (check_quotes(line) == NO)
-		return (NULL);
+	check_quotes(line);
 	token_list = create_tokens(line);
 	if (token_list == NULL)
 		return (NULL);
