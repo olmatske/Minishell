@@ -6,12 +6,14 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/11 13:40:08 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/11 14:41:50 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
+
+# define CNF	"Command not found\n"
 
 #include <stdlib.h>
 #include "./libft/libft.h"
@@ -123,6 +125,7 @@ int		exec_pipeline(t_shell *shell, t_cmd_node *cmd_list);
 
 // externals.c /////////////////////////////////////////////////////////////////
 int		exec_external(t_cmd *cmd, t_env *env);
+void	free_split(char **str);
 
 // garbage_collector.c /////////////////////////////////////////////////////////
 void	*gc_malloc(t_shell *shell, size_t size);

@@ -45,7 +45,9 @@
 	 -[X] supposed to be this way, added checker in echo function
 - [X] cd not working
 - [ ] env does not get updated and prints garbage like ?=0
-
+- [ ] fix export behaviour
+- [ ] Minishell$ echo "hi hello hiii" | cat -e >>>>>>> LEAKS!!!
+	- [ ] exitting afterwards leaks too!!
 
 ~/Curriculum/Minishell (execution*) » ./minishell                                                                                                                                                                                                                                                                                       olmatske@3-F-12
 Minishell$ echo hi hello
