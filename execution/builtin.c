@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/11 16:32:15 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/12 14:19:15 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 
 	split = NULL;
 	if (cmd_node->cmd->built_in_name == BUILTIN_NONE)
-		return (1);
+		return (0);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_ECHO)
 		echo(cmd_node->cmd->args);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_PWD)
@@ -32,11 +32,13 @@ int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 	else if (cmd_node->cmd->built_in_name == BUILTIN_EXPORT)
 	{
 		split = ft_split(cmd_node->cmd->args[1], '=');
-		if (split)
+		if (split && split[0])
 		{
 			export(shell, env, split);
 			free_split(split);
 		}
+		else
+			return (fprintf(stderr, "ft_split failure"), 1);
 	}
 	else if (cmd_node->cmd->built_in_name == BUILTIN_UNSET)
 		unset(env, cmd_node->cmd->args[1]);
@@ -117,11 +119,12 @@ void	cd(char *path)
 // validate split
 void	export(t_shell *shell, t_env **env, char **split)
 {
+	printf("[DEBUG] Exporting: key='%s', val='%s'\n", split[0], split[1]);
+	printf("[DEBUG] Searching list starting at: %s\n\n", (*env)->name);
 	t_env	*curr;
 	t_env	*new;
 
 	curr = *env;
-	if (!split)
 	while (curr)
 	{
 		if (ft_strlen(curr->name) == ft_strlen(split[0])
@@ -131,28 +134,29 @@ void	export(t_shell *shell, t_env **env, char **split)
 	}
 	if (curr)
 	{
-		free(curr->value);
-		curr->value = NULL;
+		if (curr->value)
+			free(curr->value);
 		if (split[1])
 			curr->value = ft_strdup(split[1]);
+		else
+			curr->value = NULL;
 		return;
 	}
-	// if (curr)
-	// {
-	// 	curr->value = split[1];
-	// 	return ;
-	// }
 	new = gc_malloc(shell, sizeof(t_env));
 	new->name = ft_strdup(split[0]);
-	gc_add(shell, new->name);
 	new->value = NULL;
 	if (split[1])
-	{
 		new->value = ft_strdup(split[1]);
-		gc_add(shell, new->value);
+	new->next = NULL;
+	if (*env == NULL)
+		*env = new;
+	else
+	{
+		curr = *env;
+		while (curr->next != NULL)
+			curr = curr->next;
+		curr->next = new;
 	}
-	new->next = *env;
-	*env = new;
 }
 
 // removes variable in shell

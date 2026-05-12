@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 12:39:56 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 12:37:27 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/12 14:28:58 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	pipe_loop(t_pipex *p)
 	if (p->pids[p->i] == 0)
 	{
 		child_loop(p->i, p->cmd_count, p->pipe_fd, p->prev_read);
-		// execution(p->curr->cmd, p->shell->env);
+		execution(p->curr->cmd, env_for_execution(p->shell->env));
 		exit(1);
 	}
 	else
