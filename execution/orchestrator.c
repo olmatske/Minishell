@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:57:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/12 14:32:34 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/12 14:43:29 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,4 @@ void	free_all(t_shell *shell, t_env **env, t_cmd_node *cmd)
 		*env = NULL;
 }
 
-// execution(p->curr->cmd, p->shell->env)
-void	execution(t_cmd *cmd, char **env)
-{
-	char	*command_path;
-	char	**command;
 
-	command = ft_split(cmd, ' ');
-	if (command == NULL)
-		ft_perror("command");
-	if (command[0] == NULL)
-	{
-		ft_free_array(command);
-		ft_error("Command not found", 127);
-	}
-	command_path = find_command_path(command[0], env);
-	if (command_path == NULL)
-	{
-		ft_free_array(command);
-		ft_error("Command not found", 127);
-	}
-	execve(command_path, command, env);
-	perror(command[0]);
-	ft_free_array(command);
-	free(command_path);
-	exit(126);
-}

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/11 14:20:17 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/12 16:38:12 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static char *resolve_path(t_cmd *cmd, char **env)
 	return (NULL);
 }
 
-int exec_external(t_cmd *cmd, t_env *env)
+int	exec_external(t_cmd *cmd, t_env *env)
 {
 	char	*path;
 	char	**env_array;

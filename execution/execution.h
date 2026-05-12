@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/12 14:32:41 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/12 16:39:07 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,13 +138,13 @@ void	gc_free_all(t_shell *shell);
 int		shell_loop(t_shell *shell, t_cmd_node *cmd_list);
 int		exec_single_cmd(t_shell *shell, t_env *environment, t_cmd_node *cmd_list);
 void	free_all(t_shell *shell, t_env **env, t_cmd_node *cmd);
-void	execution(t_cmd *cmd, char **env);
 
 // pipe_helpers.c //////////////////////////////////////////////////////////////
 int		open_file(char *file, int mode);
 int		pipe_count(t_cmd_node *cmd_list);
 void	redirect_input(int fd);
 void	redirect_output(int fd);
+void	execution(t_shell *shell, t_cmd_node *cmd, t_env **env);
 
 // redirections.c ////////////////////////////////////////////////////////////////
 void	wrapper(char **argv, t_cmd *cmd);
