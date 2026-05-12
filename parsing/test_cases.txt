@@ -1,3 +1,41 @@
+mandatory cases
+- [ ]  make -n to check if the compilation uses the -Wall -Wextra -Werror
+- [ ]  check that only one global variable is used (not a struct). why is it used for the signals, what's it
+		overall purpose
+- [ ]  empty command should print out the next prompt. spases or tabs behave the same way
+- [ ]  check commands with absolute paths or without paths. both should work the same way
+- [ ]  echo without arguments should print out a new empty line and then give the usual prompt
+- [ ]  echo -n should print out a new line with the usual prompt(without an empty line)
+- [ ]  exit with “exit cat” 
+		prints out exit and on the next line bash: exit: cat: numeric argument required.
+		the second line is very questionabble - should it be included or not.
+		then exits directly. the text is hardly to catch before the exit. a text message
+		appears for the error - the terminal process "/usr/bin/bash" terminated with exit code: 2.
+- [ ]  exit with one or more numeric arguments
+		can exit only with one numeric argument or without any arguments. with no arguments
+		the error runs as folows: the terminal process "/usr/bin/bash" terminated with exit code: 1.
+		with one numeric argument the error takes the numeric argument as the exit code
+		exit 55 will have error: the terminal process "/usr/bin/bash" terminated with exit code: 55.
+		the error for the exit with	too many numeric arguments is exit\nbash: exit: too many arguments.
+		but it does not exit
+- [ ]  echo $? should print out the last exit code
+- [ ]  ctrl-C writes out ^C and jumps to the new line
+- [ ]  ctrl-D in an empty prompt should close the terminal
+- [ ]  ctrl-\ should do nothing
+- [ ]  ctrl-C in a prompt with smth already written in it should add ^C  and give a new line with prompt
+		it should not be stored in history
+- [ ]  ctrl-D and ctrl-\ in a prompt with smth already written in it should do nothing
+- [ ]  running ctrl-C after a blocking command (like grep b) should write ^C on the line
+		and give a prompt on a new line
+- [ ]  running ctrl-D after a blocking command (like grep b) should just give a prompt on a new line
+		without writing anything
+- [ ]  running ctrl-\ after a blocking command (like grep b) should write ^\Quit (core dumped) on the line
+		and give a prompt on a new line
+- [ ]  the info after the delimeter should not be added to the history (??)
+- [ ]  history is working
+- [ ]  how to create the new environmental variables
+- [ ]  cd should work correctly with . and ..
+- [ ]  unset env should crash the $PATH
 - [ ]  /bin/echo """""""'"$USER"'""""""
 		should wait for the quotes to be closed then write out the user name with
 		anything put after the > prompt on a new line 
@@ -19,22 +57,4 @@
 		node at thhe end and with prefix declare -x 
 - [ ]  +echo "" "" "" -n -n -n -n
 		command not found 127
-		
-- [ ]  exit with “exit cat” 
-- [ ]  echo arsch~ sollte nicht expanden
-- [ ]  exit nur mit 1 numeric argument möglich, wenn non numeric argument → still exit
 - [ ]  heredoc should ignore ctrl + z
-- [ ]  single within double quotes gets interpreted as syntax error
-- [ ]  quotation doesn’t work properly
-- [ ]  here doc mit gleihen delimiter gehene nicht
-- [ ]  cd - darf beim starten der minishel funktiononieren
-- [ ]  asdas | ls gibt exit code 141 raus
-- [ ]  bei error messages gefailten command angeben
-- [ ]  e printed export
-- [ ]  en printed env
-- [ ]  p printed pwd
-- [ ]  c src macht cd into src
-- [ ]  ec hey printed hey
-- [ ]  u USER unsetted USER
-- [ ]  echohey lol → command not found (error message anpassen)
-- [ ]  seg fault bei execute_utils.c line 24 wegen cmd_node→cmd[1]
