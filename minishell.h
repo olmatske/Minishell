@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/11 12:43:15 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/13 11:32:03 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int			main(int argc, char **argv, char **envp);
 t_env		*shell_env(char **envp);
 t_cmd_node	*main_parsing(char *line, t_env *copied_env);
 char		**env_array_for_execution(t_env *copied_env);
+char		**env_array_without_value(t_env *copied_env);
 char		**free_env_array(char **env_array);
 void		ft_error(char *s, int exit_code);
 void		ft_perror(char *s);

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/12 14:19:15 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/14 19:59:24 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 		cd(cmd_node->cmd->args[1]);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_EXPORT)
 	{
+		if (!cmd_node->cmd->args[1])
+			return (print_export(*env), 0);
 		split = ft_split(cmd_node->cmd->args[1], '=');
 		if (split && split[0])
 		{
@@ -117,6 +119,8 @@ void	cd(char *path)
 // adds variable in shell: NAME=value
 // updates variable's value if it already exists
 // validate split
+
+// if export has no args print sorted env + env_array_without_value
 void	export(t_shell *shell, t_env **env, char **split)
 {
 	printf("[DEBUG] Exporting: key='%s', val='%s'\n", split[0], split[1]);

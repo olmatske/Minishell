@@ -45,7 +45,7 @@
 	 -[X] supposed to be this way, added checker in echo function
 - [X] cd not working
 - [X] env does not get updated and prints garbage like ?=0 -> that's the exit, not supposed to be printed, isn't garbage either
-- [ ] fix export behaviour
+# - [ ] fix export behaviour: "declare -x "
 - [ ] Minishell$ echo "hi hello hiii" | cat -e >>>>>>> LEAKS!!!
 	- [ ] exitting afterwards leaks too!!
 - [ ] exit leaks like crazy
