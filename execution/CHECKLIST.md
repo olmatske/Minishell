@@ -42,13 +42,16 @@
 - [X] wrong command doesn't work (example: rxiy)
 	- [X] leaks
 - [X] echo -n: -n is in args and not initialized
-	 -[X] supposed to be this way, added checker in echo function
+	 -> supposed to be this way, added checker in echo function
 - [X] cd not working
 - [X] env does not get updated and prints garbage like ?=0 -> that's the exit, not supposed to be printed, isn't garbage either
-# - [ ] fix export behaviour: "declare -x "
-- [ ] Minishell$ echo "hi hello hiii" | cat -e >>>>>>> LEAKS!!!
-	- [ ] exitting afterwards leaks too!!
-- [ ] exit leaks like crazy
+- [X] fix export behaviour: "declare -x "
+#	- [ ] bash export and minishell export differs
+- [X] Minishell$ echo "hi hello hiii" | cat -e >>>>>>> LEAKS!!!
+	-> idk what I did but I fixed it, exit leaks because of shell status
+	- [X] exitting afterwards leaks too!!
+- [X] exit leaks like crazy
+	-> likely because of the uninitalized shell exit status
 
 ~/Curriculum/Minishell (execution*) » ./minishell                                                                                                                                                                                                                                                                                       olmatske@3-F-12
 Minishell$ echo hi hello

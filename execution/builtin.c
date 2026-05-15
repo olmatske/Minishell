@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/14 19:59:24 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:19:45 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,14 @@ void	pwd(void)
 
 void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 {
+	int	exit_status;
+
+	if (!cmd->cmd->args || !cmd->cmd->args[1])
+		exit_status = shell->exit;
+	else
+		exit_status = ft_atoi(cmd->cmd->args[1]);
 	free_all(shell, env, cmd);
-	exit(shell->exit);
+	exit(exit_status);
 }
 void	ft_env(t_env **env)
 {
