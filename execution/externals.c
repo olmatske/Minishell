@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/12 16:38:12 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/15 20:19:29 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,11 @@ int	exec_external(t_cmd *cmd, t_env *env)
 	if (pid == 0)
 	{
 		execve(path, cmd->args, env_array);
-		fprintf(stderr, "execve\n");
-		exit(1);
+		fprintf(stderr, "%s: %s\n", path, strerror(errno));
+		if (errno == EACCES || errno == EISDIR)
+			exit(126);
+		else
+			exit(127);
 	}
 	waitpid(pid, &status, 0);
 	free_split(env_array);

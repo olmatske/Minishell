@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/15 13:50:35 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/15 20:17:50 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #include "./get_next_line/get_next_line.h"
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/errno.h>
 #include "../minishell.h"
 
 // typedef enum e_builtin {
@@ -116,7 +117,7 @@ void	echo(char **str);
 void	pwd(void);
 void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd);
 void	ft_env(t_env **env);
-void	cd(char *path);
+void	cd(char *path, t_env *env);
 void	export(t_shell *shell, t_env **env, char **split);
 void	unset(t_env **env, char *rm_var);
 

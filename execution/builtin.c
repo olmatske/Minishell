@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/15 13:41:28 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/15 20:03:41 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 	else if (cmd_node->cmd->built_in_name == BUILTIN_ENV)
 		ft_env(env);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_CD)
-		cd(cmd_node->cmd->args[1]);
+		cd(cmd_node->cmd->args[1], *env);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_EXPORT)
 	{
 		if (!cmd_node->cmd->args[1])
@@ -68,7 +68,6 @@ void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 	else
 		exit_status = ft_atoi(cmd->cmd->args[1]);
 	free_all(shell, env, cmd);
-	printf("exit status: %d\n", exit_status);
 	exit(exit_status);
 }
 void	ft_env(t_env **env)
@@ -89,8 +88,25 @@ void	ft_env(t_env **env)
 	printf("\n");
 }
 
-void	cd(char *path)
+void	cd(char *path, t_env *env)
 {
+	t_env *curr;
+
+	curr = env;
+	if (!path || !ft_strcmp(path, "~"))
+	{
+		while (curr)
+		{
+			if (!ft_strcmp(curr->name, "HOME"))
+			{
+				path = curr->value;
+				break;
+			}
+			curr = curr->next;
+		}
+		if (!path)
+			printf("HOME not set\n");
+	}
 	if (chdir(path) == -1)
 	{
 		perror("Error");
