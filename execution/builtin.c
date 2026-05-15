@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/15 13:19:45 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/15 13:41:28 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,31 +47,6 @@ int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 	return (0);
 }
 
-void	echo(char **str)
-{
-	int	i;
-	int	n;
-
-	i = 1;
-	n = 0;
-	if (!ft_strncmp(str[1], "-n ", 2))
-	{
-		n = 1;
-		i = 2;
-	}
-	while (str[i])
-	{
-		printf("%s", str[i]);
-		if (str[i + 1])
-			printf(" ");
-		i++;
-	}
-	if (!n)
-		printf("\n");
-	else
-		return;
-}
-
 void	pwd(void)
 {
 	char *path = getcwd(NULL, 0);
@@ -93,6 +68,7 @@ void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 	else
 		exit_status = ft_atoi(cmd->cmd->args[1]);
 	free_all(shell, env, cmd);
+	printf("exit status: %d\n", exit_status);
 	exit(exit_status);
 }
 void	ft_env(t_env **env)
