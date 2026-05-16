@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/15 20:17:50 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/16 15:44:11 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,81 +29,6 @@
 #include <sys/errno.h>
 #include "../minishell.h"
 
-// typedef enum e_builtin {
-// 	NONE_B,
-// 	ECHO,
-// 	ECHO_N,
-// 	PWD,
-// 	EXIT,
-// 	ENV,
-// 	CD,
-// 	EXPORT,
-// 	UNSET
-
-// }	t_builtin;
-
-// typedef enum e_redir_type {
-// 	NONE_R,
-// 	INPUT,
-// 	OVERWRITE,
-// 	HEREDOC,
-// 	APPEND
-// }	t_redir_type;
-
-
-// typedef struct s_pre_zero {
-// 	void *ptr;
-// 	struct s_pre_zero *next;
-// }	pre_zero;
-
-// typedef struct s_redir {
-// 	char		*infile;                  // filename
-// 	char		*heredoc_delimiter;
-// 	char		*outfile;                 // filename
-// 	t_redir_type	redir_type;
-// }	t_redir;
-
-// typedef struct s_env {
-// 	char			*name;
-// 	char			*value;
-// 	struct s_env	*next;
-// }	t_env;
-
-// shell struct will have a gc variable
-// typedef struct s_shell {
-// 	t_env	**env;
-// 	pre_zero *gc;
-// 	int		exit;
-// }	t_shell;
-
-// typedef struct s_cmd {
-// 	char			**args;
-// 	t_redir			*redir; 
-// 	t_redir_type	type_redir;
-// 	t_builtin		builtin;
-// }	t_cmd;
-
-// typedef struct s_cmd_node {
-// 	t_cmd				*cmd;
-// 	struct s_cmd_node	*next;
-// }	t_cmd_node;
-
-// typedef struct s_pipex {
-// 	t_cmd_node	*curr;
-// 	t_shell		*shell;
-// 	pid_t		*pids;
-// 	int			i;
-// 	int			cmd_count;
-// 	int			pipe_fd[2];	// pipe_fd[0] read - pipde_fd[1] write
-// 	int			prev_read;
-// }	t_pipex;
-
-
-
-
-// int		main(int argc, char **argv, char **envp);
-
-
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
 
@@ -117,8 +42,8 @@ void	echo(char **str);
 void	pwd(void);
 void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd);
 void	ft_env(t_env **env);
-void	cd(char *path, t_env *env);
-void	export(t_shell *shell, t_env **env, char **split);
+void	cd(char *path, t_env *env, t_shell *shell);
+void	export(t_shell *shell, t_env **env, char **split, char *arg);
 void	unset(t_env **env, char *rm_var);
 
 // executor.c //////////////////////////////////////////////////////////////////

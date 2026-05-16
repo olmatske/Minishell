@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/15 20:19:29 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/16 14:55:25 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	exec_external(t_cmd *cmd, t_env *env)
 	else
 		path = resolve_path(cmd, env_array);
 	if (!path)
-		return (free_split(env_array), fprintf(stderr, CNF), 1);
+		return (free_split(env_array), fprintf(stderr, "%s: %s", cmd->args[0], CNF), 1);
 	pid = fork();
 	if (pid < 0)
 		return (free_split(env_array), fprintf(stderr, "fork\n"), 1);

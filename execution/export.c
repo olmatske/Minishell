@@ -72,7 +72,8 @@ void	print_export(t_env *env)
 	{
 		if (curr->value == NULL)
 			printf("declare -x %s=\n", curr->name);
-		printf("declare -x %s=\"%s\"\n", curr->name, curr->value);
+		else
+			printf("declare -x %s=\"%s\"\n", curr->name, curr->value);
 		curr = curr->next;
 	}
 }

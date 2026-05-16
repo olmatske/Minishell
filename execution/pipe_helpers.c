@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 13:24:58 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/13 11:36:21 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/16 13:06:09 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,4 @@ void	execution(t_shell *shell, t_cmd_node *cmd, t_env **env)
 		exec_external(cmd->cmd, *env);
 	else
 		wrapper_builtin(shell, cmd, env);
-	// execve(command_path, command, env);
-	// perror(command[0]);
-	// ft_free_array(command);
-	// free(command_path);
-	// exit(126);
 }

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/15 20:03:41 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/16 15:46:55 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 	else if (cmd_node->cmd->built_in_name == BUILTIN_ENV)
 		ft_env(env);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_CD)
-		cd(cmd_node->cmd->args[1], *env);
+		cd(cmd_node->cmd->args[1], *env, shell);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_EXPORT)
 	{
 		if (!cmd_node->cmd->args[1])
@@ -36,7 +36,7 @@ int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 		split = ft_split(cmd_node->cmd->args[1], '=');
 		if (split && split[0])
 		{
-			export(shell, env, split);
+			export(shell, env, split, cmd_node->cmd->args[1]);
 			free_split(split);
 		}
 		else
@@ -82,13 +82,16 @@ void	ft_env(t_env **env)
 			curr = curr->next;
 			continue;
 		}
-		printf("%s=%s\n", curr->name, curr->value);
+		if (curr->value == NULL)
+			printf("%s=\n", curr->name);
+		else
+			printf("%s=%s\n", curr->name, curr->value);
 		curr = curr->next;
 	}
 	printf("\n");
 }
 
-void	cd(char *path, t_env *env)
+void	cd(char *path, t_env *env, t_shell *shell)
 {
 	t_env *curr;
 
@@ -109,8 +112,9 @@ void	cd(char *path, t_env *env)
 	}
 	if (chdir(path) == -1)
 	{
-		perror("Error");
-		return;
+		fprintf(stderr, "cd: no such file or directory: %s\n", path);
+		shell->exit = 1;
+		return ;
 	}
 }
 
@@ -119,10 +123,9 @@ void	cd(char *path, t_env *env)
 // validate split
 
 // if export has no args print sorted env + env_array_without_value
-void	export(t_shell *shell, t_env **env, char **split)
+void	export(t_shell *shell, t_env **env, char **split, char *arg)
 {
-	printf("[DEBUG] Exporting: key='%s', val='%s'\n", split[0], split[1]);
-	printf("[DEBUG] Searching list starting at: %s\n\n", (*env)->name);
+	printf("\n%s\n\n", arg);
 	t_env	*curr;
 	t_env	*new;
 
@@ -136,18 +139,18 @@ void	export(t_shell *shell, t_env **env, char **split)
 	}
 	if (curr)
 	{
-		if (curr->value)
-			free(curr->value);
-		if (split[1])
+		if (ft_strnstr(arg, "="))
+		{
+			if (curr->value)
+				free(curr->value);
 			curr->value = ft_strdup(split[1]);
-		else
-			curr->value = NULL;
-		return;
+		}
+		return ;
 	}
 	new = gc_malloc(shell, sizeof(t_env));
 	new->name = ft_strdup(split[0]);
 	new->value = NULL;
-	if (split[1])
+	if (split[1] != NULL)
 		new->value = ft_strdup(split[1]);
 	new->next = NULL;
 	if (*env == NULL)

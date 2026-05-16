@@ -53,9 +53,10 @@
 - [X] exit leaks like crazy
 	-> likely because of the uninitalized shell exit status
 - [X] just cd does not rerout to $HOME
-- [ ] echo status must be 1 if cd nonexistentpath
+- [X] echo status must be 1 if cd nonexistentpath
 - [ ] export PATH -> declare -x PATH (no ="")
-- [ ] pipes don't work apparently (env | grep TEST)
+- [X] pipes don't work apparently (env | grep TEST) -> they do
+- [ ] fix export so that it sees the difference between export PATH and export PATH= !!
 - [ ] exit 1 1 2 works, exit abc also works -> too many arguments / numeric argument required
 - [ ] grep "NAME" goes into infinite loop
 		~/42/Minishell (execution*) » ./minishell                                               oli@Olgas-MacBook-Air
