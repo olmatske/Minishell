@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/16 15:46:55 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/17 16:18:06 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	export(t_shell *shell, t_env **env, char **split, char *arg)
 	}
 	if (curr)
 	{
-		if (ft_strnstr(arg, "="))
+		if (ft_strnstr(arg, "=", ft_strlen(arg)))
 		{
 			if (curr->value)
 				free(curr->value);

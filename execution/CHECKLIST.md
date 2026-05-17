@@ -46,12 +46,12 @@
 - [X] cd not working
 - [X] env does not get updated and prints garbage like ?=0 -> that's the exit, not supposed to be printed, isn't garbage either
 - [X] fix export behaviour: "declare -x "
-#	- [ ] bash export and minishell export differs
+- [X] bash export and minishell export differs
 - [X] Minishell$ echo "hi hello hiii" | cat -e >>>>>>> LEAKS!!!
 	-> idk what I did but I fixed it, exit leaks because of shell status
 	- [X] exitting afterwards leaks too!!
 - [X] exit leaks like crazy
-	-> likely because of the uninitalized shell exit status
+	-> likely because of the uninitialized shell exit status
 - [X] just cd does not rerout to $HOME
 - [X] echo status must be 1 if cd nonexistentpath
 - [ ] export PATH -> declare -x PATH (no ="")
@@ -76,7 +76,7 @@
 - [ ] echo "first" > out.tct < in.txt   oli@Olgas-MacBook-Air zsh: no such file or directory: in.txt
 - [ ] > test.txt goes into infinite loop
 		-> smth wrong with redirections...
-- [ ] echo "fail" > dev/full -> /dev/full: No space left on device
+# - [ ] echo "fail" > dev/full -> /dev/full: No space left on device 
 - [ ] cat > > -> syntax error near unexpected token '>'
 - [ ] exits!!!
 - [ ] update old pwd and new pwd in env after calling cd !!!
