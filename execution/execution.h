@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/20 13:12:24 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/20 14:33:05 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@
 # define CNF	"Command not found\n"
 
 #include <stdlib.h>
-#include "./libft/libft.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <fcntl.h>
 #include <string.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "./get_next_line/get_next_line.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/errno.h>

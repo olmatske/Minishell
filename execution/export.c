@@ -84,7 +84,10 @@ void	update_variable(t_shell *shell, t_env **env, char *name, char *value)
 		if (ft_strcmp(curr->name, name) == 0)
 		{
 			free(curr->value);
-			curr->value = ft_strdup(value);
+			if (value)
+				curr->value = ft_strdup(value);
+			else
+				curr->value = NULL;
 			return ;
 		}
 		curr = curr->next;
@@ -98,7 +101,10 @@ void	append_variable(t_shell *shell, t_env **env, char *name, char *value)
 
 	new = gc_malloc(shell, sizeof(t_env));
 	new->name = ft_strdup(name);
-	new->value = ft_strdup(value);
+	if (value)
+		new->value = ft_strdup(value);
+	else
+		new->next = NULL;
 	new->next = NULL;
 	if (*env == NULL)
 		*env = new;

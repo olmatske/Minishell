@@ -6,13 +6,13 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:57:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/12 14:43:29 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/20 14:33:38 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "../minishell.h"
 
-// add shell loop to minishell.h !!!!!!!!!!!!
 int	shell_loop(t_shell *shell, t_cmd_node *cmd_list)
 {
 	if (!cmd_list)
@@ -21,8 +21,6 @@ int	shell_loop(t_shell *shell, t_cmd_node *cmd_list)
 		return (exec_pipeline(shell, cmd_list));
 	return (exec_single_cmd(shell, *shell->env, cmd_list));
 }
-
-// add shell struct
 
 int	exec_single_cmd(t_shell *shell, t_env *environment, t_cmd_node *cmd_list)
 {
@@ -35,12 +33,12 @@ void	free_all(t_shell *shell, t_env **env, t_cmd_node *cmd)
 {
 	if (cmd)
 		free_cmd_list(cmd);
+	if (env)
+		free_env_list(env);
 	if (shell)
 		gc_free_all(shell);
 	if (shell)
 		free(shell);
-	if (env)
-		*env = NULL;
 }
 
 

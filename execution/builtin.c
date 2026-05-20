@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/20 13:12:59 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/20 14:46:53 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 		exit_status = shell->exit;
 	else
 		exit_status = ft_atoi(cmd->cmd->args[1]);
+	rl_clear_history();
 	free_all(shell, env, cmd);
 	exit(exit_status);
 }
@@ -77,15 +78,15 @@ void	ft_env(t_env **env)
 	curr = *env;
 	while (curr)
 	{
-		if (curr->name && ft_strncmp(curr->name, "?", 2) == 0)
+		if ((curr->name && ft_strncmp(curr->name, "?", 2) == 0) || curr->value == NULL)
 		{
 			curr = curr->next;
 			continue;
 		}
-		if (curr->value == NULL)
-			printf("%s=\n", curr->name);
-		else
-			printf("%s=%s\n", curr->name, curr->value);
+		// if (curr->value == "")
+		// 	printf("%s=\n", curr->name);
+		// else
+		printf("%s=%s\n", curr->name, curr->value);
 		curr = curr->next;
 	}
 	printf("\n");
@@ -156,62 +157,6 @@ void	export(t_shell *shell, t_env **env, char **split, char *arg)
 		update_variable(shell, env, split[0], value);
 	}
 }
-// if (split[1] == NULL)
-// {
-// 	if (equal == NULL)
-// 		value = NULL;
-// 	else
-// 		value = "";
-// }
-// else
-// {
-// 	if (check_var(env, split[0]))
-// }
-
-// void	export(t_shell *shell, t_env **env, char **split, char *arg)
-// {
-// 	// printf("\n%s\n\n", arg);
-// 	t_env	*curr;
-// 	t_env	*new;
-
-// 	curr = *env;
-// 	while (curr)
-// 	{
-// 		if (ft_strlen(curr->name) == ft_strlen(split[0])
-// 			&& ft_strncmp(curr->name, split[0], ft_strlen(curr->name)) == 0)
-// 			break;
-// 		curr = curr->next;
-// 	}
-// 	if (curr)
-// 	{
-// 		if (ft_strnstr(arg, "=", ft_strlen(arg)))
-// 		{
-// 			if (curr->value)
-// 				free(curr->value);
-// 			if (split[1] != NULL)
-// 				curr->value = ft_strdup(split[1]);
-// 			else
-// 				curr->value = NULL;
-// 		}
-// 		return ;
-// 	}
-// 	new = gc_malloc(shell, sizeof(t_env));
-// 	new->name = ft_strdup(split[0]);
-// 	new->value = NULL;
-// 	if (split[1] != NULL)
-// 		new->value = ft_strdup(split[1]);
-// 	new->next = NULL;
-// 	if (*env == NULL)
-// 		*env = new;
-// 	else
-// 	{
-// 		curr = *env;
-// 		while (curr->next != NULL)
-// 			curr = curr->next;
-// 		curr->next = new;
-// 	}
-// }
-
 // removes variable in shell
 void	unset(t_env **env, char *rm_var)
 {

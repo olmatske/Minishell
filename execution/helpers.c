@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:42:46 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/19 09:02:27 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/20 14:43:10 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,3 @@ int	ft_strcmp(char *a, char *b)
 		i++;
 	return ((unsigned char)a[i] - (unsigned char)b[i]);
 }
-
-// void	export_split(char	*arg)
-// {
-	
-	
-	
-// }
