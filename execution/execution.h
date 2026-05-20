@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/19 11:14:21 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/20 13:12:24 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	append(char **argv);
 void	append_variable(t_shell *shell, t_env **env, char *name, char *value);
 void	print_export(t_env *env);
 int		check_var(t_env *env, char *var);
+void	update_variable(t_shell *shell, t_env **env, char *name, char *value);
 
 // builtin_echo.c //////////////////////////////////////////////////////////////
 void	echo(char **str);

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/20 12:52:37 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/20 13:12:59 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	export(t_shell *shell, t_env **env, char **split, char *arg)
 			value = split[1];
 		else if (equal != NULL && split[1] == NULL)
 			value = "";
-		append_variable(shell, env, split[0], value);
+		update_variable(shell, env, split[0], value);
 	}
 }
 // if (split[1] == NULL)

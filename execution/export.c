@@ -78,6 +78,7 @@ void	update_variable(t_shell *shell, t_env **env, char *name, char *value)
 	t_env	*curr;
 
 	curr = *env;
+	(void)shell;
 	while (curr)
 	{
 		if (ft_strcmp(curr->name, name) == 0)
