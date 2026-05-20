@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/16 15:44:11 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/19 11:14:21 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,12 +80,14 @@ void	overwrite(char **text);
 void	append(char **argv);
 
 // export.c /////////////////////////////////////////////////////////////////////
-int		ft_strcmp(char *a, char *b);
+void	append_variable(t_shell *shell, t_env **env, char *name, char *value);
 void	print_export(t_env *env);
+int		check_var(t_env *env, char *var);
 
 // builtin_echo.c //////////////////////////////////////////////////////////////
 void	echo(char **str);
 
+int		ft_strcmp(char *a, char *b);
 
 
 #endif

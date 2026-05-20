@@ -33,6 +33,7 @@
 - [X] struct for built in commands
 -------------------------------------------------------------------------------
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ### Errors
 - [X] externals leak (example: ls)
 - [X] when writing "exit" it prints exit again
@@ -56,7 +57,7 @@
 - [X] echo status must be 1 if cd nonexistentpath
 - [ ] export PATH -> declare -x PATH (no ="")
 - [X] pipes don't work apparently (env | grep TEST) -> they do
-- [ ] fix export so that it sees the difference between export PATH and export PATH= !!
+# - [ ] fix export so that it sees the difference between export PATH and export PATH= !!
 - [ ] exit 1 1 2 works, exit abc also works -> too many arguments / numeric argument required
 - [ ] grep "NAME" goes into infinite loop
 		~/42/Minishell (execution*) » ./minishell                                               oli@Olgas-MacBook-Air
@@ -80,6 +81,7 @@
 - [ ] cat > > -> syntax error near unexpected token '>'
 - [ ] exits!!!
 - [ ] update old pwd and new pwd in env after calling cd !!!
+- [ ] apparently storing exit code in env is wrong
 - [ ] Minishell$ echo $?
 			     0
 				 Minishell$ ls nonexistent; echo $?
@@ -107,6 +109,8 @@
 				 Minishell$ $HOME
 					execve
 				 Minishell$ $USER
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ### Roadmap
 - [X] start with: echo hi (> hi.txt)
