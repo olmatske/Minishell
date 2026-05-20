@@ -32,7 +32,6 @@ static void	sort_env(t_env *env)
 
 	if (!env)
 		return;
-
 	swapped = 1;
 	while (swapped)
 	{
@@ -51,27 +50,34 @@ static void	sort_env(t_env *env)
 	}
 }
 
-void	print_export(t_env *env)
+void	print_export(t_env *copy)
 {
-	t_env *curr = env;
+	t_env	*curr;
+	t_env	*tmp;
 
-	sort_env(env);
-
+	sort_env(copy);
+	curr = copy;
 	while (curr)
 	{
-		if (ft_strcmp(curr->name, "?") == 0)
+		if (!curr->name || ft_strcmp(curr->name, "?") == 0)
 		{
 			curr = curr->next;
 			continue;
 		}
-		
 		if (curr->value == NULL)
 			printf("declare -x %s\n", curr->name);
 		else
 			printf("declare -x %s=\"%s\"\n", curr->name, curr->value);
 		curr = curr->next;
 	}
+	while (copy)
+	{
+		tmp = copy;
+		copy = copy->next;
+		free(tmp);
+	}
 }
+////////////////////////////////////////////////////////////////////////////////
 
 void	update_variable(t_shell *shell, t_env **env, char *name, char *value)
 {
@@ -152,3 +158,57 @@ int	check_var(t_env *env, char *var)
 //
 //
 //
+// static void	swap_env_contents(char *a, char *b)
+// {
+// 	char *tmp;
+
+// 	tmp = a;
+// 	a = b;
+// 	b = tmp;
+// }
+
+// // soprt env list alpahbetically and only print declare -x + varables
+// static void	sort_env(char **env)
+// {
+// 	int	i;
+// 	int	swapped;
+
+// 	if (!env)
+// 		return;
+// 	i = 0;
+// 	swapped = 1;
+// 	while (swapped)
+// 	{
+// 		swapped = 0;
+// 		while (env[i] && env[i + 1])
+// 		{
+// 			if (ft_strcmp(env[i], env[i + 1]) > 0)
+// 			{
+// 				swap_env_contents(env[i], env[i + 1]);
+// 				swapped = 1;
+// 			}
+// 			i++;
+// 		}
+// 	}
+// }
+
+// void	print_export(char **env)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	sort_env(env);
+// 	while (env[i])
+// 	{
+// 		if (ft_strcmp(env[i], "?=0") == 0)
+// 		{
+// 			i++;
+// 			continue;
+// 		}
+// 		if (curr->value == NULL)
+// 			printf("declare -x %s\n", curr->name);
+// 		else
+// 			printf("declare -x %s=\"%s\"\n", curr->name, curr->value);
+// 		curr = curr->next;
+// 	}
+// }

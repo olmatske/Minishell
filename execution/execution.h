@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/20 14:33:05 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/20 16:58:13 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	update_variable(t_shell *shell, t_env **env, char *name, char *value);
 void	echo(char **str);
 
 int		ft_strcmp(char *a, char *b);
-
+t_env	*copy_of_env(t_env *env);
 
 #endif
 

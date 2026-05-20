@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/20 14:46:53 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/20 17:10:31 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 	else if (cmd_node->cmd->built_in_name == BUILTIN_EXPORT)
 	{
 		if (!cmd_node->cmd->args[1])
-			return (print_export(*env), 0);
+			return (print_export(copy_of_env(*env)), 0);
 		split = ft_split(cmd_node->cmd->args[1], '=');
 		if (split && split[0])
 		{
@@ -134,6 +134,7 @@ void	export(t_shell *shell, t_env **env, char **split, char *arg)
 	char	*equal;
 	char	*value;
 
+	if (!split || !split[0])
 	equal = ft_strchr(arg, '=');
 	value = NULL;
 	if (check_var(*env, split[0]) == 0)
