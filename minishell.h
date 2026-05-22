@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/13 11:32:03 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/21 16:39:00 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,6 @@ int			env_list_length(t_env *head);
 ////////////////////////////////////////////////////////////////////////////////
 int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);
 void		free_all(t_shell *shell, t_env **env, t_cmd_node *cmd);
+int			ft_strcmp(char *a, char *b);
 ////////////////////////////////////////////////////////////////////////////////
 #endif

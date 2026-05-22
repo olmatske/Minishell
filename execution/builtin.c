@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/20 17:10:31 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/21 17:05:41 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 	else if (cmd_node->cmd->built_in_name == BUILTIN_EXPORT)
 	{
 		if (!cmd_node->cmd->args[1])
-			return (print_export(copy_of_env(*env)), 0);
+			return (print_export(env_array_for_execution(*env)), 0);
 		split = ft_split(cmd_node->cmd->args[1], '=');
 		if (split && split[0])
 		{
-			export(shell, env, split, cmd_node->cmd->args[1]);
+			export(shell, env, cmd_node->cmd->args[1]);
 			free_split(split);
 		}
 		else
@@ -80,12 +80,11 @@ void	ft_env(t_env **env)
 	{
 		if ((curr->name && ft_strncmp(curr->name, "?", 2) == 0) || curr->value == NULL)
 		{
+			if (curr->next == NULL)
+				return ;
 			curr = curr->next;
 			continue;
 		}
-		// if (curr->value == "")
-		// 	printf("%s=\n", curr->name);
-		// else
 		printf("%s=%s\n", curr->name, curr->value);
 		curr = curr->next;
 	}
@@ -129,35 +128,66 @@ void	cd(char *path, t_env *env, t_shell *shell)
 
 // doesn't work
 //  function to update value!!!
-void	export(t_shell *shell, t_env **env, char **split, char *arg)
+
+void	export(t_shell *shell, t_env **env, char *arg)
 {
 	char	*equal;
+	char	*name;
 	char	*value;
 
-	if (!split || !split[0])
+	if (!arg)
+		return;
 	equal = ft_strchr(arg, '=');
-	value = NULL;
-	if (check_var(*env, split[0]) == 0)
+	if (equal == NULL)
 	{
-		if (equal == NULL)
-			value = NULL;
-		else if (equal != NULL && split[1] != NULL)
-			value = split[1];
-		else if (equal != NULL && split[1] == NULL)
-			value = "";
-		append_variable(shell, env, split[0], value);
+		if (!check_var(*env, arg))
+			append_variable(shell, env, arg, NULL);
+		return;
 	}
+	name = ft_substr(arg, 0, equal - arg);
+	if (!name)
+		return;
+	value = ft_strdup(equal + 1);
+	if (!value)
+		return (free(name));
+	if (check_var(*env, name))
+		update_variable(env, name, value);
 	else
-	{
-		if (equal == NULL)
-			value = NULL;
-		else if (equal != NULL && split[1] != NULL)
-			value = split[1];
-		else if (equal != NULL && split[1] == NULL)
-			value = "";
-		update_variable(shell, env, split[0], value);
-	}
+		append_variable(shell, env, name, value);
+	free(name);
+	free(value);
 }
+
+
+// void	export(t_shell *shell, t_env **env, char **split, char *arg)
+// {
+// 	char	*equal;
+// 	char	*value;
+
+// 	if (!split || !split[0])
+// 	equal = ft_strchr(arg, '=');
+// 	value = NULL;
+// 	if (check_var(*env, split[0]) == 0)
+// 	{
+// 		if (equal == NULL)
+// 			value = NULL;
+// 		else if (equal != NULL && split[1] != NULL)
+// 			value = split[1];
+// 		else if (equal != NULL && split[1] == NULL)
+// 			value = "";
+// 		append_variable(shell, env, split[0], value);
+// 	}
+// 	else
+// 	{
+// 		if (equal == NULL)
+// 			value = NULL;
+// 		else if (equal != NULL && split[1] != NULL)
+// 			value = split[1];
+// 		else if (equal != NULL && split[1] == NULL)
+// 			value = "";
+// 		update_variable(shell, env, split[0], value);
+// 	}
+// }
 // removes variable in shell
 void	unset(t_env **env, char *rm_var)
 {

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/20 16:58:13 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/21 17:05:18 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	pwd(void);
 void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd);
 void	ft_env(t_env **env);
 void	cd(char *path, t_env *env, t_shell *shell);
-void	export(t_shell *shell, t_env **env, char **split, char *arg);
+void	export(t_shell *shell, t_env **env, char *arg);
 void	unset(t_env **env, char *rm_var);
 
 // executor.c //////////////////////////////////////////////////////////////////
@@ -79,9 +79,10 @@ void	append(char **argv);
 
 // export.c /////////////////////////////////////////////////////////////////////
 void	append_variable(t_shell *shell, t_env **env, char *name, char *value);
-void	print_export(t_env *env);
+void	print_export(char **arr);
 int		check_var(t_env *env, char *var);
-void	update_variable(t_shell *shell, t_env **env, char *name, char *value);
+void	update_variable(t_env **env, char *name, char *value);
+char	**env_array_for_export(t_env *env);
 
 // builtin_echo.c //////////////////////////////////////////////////////////////
 void	echo(char **str);

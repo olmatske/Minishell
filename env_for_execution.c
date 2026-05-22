@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:23:09 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/20 17:06:51 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/21 16:49:21 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,85 +28,147 @@ char	**free_env_array(char **env_array)
 	return (NULL);
 }
 
-// char	**env_array_for_execution(t_env *copied_env)
-// {
-// 	char	**env_array;
-// 	char	*tmp;
-// 	t_env	*current;
-// 	int		i;
-// 	int		len;
-
-// 	len = env_list_length(copied_env);
-// 	env_array = ft_calloc((len + 1), sizeof(char *));
-// 	if (env_array == NULL)
-// 		return (NULL);
-// 	current = copied_env;
-// 	i = 0;
-// 	while (i < len)
-// 	{
-// 		tmp = ft_strjoin(current->name, "=");
-// 		if (tmp == NULL)
-// 			return (free_env_array(env_array));
-// 		env_array[i] = ft_strjoin(tmp, current->value);
-// 		if (env_array[i] == NULL)
-// 			return (free_env_array(env_array));
-// 		free(tmp);
-// 		current = current->next;
-// 		i++;
-// 	}
-// 	return (env_array);
-// }
-
-static int	count_env_with_value(t_env *env)
+char	**env_array_for_execution(t_env *copied_env)
 {
+	char	**env_array;
+	char	*tmp;
+	t_env	*current;
 	int		i;
-	int		count;
-	t_env	*curr;
+	int		len;
 
+	len = env_list_length(copied_env);
+	env_array = ft_calloc((len + 1), sizeof(char *));
+	if (env_array == NULL)
+		return (NULL);
+	current = copied_env;
 	i = 0;
-	count = 0;
-	curr = env;
-	while (curr)
+	while (i < len)
 	{
-		if (env->value != NULL)
+		tmp = ft_strjoin(current->name, "=");
+		if (tmp == NULL)
+			return (free_env_array(env_array));
+		env_array[i] = ft_strjoin(tmp, current->value);
+		if (env_array[i] == NULL)
+			return (free_env_array(env_array));
+		free(tmp);
+		current = current->next;
+		i++;
+	}
+	return (env_array);
+}
+
+static int	count_export_entries(t_env *env)
+{
+	int	count;
+
+	count = 0;
+	while (env)
+	{
+		if (env->name && ft_strcmp(env->name, "?") != 0)
 			count++;
 		env = env->next;
 	}
 	return (count);
 }
 
-char	**env_array_for_execution(t_env *copied_env)
+static char	*format_export_entry(t_env *node)
 {
-	char	**env_array;
 	char	*tmp;
-	t_env	*curr;
+	char	*temp;
+	char	*res;
+
+	if (!node || !node->name)
+		return (NULL);
+	if (ft_strcmp(node->name, "?") == 0)
+		return (NULL);
+	if (node->value == NULL)
+		return (ft_strdup(node->name));
+	tmp = ft_strjoin(node->name, "=\"");
+	if (!tmp)
+		return (NULL);
+	temp = ft_strjoin(tmp, node->value);
+	free(tmp);
+	if (!temp)
+		return (NULL);
+	res = ft_strjoin(temp, "\"");
+	free(temp);
+	return (res);
+}
+
+char	**env_array_for_export(t_env *env)
+{
+	char	**arr;
 	int		i;
 	int		len;
 
-	len = count_env_with_value(copied_env);
-	env_array = ft_calloc((len + 1), sizeof(char *));
-	if (env_array == NULL)
+	len = count_export_entries(env);
+	arr = ft_calloc((len + 1), sizeof(char *));
+	if (!arr)
 		return (NULL);
-	curr = copied_env;
 	i = 0;
-	while (curr)
+	while (env)
 	{
-		if (curr->value != NULL)
+		if (env->name && ft_strcmp(env->name, "?") != 0)
 		{
-			tmp = ft_strjoin(curr->name, "=");
-			if (!tmp)
-				return (free_env_array(env_array));
-			env_array[i] = ft_strjoin(tmp, curr->value);
-			free(tmp);
-			if (!env_array[i])
-				return (free_env_array(env_array));
+			arr[i] = format_export_entry(env);
+			if (!arr[i])
+				return (free_env_array(arr));
 			i++;
 		}
-		curr = curr->next;
+		env = env->next;
 	}
-	env_array[i] = NULL;
-	return (env_array);
+	arr[i] = NULL;
+	return (arr);
 }
+
+// static int	count_env_with_value(t_env *env)
+// {
+// 	int		count;
+// 	t_env	*curr;
+
+// 	count = 0;
+// 	curr = env;
+// 	while (curr)
+// 	{
+// 		if (env->value != NULL)
+// 			count++;
+// 		env = env->next;
+// 	}
+// 	return (count);
+// }
+
+// char	**env_array_for_execution(t_env *copied_env)
+// {
+// 	char	**env_array;
+// 	char	*tmp;
+// 	t_env	*curr;
+// 	int		i;
+// 	int		len;
+
+// 	len = count_env_with_value(copied_env);
+// 	env_array = ft_calloc((len + 1), sizeof(char *));
+// 	if (env_array == NULL)
+// 		return (NULL);
+// 	curr = copied_env;
+// 	i = 0;
+// 	while (curr)
+// 	{
+// 		if (curr->value != NULL)
+// 		{
+// 			tmp = ft_strjoin(curr->name, "=");
+// 			if (!tmp)
+// 				return (free_env_array(env_array));
+// 			env_array[i] = ft_strjoin(tmp, curr->value);
+// 			free(tmp);
+// 			if (!env_array[i])
+// 				return (free_env_array(env_array));
+// 			i++;
+// 		}
+// 		curr = curr->next;
+// 	}
+// 	env_array[i] = NULL;
+// 	return (env_array);
+// }
 
 t_env	*copy_of_env(t_env *env)
 {
