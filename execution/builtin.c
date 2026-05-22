@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/22 11:49:49 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/22 12:01:47 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	export(t_shell *shell, t_env **env, char *arg)
 	if (equal == NULL)
 	{
 		if (!check_var(*env, arg))
-			append_variable(shell, env, arg, NULL);
+			append_variable(env, arg, NULL);
 		return;
 	}
 	name = ft_substr(arg, 0, equal - arg);
@@ -155,7 +155,7 @@ void	export(t_shell *shell, t_env **env, char *arg)
 	if (check_var(*env, name))
 		update_variable(shell, env, name, value);
 	else
-		append_variable(shell, env, name, value);
+		append_variable(env, name, value);
 	free(name);
 	free(value);
 }
@@ -196,7 +196,7 @@ void	unset(t_env **env, char *rm_var)
 	t_env	*curr;
 	t_env	*prev;
 
-	if (!rm_var)
+	if (!env || !*env || !rm_var)
 		return ;
 	curr = *env;
 	prev = NULL;

@@ -84,15 +84,17 @@ void	update_variable(t_shell *shell, t_env **env, char *name, char *value)
 	}
 }
 
-void	append_variable(t_shell *shell, t_env **env, char *name, char *value)
+void	append_variable(t_env **env, char *name, char *value)
 {
 	t_env	*curr;
 	t_env	*new;
 
 	new = malloc(sizeof(t_env));
-	new->name = gc_strdup(shell, name);
+	if (!new)
+		return ;
+	new->name = ft_strdup(name);
 	if (value)
-		new->value = gc_strdup(shell, value);
+		new->value = ft_strdup(value);
 	else
 		new->value = NULL;
 	new->next = NULL;
