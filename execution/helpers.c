@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:42:46 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/22 11:08:04 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/22 14:40:16 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,3 +59,5 @@ char	*gc_strjoin(t_shell *shell, char const *s1, char const *s2)
 		ft_strlcpy(res + len1, s2, len2 + 1);
 	return (res);
 }
+
+

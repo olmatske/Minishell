@@ -69,6 +69,7 @@
 				$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -o $(NAME) -lreadline
 				$(RM) $(NAME) $(OBJECTS)
 		Minishell$ 
+- [ ] why does the tester fail on exit codes when everythings fine>??
 - [ ] echo "overwrite" > test.txt -> no output
 - [ ] > doesn't appear to be working, doesn't make a new file
 - [ ] when doing echo and a pipe it still prints with echo

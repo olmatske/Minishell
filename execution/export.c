@@ -21,7 +21,6 @@ static void	swap_array(char **a, char **b)
 	*b = tmp;
 }
 
-// soprt env list alpahbetically and only print declare -x + varables
 static void	sort_array(char **str)
 {
 	int	swapped;
@@ -64,7 +63,7 @@ void	print_export(char **arr)
 }
 ////////////////////////////////////////////////////////////////////////////////
 
-void	update_variable(t_shell *shell, t_env **env, char *name, char *value)
+void	update_variable(t_env **env, char *name, char *value)
 {
 	t_env	*curr;
 
@@ -75,7 +74,7 @@ void	update_variable(t_shell *shell, t_env **env, char *name, char *value)
 		{
 			free(curr->value);
 			if (value)
-				curr->value = gc_strdup(shell, value);
+				curr->value = ft_strdup(value);
 			else
 				curr->value = NULL;
 			return ;
@@ -122,79 +121,3 @@ int	check_var(t_env *env, char *var)
 	}
 	return (0);
 }
-
-// does arg have a value?
-//	  > no -> does arg have '='?
-//			> no -> don't print in env, print in export "declare -x TEST"
-//			> yes -> print in both: 'TEST=' + 'declare -x TEST=""'
-//	  > yes -> does the variable already exist?
-//			> no -> create and append to env list
-//			> yes -> update the variable
-// update smth, I forgot what 
-
-
-// does variable name exist?
-//		> yes -> does it have an equal sign?
-//				> yes -> replace with value
-//				> no  -> replace with NULL
-//		> no  -> does it have an equal sign?
-//				> yes -> append to env list with value
-//				> no  -> append to env list with NULL
-//
-//
-//
-//
-// static void	swap_env_contents(char *a, char *b)
-// {
-// 	char *tmp;
-
-// 	tmp = a;
-// 	a = b;
-// 	b = tmp;
-// }
-
-// // soprt env list alpahbetically and only print declare -x + varables
-// static void	sort_array(char **env)
-// {
-// 	int	i;
-// 	int	swapped;
-
-// 	if (!env)
-// 		return;
-// 	i = 0;
-// 	swapped = 1;
-// 	while (swapped)
-// 	{
-// 		swapped = 0;
-// 		while (env[i] && env[i + 1])
-// 		{
-// 			if (ft_strcmp(env[i], env[i + 1]) > 0)
-// 			{
-// 				swap_env_contents(env[i], env[i + 1]);
-// 				swapped = 1;
-// 			}
-// 			i++;
-// 		}
-// 	}
-// }
-
-// void	print_export(char **env)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	sort_array(env);
-// 	while (env[i])
-// 	{
-// 		if (ft_strcmp(env[i], "?=0") == 0)
-// 		{
-// 			i++;
-// 			continue;
-// 		}
-// 		if (curr->value == NULL)
-// 			printf("declare -x %s\n", curr->name);
-// 		else
-// 			printf("declare -x %s=\"%s\"\n", curr->name, curr->value);
-// 		curr = curr->next;
-// 	}
-// }

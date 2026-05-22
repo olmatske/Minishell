@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/22 11:04:57 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/22 14:50:36 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static char	*join_path(t_shell *shell, char *dir, char *cmd)
 	if (!tmp)
 		return (NULL);
 	full = gc_strjoin(shell, tmp, cmd);
-	free(tmp);
 	return (full);
 }
 
@@ -89,7 +88,7 @@ static char *resolve_path(t_shell *shell, t_cmd *cmd, char **env)
 		full_path = join_path(shell, paths[i], cmd->args[0]);
 		if (full_path && access(full_path, X_OK) == 0)
 			return (free_split(paths), full_path);
-		free(full_path);
+		gc_single_free(shell, full_path);
 		i++;
 	}
 	free_split(paths);

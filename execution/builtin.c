@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/22 12:01:47 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/22 13:45:27 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 		split = ft_split(cmd_node->cmd->args[1], '=');
 		if (split && split[0])
 		{
-			export(shell, env, cmd_node->cmd->args[1]);
+			export(shell, env, cmd_node->cmd->args[1], split);
 			free_split(split);
 		}
 		else
 			return (fprintf(stderr, "ft_split failure"), 1);
+		// printf("exit: %d\n", shell->exit);
 	}
 	else if (cmd_node->cmd->built_in_name == BUILTIN_UNSET)
 		unset(env, cmd_node->cmd->args[1]);
@@ -119,29 +120,23 @@ void	cd(char *path, t_env *env, t_shell *shell)
 	}
 }
 
-// adds variable in shell: NAME=value
-// updates variable's value if it already exists
-// validate split
-
-// if export has no args print sorted env + env_array_without_value
-// declare -x PAGER="" -> bash if empty value
-// only adds value if = is present
-
-// doesn't work
-//  function to update value!!!
-
-void	export(t_shell *shell, t_env **env, char *arg)
+void	export(t_shell *shell, t_env **env, char *arg, char **split)
 {
 	char	*equal;
 	char	*name;
 	char	*value;
 
 	if (!arg)
-		return;
-	(void)shell;
+		return ;
 	equal = ft_strchr(arg, '=');
 	if (equal == NULL)
 	{
+		if (!check_export(arg) || arg[0] == '=')
+		{
+			shell->exit = 1;
+			fprintf(stderr, "'%s': not a valid identifier\n", arg);
+			return ;
+		}
 		if (!check_var(*env, arg))
 			append_variable(env, arg, NULL);
 		return;
@@ -149,47 +144,24 @@ void	export(t_shell *shell, t_env **env, char *arg)
 	name = ft_substr(arg, 0, equal - arg);
 	if (!name)
 		return;
+	if (!check_export(split[0]) || arg[0] == '=')
+	{
+		shell->exit = 1;
+		fprintf(stderr, "'%s': not a valid identifier\n", arg);
+		free(name);
+		return ;
+	}
 	value = ft_strdup(equal + 1);
 	if (!value)
 		return (free(name));
 	if (check_var(*env, name))
-		update_variable(shell, env, name, value);
+		update_variable(env, name, value);
 	else
 		append_variable(env, name, value);
 	free(name);
 	free(value);
 }
 
-
-// void	export(t_shell *shell, t_env **env, char **split, char *arg)
-// {
-// 	char	*equal;
-// 	char	*value;
-
-// 	if (!split || !split[0])
-// 	equal = ft_strchr(arg, '=');
-// 	value = NULL;
-// 	if (check_var(*env, split[0]) == 0)
-// 	{
-// 		if (equal == NULL)
-// 			value = NULL;
-// 		else if (equal != NULL && split[1] != NULL)
-// 			value = split[1];
-// 		else if (equal != NULL && split[1] == NULL)
-// 			value = "";
-// 		append_variable(shell, env, split[0], value);
-// 	}
-// 	else
-// 	{
-// 		if (equal == NULL)
-// 			value = NULL;
-// 		else if (equal != NULL && split[1] != NULL)
-// 			value = split[1];
-// 		else if (equal != NULL && split[1] == NULL)
-// 			value = "";
-// 		update_variable(shell, env, split[0], value);
-// 	}
-// }
 // removes variable in shell
 void	unset(t_env **env, char *rm_var)
 {
