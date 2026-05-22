@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:42:46 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/20 14:43:10 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/22 11:08:04 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,42 @@ int	ft_strcmp(char *a, char *b)
 	while (a[i] && b[i] && a[i] == b[i])
 		i++;
 	return ((unsigned char)a[i] - (unsigned char)b[i]);
+}
+
+char	*gc_strdup(t_shell *shell, const char *s1)
+{
+	size_t	size;
+	size_t	i;
+	char	*ptr;
+
+	i = 0;
+	size = ft_strlen(s1);
+	ptr = gc_malloc(shell, sizeof(char) * (size + 1));
+	if (!ptr)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
+}
+
+char	*gc_strjoin(t_shell *shell, char const *s1, char const *s2)
+{
+	int		len1;
+	int		len2;
+	char	*res;
+
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	res = gc_malloc(shell, sizeof(char) * (len1 + len2 + 1));
+	if (!res)
+		return (NULL);
+	if (s1)
+		ft_strlcpy(res, s1, len1 + 1);
+	if (s2)
+		ft_strlcpy(res + len1, s2, len2 + 1);
+	return (res);
 }

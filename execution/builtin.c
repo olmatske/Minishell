@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/21 17:05:41 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/22 11:49:49 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 	free_all(shell, env, cmd);
 	exit(exit_status);
 }
+
 void	ft_env(t_env **env)
 {
 	t_env *curr;
@@ -137,6 +138,7 @@ void	export(t_shell *shell, t_env **env, char *arg)
 
 	if (!arg)
 		return;
+	(void)shell;
 	equal = ft_strchr(arg, '=');
 	if (equal == NULL)
 	{
@@ -151,7 +153,7 @@ void	export(t_shell *shell, t_env **env, char *arg)
 	if (!value)
 		return (free(name));
 	if (check_var(*env, name))
-		update_variable(env, name, value);
+		update_variable(shell, env, name, value);
 	else
 		append_variable(shell, env, name, value);
 	free(name);

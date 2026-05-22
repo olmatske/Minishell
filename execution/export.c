@@ -64,7 +64,7 @@ void	print_export(char **arr)
 }
 ////////////////////////////////////////////////////////////////////////////////
 
-void	update_variable(t_env **env, char *name, char *value)
+void	update_variable(t_shell *shell, t_env **env, char *name, char *value)
 {
 	t_env	*curr;
 
@@ -75,7 +75,7 @@ void	update_variable(t_env **env, char *name, char *value)
 		{
 			free(curr->value);
 			if (value)
-				curr->value = ft_strdup(value);
+				curr->value = gc_strdup(shell, value);
 			else
 				curr->value = NULL;
 			return ;
@@ -89,10 +89,10 @@ void	append_variable(t_shell *shell, t_env **env, char *name, char *value)
 	t_env	*curr;
 	t_env	*new;
 
-	new = gc_malloc(shell, sizeof(t_env));
-	new->name = ft_strdup(name);
+	new = malloc(sizeof(t_env));
+	new->name = gc_strdup(shell, name);
 	if (value)
-		new->value = ft_strdup(value);
+		new->value = gc_strdup(shell, value);
 	else
 		new->value = NULL;
 	new->next = NULL;

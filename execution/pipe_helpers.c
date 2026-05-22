@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 13:24:58 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/16 13:06:09 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/22 11:05:16 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	redirect_output(int fd)
 void	execution(t_shell *shell, t_cmd_node *cmd, t_env **env)
 {
 	if (cmd->cmd->built_in_name == BUILTIN_NONE)
-		exec_external(cmd->cmd, *env);
+		exec_external(shell, cmd->cmd, *env);
 	else
 		wrapper_builtin(shell, cmd, env);
 }

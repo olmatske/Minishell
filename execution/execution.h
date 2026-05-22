@@ -6,14 +6,14 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/21 17:05:18 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/22 11:11:52 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-# define CNF	"Command not found\n"
+# define C	"Command not found\n"
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -48,7 +48,7 @@ void	unset(t_env **env, char *rm_var);
 int		exec_pipeline(t_shell *shell, t_cmd_node *cmd_list);
 
 // externals.c /////////////////////////////////////////////////////////////////
-int		exec_external(t_cmd *cmd, t_env *env);
+int	exec_external(t_shell *shell, t_cmd *cmd, t_env *env);
 void	free_split(char **str);
 
 // garbage_collector.c /////////////////////////////////////////////////////////
@@ -81,14 +81,17 @@ void	append(char **argv);
 void	append_variable(t_shell *shell, t_env **env, char *name, char *value);
 void	print_export(char **arr);
 int		check_var(t_env *env, char *var);
-void	update_variable(t_env **env, char *name, char *value);
+void	update_variable(t_shell *shell, t_env **env, char *name, char *value);
 char	**env_array_for_export(t_env *env);
 
 // builtin_echo.c //////////////////////////////////////////////////////////////
 void	echo(char **str);
 
 int		ft_strcmp(char *a, char *b);
+char	*gc_strjoin(t_shell *shell, char const *s1, char const *s2);
+char	*gc_strdup(t_shell *shell, const char *s1);
 t_env	*copy_of_env(t_env *env);
+void	free_env_list(t_env **head);
 
 #endif
 
