@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 12:39:56 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/12 14:51:48 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/25 19:04:25 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ static int	pipe_loop(t_pipex *p)
 	if (p->pids[p->i] == 0)
 	{
 		child_loop(p->i, p->cmd_count, p->pipe_fd, p->prev_read);
-		execution(p->shell, p->curr, p->shell->env);
-		exit(1);
+		if (p->curr->cmd->built_in_name == BUILTIN_NONE)
+			exec_external_child(p->shell, p->curr->cmd, *(p->shell->env));
+		exit(execution(p->shell, p->curr, p->shell->env));
 	}
 	else
 		parent_loop(p->i, p->cmd_count, p->pipe_fd, &p->prev_read);
@@ -73,8 +74,11 @@ int	exec_pipeline(t_shell *shell, t_cmd_node *cmd_list)
 {
 	t_pipex	*p;
 	int		status;
+	int		last_status;
 
 	p = pipex_init(shell, cmd_list);
+	if (!p)
+		return (1);
 	while (p->i < p->cmd_count)
 	{
 		if (pipe_loop(p) == 1)
@@ -82,12 +86,22 @@ int	exec_pipeline(t_shell *shell, t_cmd_node *cmd_list)
 		p->curr = p->curr->next;
 		p->i++;
 	}
+	last_status = 0;
 	p->i = 0;
 	while (p->i < p->cmd_count)
 	{
-		waitpid(p->pids[p->i], &status, 0);
+		if (waitpid(p->pids[p->i], &status, 0) == -1)
+			return (perror("waitpid"), 1);
+		if (p->i == p->cmd_count - 1)
+			last_status = status;
 		p->i++;
 	}
+	if (WIFEXITED(last_status))
+		shell->exit = WEXITSTATUS(last_status);
+	else if (WIFSIGNALED(last_status))
+		shell->exit = 128 + WTERMSIG(last_status);
+	else
+		shell->exit = 1;
+	update_shell_status(shell->env, shell);
 	return (0);
 }
-

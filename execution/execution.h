@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/25 15:36:18 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/25 19:00:16 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int		unset(t_env **env, char *rm_var);
 int		exec_pipeline(t_shell *shell, t_cmd_node *cmd_list);
 
 // externals.c /////////////////////////////////////////////////////////////////
-int	exec_external(t_shell *shell, t_cmd *cmd, t_env *env);
+int		exec_external(t_shell *shell, t_cmd *cmd, t_env *env);
+void	exec_external_child(t_shell *shell, t_cmd *cmd, t_env *env);
 void	free_split(char **str);
 
 // garbage_collector.c /////////////////////////////////////////////////////////
@@ -73,7 +74,7 @@ int		open_file(char *file, int mode);
 int		pipe_count(t_cmd_node *cmd_list);
 void	redirect_input(int fd);
 void	redirect_output(int fd);
-void	execution(t_shell *shell, t_cmd_node *cmd, t_env **env);
+int		execution(t_shell *shell, t_cmd_node *cmd, t_env **env);
 
 // redirections.c ////////////////////////////////////////////////////////////////
 void	wrapper(char **argv, t_cmd *cmd);
