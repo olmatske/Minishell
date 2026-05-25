@@ -7,14 +7,15 @@
 ### Functions
 - [X] built ins
 	- [X] cd
-#	- [X] echo
-#		- [ ] fix
+	- [X] echo
+		- [X] fix -n
 	- [X] echo -n (do not output the trailing newline)
 	- [X] env ([ ] redo and only use the env struct)
 #	- [X] export
-#		- [ ] fix updating variable if it exists
+#		- [X] fix updating variable if it exists
 	- [X] unset
-	- [ ] exit
+	- [X] exit
+#	- [ ] externals paths etc
 - [ ] expander
 - [ ] external functions
 - [ ] heredoc
@@ -32,35 +33,97 @@
 - [X] struct for built in commands
 -------------------------------------------------------------------------------
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ### Errors
-- [ ] externals leak (example: ls)
-- [ ] when writing "exit" it prints exit again
-- [ ] are args supposed to have the builtin in them??
-- [ ] wrong command doesn't work (example: rxiy)
-- [ ] echo -n: -n is in args and not initialized
+- [X] externals leak (example: ls)
+- [X] when writing "exit" it prints exit again
+	- [X] leaks
+- [X] are args supposed to have the builtin in them??
+	-> yes, kind of
+- [X] wrong command doesn't work (example: rxiy)
+	- [X] leaks
+- [X] echo -n: -n is in args and not initialized
+	 -> supposed to be this way, added checker in echo function
+- [X] cd not working
+- [X] env does not get updated and prints garbage like ?=0 -> that's the exit, not supposed to be printed, isn't garbage either
+- [X] fix export behaviour: "declare -x "
+- [X] bash export and minishell export differs
+- [X] Minishell$ echo "hi hello hiii" | cat -e >>>>>>> LEAKS!!!
+	-> idk what I did but I fixed it, exit leaks because of shell status
+	- [X] exitting afterwards leaks too!!
+- [X] exit leaks like crazy
+	-> likely because of the uninitialized shell exit status
+- [X] just cd does not rerout to $HOME
+- [X] echo status must be 1 if cd nonexistentpath
+- [ ] export PATH -> declare -x PATH (no ="")
+- [X] pipes don't work apparently (env | grep TEST) -> they do
+- [ ] fix export so that it sees the difference between export PATH and export PATH= !!
+- [X] env gets permanently sorted after export
+- [ ] exit 1 1 2 works, exit abc also works -> too many arguments / numeric argument required
+- [X] grep "NAME" goes into infinite loop
+		~/42/Minishell (execution*) » ./minishell                                               oli@Olgas-MacBook-Air
+		Minishell$ grep "NAME" Makefile
+		NAME = minishell
+		all: $(NAME)
+		$(NAME): $(OBJECTS) $(LIBFT)
+				$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -o $(NAME) -lreadline
+				$(RM) $(NAME) $(OBJECTS)
+		Minishell$ 
+- [ ] why does the tester fail on exit codes when everythings fine>??
+- [ ] echo "overwrite" > test.txt -> no output
+- [ ] > doesn't appear to be working, doesn't make a new file
+- [ ] when doing echo and a pipe it still prints with echo
+- [ ] >> doesn't seem to be working
+- [ ] cat < nonexistent.txt goes into infinite loop
+- [ ] heredoc is missing
+- [ ] echo "first" > out.tct < in.txt   oli@Olgas-MacBook-Air zsh: no such file or directory: in.txt
+- [ ] > test.txt goes into infinite loop
+		-> smth wrong with redirections...
+# - [ ] echo "fail" > dev/full -> /dev/full: No space left on device 
+- [ ] cat > > -> syntax error near unexpected token '>'
+- [ ] exits!!!
+- [ ] update old pwd and new pwd in env after calling cd !!!
+- [ ] apparently storing exit code in env is wrong
+- [ ] Minishell$ echo $?
+			     0
+				 Minishell$ ls nonexistent; echo $?
+				 ls: 0: No such file or directory
+				 ls: echo: No such file or directory
+				 ls: nonexistent;: No such file or directory
+- [ ] ~/42/Minishell (execution*) » ./minishell
+									Minishell$ sdsgs
+									hello         
+									Minishell$ sdsgshello
+									Command not found
+									Minishell$ 
+									^C
+									^C
+									^C
+									osfjh
+									Minishell$ osfjh
+									Command not found
+									Minishell$
+- [ ] Ctrl+\ doesn't work
+- [ ] Minishell$ echo $HOME
+					/Users/oli
+				 Minishell$ echo $NO
+				 Minishell$ $NO
+				 Minishell$ $HOME
+					execve
+				 Minishell$ $USER
+		
+- [ ] Minishell$ pwd
+				/Users/oli/42/Minishell
+				curr status: 0
+				shell status: 0
+				Minishell$ $?
+				0: Command not found
+				curr status: 0
+				shell status: 0
+				Minishell$ Minishell$  <------ !!! when pressing down key
+				Minishell$ 
 
-
-~/Curriculum/Minishell (execution*) » ./minishell                                                                                                                                                                                                                                                                                       olmatske@3-F-12
-Minishell$ echo hi hello
-hi hello
-Minishell$ echo -n hi hello
--n hi hello
-Minishell$ exit
-
-=================================================================
-==229973==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 24 byte(s) in 1 object(s) allocated from:
-    #0 0x49a23d in malloc (/home/olmatske/Curriculum/Minishell/minishell+0x49a23d)
-    #1 0x4cb6be in minishell_loop /home/olmatske/Curriculum/Minishell/minishell.c:35:10
-    #2 0x4cb548 in main /home/olmatske/Curriculum/Minishell/minishell.c:73:2
-    #3 0x77288c229d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-
-SUMMARY: AddressSanitizer: 24 byte(s) leaked in 1 allocation(s).
-
-
-
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ### Roadmap
 - [X] start with: echo hi (> hi.txt)

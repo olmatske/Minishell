@@ -6,7 +6,7 @@
 #    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/05/10 13:19:06 by olmatske         ###   ########.fr        #
+#    Updated: 2026/05/22 12:28:27 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,11 @@ EXECUTION =	execution/builtin.c \
 			execution/garbage_collector.c \
 			execution/orchestrator.c \
 			execution/pipe_helpers.c \
-			execution/redirections.c
+			execution/redirections.c \
+			execution/export.c \
+			execution/builtin_echo.c \
+			execution/helpers.c \
+			execution/checkers.c
 
 GNL =		get_next_line/get_next_line.c \
 			get_next_line/get_next_line_utils.c

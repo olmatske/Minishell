@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:09:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 13:15:47 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/22 10:00:09 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int create_file(char *filename)
 	}
 	return (0);
 }
-// open(file_name, O_CREAT | O_WRONLY | O_TRUNC, 0644)
 
 // cat < file.txt outputs file content to shell
 void input(int fd)
@@ -81,21 +80,3 @@ void append(char **argv)
 
 	write(fd, text, ft_strlen(text));
 }
-
-
-
-
-
-
-
-
-	// int fd;
-	// if (argc <= 2)
-	// {
-	// 	printf("not enough arguments");
-	// 	return (1);
-	// }
-	// if (argc == 3)
-		
-	// fd = open(argv[1], O_RDONLY);
-	// input(fd);

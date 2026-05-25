@@ -6,13 +6,13 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:57:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 15:50:38 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/25 16:03:20 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+#include "../minishell.h"
 
-// add shell loop to minishell.h !!!!!!!!!!!!
 int	shell_loop(t_shell *shell, t_cmd_node *cmd_list)
 {
 	if (!cmd_list)
@@ -22,22 +22,53 @@ int	shell_loop(t_shell *shell, t_cmd_node *cmd_list)
 	return (exec_single_cmd(shell, *shell->env, cmd_list));
 }
 
-// add shell struct
-
-int	exec_single_cmd(t_shell *shell, t_env *environment, t_cmd_node *cmd_list)
+int	exec_single_cmd(t_shell *shell, t_env *env, t_cmd_node *cmd_list)
 {
+	int	status;
+
+		status = 0;
 	if (cmd_list->cmd->built_in_name == BUILTIN_NONE)
-		return (exec_external(cmd_list->cmd, environment));
-	return (wrapper_builtin(shell, cmd_list, &environment));
+		status = exec_external(shell, cmd_list->cmd, env);
+	else
+		status = wrapper_builtin(shell, cmd_list, shell->env);
+	shell->exit = status;
+	update_shell_status(shell->env, shell);
+	return (status);
 }
+
+// void	free_env(t_env **env)
+// {
+// 	t_env	*curr;
+// 	t_env	*next;
+
+// 	if (env == NULL || (*env) == NULL)
+// 		return ;
+// 	curr = *env;
+// 	while (curr)
+// 	{
+// 		next = curr->next;
+// 		if (curr->name)
+// 			free(curr->name);
+// 		if (curr->value)
+// 			free(curr->value);
+// 		if (curr)
+// 			free(curr);
+// 		curr = next;
+// 	}
+// 	*env = NULL;
+// }
 
 void	free_all(t_shell *shell, t_env **env, t_cmd_node *cmd)
 {
+	(void)env;
 	if (cmd)
 		free_cmd_list(cmd);
-	gc_free_all(shell);
+	if (shell)
+		gc_free_all(shell);
 	if (shell)
 		free(shell);
-	if (env)
-		free_env_list(env);
+	// if (env)
+	// 	free_env_list(env);
 }
+
+

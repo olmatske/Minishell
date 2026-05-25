@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 13:24:58 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 12:40:14 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/25 18:39:38 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,59 +67,9 @@ void	redirect_output(int fd)
 	}
 }
 
-// delete / change later
-void	execution(t_cmd *cmd, t_env **env)
+int	execution(t_shell *shell, t_cmd_node *cmd, t_env **env)
 {
-	(void)cmd;
-	(void)env;
-	// char	*command_path;
-	// char	**command;
-
-	// command = ft_split(cmd->args, ' ');
-	// if (command == NULL)
-	// 	ft_perror("command");
-	// if (command[0] == NULL)
-	// {
-	// 	ft_free_array(command);
-	// 	ft_error("Command not found", 127);
-	// }
-	// command_path = find_command_path(command[0], env);
-	// if (command_path == NULL)
-	// {
-	// 	ft_free_array(command);
-	// 	ft_error("Command not found", 127);
-	// }
-	// execve(command_path, command, env);
-	// perror(command[0]);
-	// ft_free_array(command);
-	// free(command_path);
-	// exit(126);
+	if (cmd->cmd->built_in_name == BUILTIN_NONE)
+		return (exec_external(shell, cmd->cmd, *env));
+	return (wrapper_builtin(shell, cmd, env));
 }
-
-// void	execute_piped_cmd(char *cmd, char **envp)
-// {
-// 	char	*command_path;
-// 	char	**command;
-
-// 	command = ft_split(cmd, ' ');
-// 	if (command == NULL)
-// 		perror("command");
-// 	if (command[0] == NULL)
-// 	{
-// 		free(command);
-// 		perror("Command not found");
-// 		exit(127);
-// 	}
-// 	command_path = find_command_path(command[0], envp);
-// 	if (command_path == NULL)
-// 	{
-// 		free(command);
-// 		perror("Command not found");
-// 		exit(127);
-// 	}
-// 	execve(command_path, command, envp);
-// 	perror(command[0]);
-// 	ft_free_array(command);
-// 	free(command_path);
-// 	exit(126);
-// }

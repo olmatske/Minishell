@@ -6,107 +6,172 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 15:36:51 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/25 19:00:23 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-// Absolute path: /bin/ls, /usr/bin/env. Starts with /; execute directly.
-
-// Relative path: ./a.out, ../prog, dir/tool. Contains /; execute directly.
-
-// Bare command: ls, cat, grep. Contains no /; search PATH
-
-
-static int	decide_path(t_cmd cmd);
-static char *resolve_path(t_cmd *cmd, t_env *env);
-
-int exec_external(t_cmd *cmd, t_env *env)
+static int	decide_path(t_cmd *cmd)
 {
-	char	*path;
-	char	**env_array;
-	// char	*str[] = {"./hi.sh", NULL};
-	char	*str[] = {"ls", NULL};
-	int		id;
+	char	*arg;
 
-	cmd->args = str;
-	cmd->built_in_name = BUILTIN_UNSET;
-	env_array = env_array_for_execution(env);
-	id = 0;
-
-	if (decide_path(*cmd) == 1)
-	{
-		if (access(cmd->args[0], X_OK) != 0)
-			return(perror("access"), 1);
-		id = fork();
-		if (id < 0)
-			return(perror("fork"), 1);
-		if (id == 0)
-		{
-			execve(cmd->args[0], cmd->args, env_array);
-			perror("execve");
-		}
-	}
-	else
-	{
-		path = resolve_path(cmd, env);
-		if (path)
-			return(perror("no path like that"), 1);
-		// execve(path, cmd->args, env);
-	}
-	return (0);
+	if (!cmd || !cmd->args)
+		return (0);
+	arg = cmd->args[0];
+	if (!arg || arg[0] == '\0')
+		return (0);
+	return (ft_strchr(arg, '/') != NULL);
 }
 
-static int	decide_path(t_cmd cmd)
+char	*get_path_value(char **env)
 {
-	// int	pid;
-	// char *path;
+	int	i;
 
-	// pid = 0;
-	if (cmd.args[0][0] == '/' || (cmd.args[0][0] == '.' && cmd.args[0][1] == '/'))
-		return (1);
-	else
-		return (2);
-	// path = ft_strchr(cmd.args[0], '/');
-	// printf("Path: %s\n", path);
-	// return (3);
-}
-
-
-static char *resolve_path(t_cmd *cmd, t_env *env)
-{
-	(void)cmd;
-	(void)env;
-	// int	i;
-	// char *path;
-
-	// i = 0;
-	// while (env[i])
-	// {
-	// 	path = ft_strnstr(env[i], ":", ft_strlen(envp[i]));
-	// 	printf("%d: %s\n", i, path);
-	// 	path = ft_strjoin(path, cmd->args[0]);
-	// 	if (access(path, X_OK) != 0)
-	// 	{
-	// 		free(path);
-	// 		i++;
-	// 	}
-	// 	else
-	// 		return (printf("Found path: %s\n", path), path);
-
-	// }
+	i = 0;
+	if (!env)
+		return (NULL);
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+			return (env[i] + 5);
+		i++;
+	}
 	return (NULL);
 }
 
+static char	*join_path(t_shell *shell, char *dir, char *cmd)
+{
+	char	*tmp;
+	char	*full;
+
+	if (!dir || dir[0] == '\0')
+		return (gc_strjoin(shell, "./", cmd));
+	tmp = gc_strjoin(shell, dir, "/");
+	if (!tmp)
+		return (NULL);
+	full = gc_strjoin(shell, tmp, cmd);
+	return (full);
+}
+
+void	free_split(char **str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+
+static char *resolve_path(t_shell *shell, t_cmd *cmd, char **env)
+{
+	char	*path_value;
+	char	**paths;
+	char	*full_path;
+	int		i;
+
+	i = 0;
+	path_value = get_path_value(env);
+	if (!path_value || !cmd || !cmd->args || !cmd->args[0])
+		return (NULL);
+	paths = ft_split(path_value, ':');
+	if (!paths)
+		return (NULL);
+	while (paths[i])
+	{
+		full_path = join_path(shell, paths[i], cmd->args[0]);
+		if (full_path && access(full_path, X_OK) == 0)
+			return (free_split(paths), full_path);
+		gc_single_free(shell, full_path);
+		i++;
+	}
+	free_split(paths);
+	return (NULL);
+}
+
+int	exec_external(t_shell *shell, t_cmd *cmd, t_env *env)
+{
+	char	*path;
+	char	**arr;
+	int		pid;
+	int		status;
+	int		mpath;
+
+	arr = env_array_for_execution(env);
+	if (!arr)
+		return (fprintf(stderr, "%s malloc failure/n", M), 1);
+	path = NULL;
+	mpath = 0;
+	if (decide_path(cmd))
+		path = cmd->args[0];
+	else
+	{
+		path = resolve_path(shell, cmd, arr);
+		mpath = 1;
+	}
+	if (!path)
+		return (free_split(arr), fprintf(stderr, "%s: %s", cmd->args[0], C), 1);
+	pid = fork();
+	if (pid < 0)
+	{
+		if (mpath)
+			free(path);
+		return (free_split(arr), fprintf(stderr, "%s fork failure\n", M), 1);
+	}
+	if (pid == 0)
+	{
+		execve(path, cmd->args, arr);
+		fprintf(stderr, "%s %s: %s\n", M, path, strerror(errno));
+		if (errno == EACCES || errno == EISDIR)
+			exit(126);
+		else
+			exit(127);
+	}
+	waitpid(pid, &status, 0);
+	if (mpath)
+		free(path);
+	free_split(arr);
+	return (0);
+}
+
+void	exec_external_child(t_shell *shell, t_cmd *cmd, t_env *env)
+{
+	char	*path;
+	char	**arr;
+	int		mpath;
+
+	arr = env_array_for_execution(env);
+	if (!arr)
+		exit(1);
+	path = NULL;
+	mpath = 0;
+	if (decide_path(cmd))
+		path = cmd->args[0];
+	else
+	{
+		path = resolve_path(shell, cmd, arr);
+		mpath = 1;
+	}
+	if (!path)
+	{
+		free_split(arr);
+		fprintf(stderr, "%s: %s", cmd->args[0], C);
+		exit (127);
+	}
+	execve(path, cmd->args, arr);
+	fprintf(stderr, "%s %s: %s\n", M, path, strerror(errno));
+	if (mpath)
+		free(path);
+	free_split(arr);
+	if (errno == EACCES || errno == EISDIR)
+		exit (126);
+	exit (127);
+}
 
 
-// Resolve the path.
-
-// Check it with access(path, X_OK) or access(path, F_OK) depending on what you want to know.
-
-// If it passes, fork().
-
-// In the child, call execve().
-
-// In the parent, waitpid().

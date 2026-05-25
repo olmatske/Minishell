@@ -16,6 +16,12 @@
 # GNL_DIR = ./get_next_line
 
 # SOURCES = externals.c \
+# 	builtin.c \
+# 	executor.c \
+# 	garbage_collector.c \
+# 	orchestrator.c \
+# 	pipe_helpers.c \
+# 	redirections.c \
 # 	$(GNL_DIR)/get_next_line.c \
 # 	$(GNL_DIR)/get_next_line_utils.c
 

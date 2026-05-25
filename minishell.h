@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/10 15:22:35 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/22 14:52:09 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@
 # include "get_next_line/get_next_line.h"
 # include "./libft/libft.h"
 // # include "./execution/execution.h"
+
+#ifdef __APPLE__
+# ifndef rl_clear_history
+#  define rl_clear_history clear_history
+# endif
+#endif
 
 extern int	g_signal;
 
@@ -99,6 +105,7 @@ int			main(int argc, char **argv, char **envp);
 t_env		*shell_env(char **envp);
 t_cmd_node	*main_parsing(char *line, t_env *copied_env);
 char		**env_array_for_execution(t_env *copied_env);
+char		**env_array_without_value(t_env *copied_env);
 char		**free_env_array(char **env_array);
 void		ft_error(char *s, int exit_code);
 void		ft_perror(char *s);
@@ -111,5 +118,7 @@ int			env_list_length(t_env *head);
 ////////////////////////////////////////////////////////////////////////////////
 int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);
 void		free_all(t_shell *shell, t_env **env, t_cmd_node *cmd);
+int			ft_strcmp(char *a, char *b);
+void		update_shell_status(t_env **env, t_shell *shell);
 ////////////////////////////////////////////////////////////////////////////////
 #endif
