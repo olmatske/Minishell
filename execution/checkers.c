@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 12:15:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/23 19:29:45 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/25 15:58:19 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	check_export(char *str)
 	if (!str || !str[0])
 		return (0);
 	i = 0;
-	if (!ft_isalnum(str[i]) && str[i] != '_')
+	if (!ft_isalpha(str[i]) && str[i] != '_')
 		return (0);
 	while (str[i])
 	{
@@ -41,6 +41,5 @@ void	update_shell_status(t_env **env, t_shell *shell)
 		append_variable(env, "?", curr_status);
 	else
 		update_variable(env, "?", curr_status);
-	printf("curr status: %s\nshell status: %d\n", curr_status, shell->exit);
 	free(curr_status);
 }

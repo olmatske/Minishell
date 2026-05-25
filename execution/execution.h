@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/23 19:32:59 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/25 15:36:18 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # define C	"Command not found\n"
 # define M	"Minishell:"
+# define I	"not a valid identifier"
+# define A	"too many arguments"
+# define FD	"No such file or directory"
+# define N	"numeric argument required"
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -37,13 +41,13 @@ int main(int argc, char **argv, char **envp);
 
 // builtin.c ///////////////////////////////////////////////////////////////////
 int		wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env);
-void	echo(char **str);
-void	pwd(void);
-void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd);
-void	ft_env(t_env **env);
-void	cd(char *path, t_env *env, t_shell *shell);
-void	export(t_shell *shell, t_env **env, char *arg, char **split);
-void	unset(t_env **env, char *rm_var);
+int		echo(char **str);
+int		pwd(void);
+int		ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd);
+int		ft_env(t_env **env);
+int		cd(char **path, t_env *env, t_shell *shell);
+int		export(t_shell *shell, t_env **env, char *arg, char **split);
+int		unset(t_env **env, char *rm_var);
 
 // executor.c //////////////////////////////////////////////////////////////////
 int		exec_pipeline(t_shell *shell, t_cmd_node *cmd_list);
@@ -86,12 +90,13 @@ void	update_variable(t_env **env, char *name, char *value);
 char	**env_array_for_export(t_env *env);
 
 // builtin_echo.c //////////////////////////////////////////////////////////////
-void	echo(char **str);
+int		echo(char **str);
 
 // checkers.c //////////////////////////////////////////////////////////////////
 int		check_export(char *str);
 
 int		ft_strcmp(char *a, char *b);
+int		isnumstr(const char *str);
 t_env	*copy_of_env(t_env *env);
 void	free_env_list(t_env **head);
 

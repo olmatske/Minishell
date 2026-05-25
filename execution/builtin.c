@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/23 19:35:38 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/25 15:56:16 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,22 @@
 int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 {
 	char **split;
+	int		exit;
 
 	split = NULL;
+	exit = 0;
 	if (cmd_node->cmd->built_in_name == BUILTIN_NONE)
 		return (0);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_ECHO)
-		echo(cmd_node->cmd->args);
+		exit = echo(cmd_node->cmd->args);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_PWD)
-		pwd();
+		exit = pwd();
 	else if (cmd_node->cmd->built_in_name == BUILTIN_EXIT)
-		ft_exit(shell, env, cmd_node);
+		exit = ft_exit(shell, env, cmd_node);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_ENV)
-		ft_env(env);
+		exit = ft_env(env);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_CD)
-		cd(cmd_node->cmd->args[1], *env, shell);
+		exit = cd(cmd_node->cmd->args, *env, shell);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_EXPORT)
 	{
 		if (!cmd_node->cmd->args[1])
@@ -36,35 +38,57 @@ int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 		split = ft_split(cmd_node->cmd->args[1], '=');
 		if (split && split[0])
 		{
-			export(shell, env, cmd_node->cmd->args[1], split);
+			exit = export(shell, env, cmd_node->cmd->args[1], split);
 			free_split(split);
 		}
 		else
-			return (fprintf(stderr, "%s ft_split failure", M), 1);
+		{
+			return (fprintf(stderr, "%s %s", M, I), 1);
+		}
 	}
 	else if (cmd_node->cmd->built_in_name == BUILTIN_UNSET)
-		unset(env, cmd_node->cmd->args[1]);
-	return (0);
+		exit = unset(env, cmd_node->cmd->args[1]);
+	// printf("DEBUG WRAPPER: exit: %d\n", exit);
+	return (exit);
 }
 
-void	pwd(void)
+int	pwd(void)
 {
 	char *path = getcwd(NULL, 0);
 
+	if (!path)
+	{
+		perror("pwd");
+		return (1);
+	}
 	if (path)
 	{
 		printf("%s\n", path);
 		free(path);
 	}
-	return;
+	return (0);
 }
 
-void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
+int	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 {
 	int	exit_status;
 
-	if (!cmd->cmd->args || !cmd->cmd->args[1])
+	printf("exit\n");
+	if (!cmd->cmd->args[1])
 		exit_status = shell->exit;
+	else if (!isnumstr(cmd->cmd->args[1]))
+	{
+		fprintf(stderr, "%s %s: %s\n", M, cmd->cmd->args[1], N);
+		rl_clear_history();
+		free_all(shell, env, cmd);
+		exit (2);
+	}
+	else if (cmd->cmd->args[2])
+	{
+		exit_status = 1;
+		fprintf(stderr, "%s %s\n", M, A);
+		return (1);
+	}
 	else
 		exit_status = ft_atoi(cmd->cmd->args[1]);
 	rl_clear_history();
@@ -72,7 +96,7 @@ void	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 	exit(exit_status);
 }
 
-void	ft_env(t_env **env)
+int	ft_env(t_env **env)
 {
 	t_env *curr;
 
@@ -82,7 +106,7 @@ void	ft_env(t_env **env)
 		if ((curr->name && ft_strncmp(curr->name, "?", 2) == 0) || curr->value == NULL)
 		{
 			if (curr->next == NULL)
-				return ;
+				return (1);
 			curr = curr->next;
 			continue;
 		}
@@ -90,85 +114,90 @@ void	ft_env(t_env **env)
 		curr = curr->next;
 	}
 	printf("\n");
+	return (0);
 }
 
-void	cd(char *path, t_env *env, t_shell *shell)
+int	cd(char **path, t_env *env, t_shell *shell)
 {
 	t_env *curr;
 
 	curr = env;
-	if (!path || !ft_strcmp(path, "~"))
+	if (path[2])
+		return (fprintf(stderr, "%s cd: %s\n", M, A), 1);
+	if (!path || !ft_strcmp(path[1], "~"))
 	{
 		while (curr)
 		{
 			if (!ft_strcmp(curr->name, "HOME"))
 			{
-				path = curr->value;
+				path = &curr->value;
 				break;
 			}
 			curr = curr->next;
 		}
-		if (!path)
-			printf("%s HOME not set\n", M);
+		if (!path[1])
+			fprintf(stderr, "%s HOME not set\n", M);
 	}
-	if (chdir(path) == -1)
+	if (chdir(path[1]) == -1)
 	{
-		fprintf(stderr, "%s cd: no such file or directory: %s\n", M, path);
+		fprintf(stderr, "%s %s: cd: %s\n", M, path[1], FD);
 		shell->exit = 1;
-		return ;
+		return (1);
 	}
+	return (0);
 }
 
-void	export(t_shell *shell, t_env **env, char *arg, char **split)
+int	export(t_shell *shell, t_env **env, char *arg, char **split)
 {
 	char	*equal;
 	char	*name;
 	char	*value;
 
 	if (!arg)
-		return ;
+		return (1);
 	equal = ft_strchr(arg, '=');
 	if (equal == NULL)
 	{
 		if (!check_export(arg) || arg[0] == '=')
 		{
 			shell->exit = 1;
-			fprintf(stderr, "%s '%s': not a valid identifier\n", M, arg);
-			return ;
+			fprintf(stderr, "%s '%s': %s\n", M, arg, I);
+			return (1);
 		}
 		if (!check_var(*env, arg))
 			append_variable(env, arg, NULL);
-		return;
+		return (0);
 	}
 	name = ft_substr(arg, 0, equal - arg);
 	if (!name)
-		return;
+		return (1);
 	if (!check_export(split[0]) || arg[0] == '=')
 	{
 		shell->exit = 1;
-		fprintf(stderr, "%s '%s': not a valid identifier\n", M, arg);
+		fprintf(stderr, "%s '%s': %s\n", M, arg, I);
 		free(name);
-		return ;
+		return (1);
 	}
 	value = ft_strdup(equal + 1);
 	if (!value)
-		return (free(name));
+		return (free(name), 1);
 	if (check_var(*env, name))
 		update_variable(env, name, value);
 	else
 		append_variable(env, name, value);
 	free(name);
 	free(value);
+	return (0);
 }
 
 // removes variable in shell
-void	unset(t_env **env, char *rm_var)
+int	unset(t_env **env, char *rm_var)
 {
 	t_env	*curr;
 	t_env	*prev;
 
 	if (!env || !*env || !rm_var)
-		return ;
+		return (0);
 	curr = *env;
 	prev = NULL;
 	while (curr)
@@ -180,7 +209,7 @@ void	unset(t_env **env, char *rm_var)
 		curr = curr->next;
 	}
 	if (!curr)
-		return ;
+		return (0);
 	if (!prev)
 		*env = curr->next;
 	else
@@ -188,5 +217,6 @@ void	unset(t_env **env, char *rm_var)
 	free(curr->name);
 	free(curr->value);
 	free(curr);
+	return (0);
 }
 

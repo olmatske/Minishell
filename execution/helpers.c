@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:42:46 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/22 14:40:16 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/25 15:52:05 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,19 @@ char	*gc_strjoin(t_shell *shell, char const *s1, char const *s2)
 	return (res);
 }
 
-
+int	isnumstr(const char *str)
+{
+	if (!str || !str[0])
+		return (0);
+	if (*str == '+' || *str == '-')
+		str++;
+	if (!str)
+		return (0);
+	while (*str)
+	{
+		if (!ft_isdigit(*(unsigned char *)str))
+			return (0);
+		str++;
+	}
+	return (1);
+}

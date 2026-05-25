@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:57:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/23 19:29:37 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/25 16:03:20 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	exec_single_cmd(t_shell *shell, t_env *env, t_cmd_node *cmd_list)
 	if (cmd_list->cmd->built_in_name == BUILTIN_NONE)
 		status = exec_external(shell, cmd_list->cmd, env);
 	else
-		wrapper_builtin(shell, cmd_list, shell->env);
+		status = wrapper_builtin(shell, cmd_list, shell->env);
+	shell->exit = status;
 	update_shell_status(shell->env, shell);
 	return (status);
 }

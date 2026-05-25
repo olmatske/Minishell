@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 13:41:29 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/23 19:38:38 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/25 14:16:29 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	echo_n_check(char **str)
 	return (found);
 }
 
-void	echo(char **str)
+int	echo(char **str)
 {
 	int	i;
 	int	n;
@@ -57,4 +57,5 @@ void	echo(char **str)
 	}
 	if (!n)
 		printf("\n");
+	return (0);
 }
