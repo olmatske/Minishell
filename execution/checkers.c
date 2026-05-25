@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 12:15:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/22 14:59:47 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/23 19:29:45 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ void	update_shell_status(t_env **env, t_shell *shell)
 	curr_status = ft_itoa(shell->exit);
 	if (!curr_status)
 		return ;
-	update_variable(env, "?", curr_status);
+	if (!check_var(*env, "?"))
+		append_variable(env, "?", curr_status);
+	else
+		update_variable(env, "?", curr_status);
+	printf("curr status: %s\nshell status: %d\n", curr_status, shell->exit);
 	free(curr_status);
 }

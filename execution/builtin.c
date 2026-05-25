@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/22 13:45:27 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/23 19:35:38 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 			free_split(split);
 		}
 		else
-			return (fprintf(stderr, "ft_split failure"), 1);
-		// printf("exit: %d\n", shell->exit);
+			return (fprintf(stderr, "%s ft_split failure", M), 1);
 	}
 	else if (cmd_node->cmd->built_in_name == BUILTIN_UNSET)
 		unset(env, cmd_node->cmd->args[1]);
@@ -110,11 +109,11 @@ void	cd(char *path, t_env *env, t_shell *shell)
 			curr = curr->next;
 		}
 		if (!path)
-			printf("HOME not set\n");
+			printf("%s HOME not set\n", M);
 	}
 	if (chdir(path) == -1)
 	{
-		fprintf(stderr, "cd: no such file or directory: %s\n", path);
+		fprintf(stderr, "%s cd: no such file or directory: %s\n", M, path);
 		shell->exit = 1;
 		return ;
 	}
@@ -134,7 +133,7 @@ void	export(t_shell *shell, t_env **env, char *arg, char **split)
 		if (!check_export(arg) || arg[0] == '=')
 		{
 			shell->exit = 1;
-			fprintf(stderr, "'%s': not a valid identifier\n", arg);
+			fprintf(stderr, "%s '%s': not a valid identifier\n", M, arg);
 			return ;
 		}
 		if (!check_var(*env, arg))
@@ -147,7 +146,7 @@ void	export(t_shell *shell, t_env **env, char *arg, char **split)
 	if (!check_export(split[0]) || arg[0] == '=')
 	{
 		shell->exit = 1;
-		fprintf(stderr, "'%s': not a valid identifier\n", arg);
+		fprintf(stderr, "%s '%s': not a valid identifier\n", M, arg);
 		free(name);
 		return ;
 	}

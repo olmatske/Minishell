@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/22 13:41:26 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/23 19:32:59 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EXECUTION_H
 
 # define C	"Command not found\n"
+# define M	"Minishell:"
 
 #include <stdlib.h>
 #include <unistd.h>

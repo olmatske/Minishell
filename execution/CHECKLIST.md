@@ -111,6 +111,17 @@
 				 Minishell$ $HOME
 					execve
 				 Minishell$ $USER
+		
+- [ ] Minishell$ pwd
+				/Users/oli/42/Minishell
+				curr status: 0
+				shell status: 0
+				Minishell$ $?
+				0: Command not found
+				curr status: 0
+				shell status: 0
+				Minishell$ Minishell$  <------ !!! when pressing down key
+				Minishell$ 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 

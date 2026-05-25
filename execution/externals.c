@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/22 14:50:36 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/23 19:40:32 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	exec_external(t_shell *shell, t_cmd *cmd, t_env *env)
 
 	arr = env_array_for_execution(env);
 	if (!arr)
-		return (fprintf(stderr, "malloc failure/n"), 1);
+		return (fprintf(stderr, "%s malloc failure/n", M), 1);
 	path = NULL;
 	mpath = 0;
 	if (decide_path(cmd))
@@ -122,12 +122,12 @@ int	exec_external(t_shell *shell, t_cmd *cmd, t_env *env)
 	{
 		if (mpath)
 			free(path);
-		return (free_split(arr), fprintf(stderr, "fork\n"), 1);
+		return (free_split(arr), fprintf(stderr, "%s fork failure\n", M), 1);
 	}
 	if (pid == 0)
 	{
 		execve(path, cmd->args, arr);
-		fprintf(stderr, "%s: %s\n", path, strerror(errno));
+		fprintf(stderr, "%s %s: %s\n", M, path, strerror(errno));
 		if (errno == EACCES || errno == EISDIR)
 			exit(126);
 		else

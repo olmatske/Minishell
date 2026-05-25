@@ -108,6 +108,7 @@ void	append_variable(t_env **env, char *name, char *value)
 	}
 }
 
+// returns 1 if the variable is present, 0 if it is not
 int	check_var(t_env *env, char *var)
 {
 	t_env	*curr;
