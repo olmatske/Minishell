@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/25 19:00:16 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/26 09:55:53 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,11 @@ void	redirect_output(int fd);
 int		execution(t_shell *shell, t_cmd_node *cmd, t_env **env);
 
 // redirections.c ////////////////////////////////////////////////////////////////
-void	wrapper(char **argv, t_cmd *cmd);
-int		create_file(char *filename);
-void	input(int fd);
-void	overwrite(char **text);
-void	append(char **argv);
+int		wrapper_redirections(t_redir *redir);
+// int		create_file(char *filename);
+// void	input(int fd);
+// void	overwrite(char **text);
+// void	append(char **argv);
 
 // export.c /////////////////////////////////////////////////////////////////////
 void	append_variable(t_env **env, char *name, char *value);
@@ -113,7 +113,7 @@ char	*gc_strjoin(t_shell *shell, char const *s1, char const *s2);
 
 
 // typedef enum e_out_type {
-// 	OUT_NONE,
+// 	IN_FILE,
 // 	OUT_APPEND,
 // 	OUT_OVERWRITE
 // }	t_out_type;

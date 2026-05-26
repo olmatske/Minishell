@@ -6,77 +6,74 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:09:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/22 10:00:09 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/26 10:33:19 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-void wrapper(char **argv, t_cmd *cmd)
+// cat < file.txt outputs file content to shell
+static int	input(int fd)
 {
-	if (cmd->redir->out_type == OUT_NONE)
-		input(open(argv[1], O_RDONLY));
-	else if (cmd->redir->out_type == OUT_OVERWRITE)
-		overwrite(argv);
-	else if (cmd->redir->out_type == OUT_APPEND)
-		append(argv);
-}
-
-int create_file(char *filename)
-{
-	int		fd;
-	
-	fd = open(filename, O_CREAT | O_RDWR, 0644);
 	if (fd < 0)
-	{
-		perror("open");
-		return (1);
-	}
-	if (close(fd) < 0)
-	{
-		perror("close");
-		return (1);
-	}
+		return (perror("infile fd:"), 1);
+	if (dup2(fd, STDIN_FILENO) < 0)
+		return (perror("infile dup2:"), 1);
+	close(fd);
 	return (0);
 }
 
-// cat < file.txt outputs file content to shell
-void input(int fd)
+static int	overwrite(int fd)
 {
-	char	*line;
-
-	line = get_next_line(fd);
-	while (line)
-	{
-		if (line == NULL)
-		{
-			perror("Error:");
-			return;
-		}
-		printf("%s", line);
-		free(line);
-		line = get_next_line(fd);
-	}
+	if (fd < 0)
+		return (perror("overwrite fd:"), 1);
+	if (dup2(fd, STDOUT_FILENO) < 0)
+		return (perror("overwrite dup2:"), 1);
+	close(fd);
+	return (0);
 }
 
-void overwrite(char **argv)
+static int	append(int fd)
 {
-	int fd;
-	char *text;
-
-	text = readline("");
-
-	fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	write(fd, text, ft_strlen(text));
+	if (fd < 0)
+		return (perror("append fd:"), 1);
+	if (dup2(fd, STDOUT_FILENO) < 0)
+		return (perror("append dup2:"), 1);
+	close(fd);
+	return (0);
 }
 
-void append(char **argv)
+int	wrapper_redirections(t_redir *redir)
 {
-	int fd;
-	char *text;
+	int	exit;
 
-	text = readline("");
-	fd = open(argv[1], O_WRONLY | O_CREAT | O_APPEND, 0644);
-
-	write(fd, text, ft_strlen(text));
+	if (!redir)
+		return (0);
+	exit = 0;
+	if (redir->infile)
+		exit = input(open(redir->infile, O_RDONLY));
+	if (redir->outfile && redir->out_type == OUT_OVERWRITE)
+		exit = overwrite(open(redir->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644));
+	if (redir->outfile && redir->out_type == OUT_APPEND)
+		exit = append(open(redir->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644));
+	return (exit);
 }
+
+// int create_file(char *filename)
+// {
+// 	int		fd;
+	
+// 	fd = open(filename, O_CREAT | O_RDWR, 0644);
+// 	if (fd < 0)
+// 	{
+// 		perror("open");
+// 		return (1);
+// 	}
+// 	if (close(fd) < 0)
+// 	{
+// 		perror("close");
+// 		return (1);
+// 	}
+// 	return (0);
+// }
+

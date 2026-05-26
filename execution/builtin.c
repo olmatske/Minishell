@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/25 15:56:16 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/26 10:14:50 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 {
-	char **split;
+	char	**split;
 	int		exit;
 
 	split = NULL;
 	exit = 0;
+
 	if (cmd_node->cmd->built_in_name == BUILTIN_NONE)
 		return (0);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_ECHO)
