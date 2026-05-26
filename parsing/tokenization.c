@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:18 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/15 18:38:11 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/26 13:23:16 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,27 +62,28 @@ static void	handle_words(t_token **head, t_token **tail, char *line, int *i)
 	free(value);
 }
 
+// changed the flags of APPEND, HEREDOC etc, they were mixed up
 static int	handle_redir(t_token **head, t_token **tail, char *line, int *i)
 {
 	if (line[*i] == '>' && line[*i + 1] == '>')
 	{
 		(*i) += 2;
-		return (linked_list_for_token(head, tail, HEREDOC, ">>"));
+		return (linked_list_for_token(head, tail, APPEND, ">>"));
 	}
 	else if (line[*i] == '<' && line[*i + 1] == '<')
 	{
 		(*i) += 2;
-		return (linked_list_for_token(head, tail, APPEND, "<<"));
+		return (linked_list_for_token(head, tail, HEREDOC, "<<"));
 	}
 	else if (line[*i] == '>')
 	{
 		(*i)++;
-		return (linked_list_for_token(head, tail, IN, ">"));
+		return (linked_list_for_token(head, tail, OUT, ">"));
 	}
 	else if (line[*i] == '<')
 	{
 		(*i)++;
-		return (linked_list_for_token(head, tail, OUT, "<"));
+		return (linked_list_for_token(head, tail, IN, "<"));
 	}
 	return (1);
 }
