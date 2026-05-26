@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/26 09:07:17 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/26 17:54:16 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <signal.h>
 # include <limits.h>
 # include <sys/wait.h>
+# include <sys/errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "get_next_line/get_next_line.h"
