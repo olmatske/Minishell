@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:09:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/26 10:33:19 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/26 12:24:56 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static int	append(int fd)
 
 int	wrapper_redirections(t_redir *redir)
 {
+	printf("\n REDIRECTIONS CHECK:\ninfile: %s\noutfile: %s\n\n", redir->infile, redir->outfile);
 	int	exit;
 
 	if (!redir)

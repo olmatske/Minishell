@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:48:16 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/26 09:07:17 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/26 12:24:22 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,21 @@
 
 static void	redir_builder(char **file_type, t_token *current)
 {
-	if (*file_type != NULL)
-		free(*file_type);
+	if (current->next == NULL)
+		ft_error("Syntax error near unsexpected token 'newline'\n", 2);
 	*file_type = ft_strdup(current->next->value);
 	if (*file_type == NULL)
 		ft_error("Error: Memory allocation failed\n", 1);
-}
 
+	// if (*file_type != NULL)
+	// 	free(*file_type);
+	// if (current->next == NULL)
+	// 	ft_error("Syntax error near unsexpected token 'newline'\n", 2);
+	// *file_type = ft_strdup(current->next->value);
+	// if (*file_type == NULL)
+	// 	ft_error("Error: Memory allocation failed\n", 1);
+}
+// deleted: new_cmd->cmd->redir->out_type = IN_FILE; line 32 - 33
 static void	distribute_redir(t_cmd_node *new_cmd, t_token *current)
 {
 	if (new_cmd->cmd->redir == NULL)
@@ -29,7 +37,6 @@ static void	distribute_redir(t_cmd_node *new_cmd, t_token *current)
 		new_cmd->cmd->redir = ft_calloc(1, sizeof (t_redir));
 		if (new_cmd->cmd->redir == NULL)
 			ft_error("Error: Memory allocation failed\n", 1);
-		new_cmd->cmd->redir->out_type = IN_FILE;
 	}
 	if (current->type == IN)
 		redir_builder(&new_cmd->cmd->redir->infile, current);
@@ -103,3 +110,27 @@ t_cmd_node	*cmd_building(t_token *token_list)
 	}
 	return (head);
 }
+
+
+// static void	distribute_redir(t_cmd_node *new_cmd, t_token *current)
+// {
+// 	if (new_cmd->cmd->redir == NULL)
+// 	{
+// 		new_cmd->cmd->redir = ft_calloc(1, sizeof (t_redir));
+// 		if (new_cmd->cmd->redir == NULL)
+// 			ft_error("Error: Memory allocation failed\n", 1);
+// 		new_cmd->cmd->redir->out_type = IN_FILE;
+// 	}
+// 	if (current->type == IN)
+// 		redir_builder(&new_cmd->cmd->redir->infile, current);
+// 	else if (current->type == OUT || current->type == APPEND)
+// 	{
+// 		if (current->type == OUT)
+// 			new_cmd->cmd->redir->out_type = OUT_OVERWRITE;
+// 		else if (current->type == APPEND)
+// 			new_cmd->cmd->redir->out_type = OUT_APPEND;
+// 		redir_builder(&new_cmd->cmd->redir->outfile, current);
+// 	}
+// 	else if (current->type == HEREDOC)
+// 		redir_builder(&new_cmd->cmd->redir->heredoc_delimiter, current);
+// }
