@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:48:16 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/26 13:41:26 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/26 15:00:14 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ static void	redir_builder(char **file_type, t_token *current)
 {
 	if (*file_type != NULL)
 		free(*file_type);
-	if (current->next == NULL)
+	if (current->next == NULL || current->next->type == IN 
+		|| current->next->type == OUT || current->next->type == APPEND 
+		|| current->next->type == HEREDOC)
 		ft_error("Syntax error near unsexpected token 'newline'\n", 2);
 	*file_type = ft_strdup(current->next->value);
 	if (*file_type == NULL)
