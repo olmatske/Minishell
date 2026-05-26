@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:48:16 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/26 12:24:22 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/26 13:41:26 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,13 @@
 
 static void	redir_builder(char **file_type, t_token *current)
 {
+	if (*file_type != NULL)
+		free(*file_type);
 	if (current->next == NULL)
 		ft_error("Syntax error near unsexpected token 'newline'\n", 2);
 	*file_type = ft_strdup(current->next->value);
 	if (*file_type == NULL)
 		ft_error("Error: Memory allocation failed\n", 1);
-
-	// if (*file_type != NULL)
-	// 	free(*file_type);
-	// if (current->next == NULL)
-	// 	ft_error("Syntax error near unsexpected token 'newline'\n", 2);
-	// *file_type = ft_strdup(current->next->value);
-	// if (*file_type == NULL)
-	// 	ft_error("Error: Memory allocation failed\n", 1);
 }
 // deleted: new_cmd->cmd->redir->out_type = IN_FILE; line 32 - 33
 static void	distribute_redir(t_cmd_node *new_cmd, t_token *current)
