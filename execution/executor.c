@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 12:39:56 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/26 14:09:45 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/26 19:12:21 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ static int	pipe_loop(t_pipex *p)
 		return (perror("fork"), 1);
 	if (p->pids[p->i] == 0)
 	{
-		child_loop(p->i, p->cmd_count, p->pipe_fd, p->prev_read);
 		if (p->curr->cmd->redir && wrapper_redirections(p->curr->cmd->redir) != 0)
 			exit (1);
-		if (p->curr->cmd->built_in_name == BUILTIN_NONE)
-			exec_external_child(p->shell, p->curr->cmd, *(p->shell->env));
+		child_loop(p->i, p->cmd_count, p->pipe_fd, p->prev_read);
+		// if (p->curr->cmd->built_in_name == BUILTIN_NONE)
+		// 	exec_external_child(p->shell, p->curr->cmd, *(p->shell->env));
 		exit(execution(p->shell, p->curr, p->shell->env));
 	}
 	else
