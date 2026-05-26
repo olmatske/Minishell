@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:57:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/26 12:59:01 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/26 14:47:31 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 int	shell_loop(t_shell *shell, t_cmd_node *cmd_list)
 {
+	// printf("%s\n%s\n%s\n", cmd_list->cmd->args[0], cmd_list->cmd->args[1], cmd_list->cmd->args[2]);
 	if (!cmd_list)
 		return (0);
 	if (pipe_count(cmd_list))
