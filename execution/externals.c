@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/26 13:06:30 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/26 13:26:50 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ int	exec_external(t_shell *shell, t_cmd *cmd, t_env *env)
 		return (fprintf(stderr, "%s malloc failure/n", M), 1);
 	path = NULL;
 	mpath = 0;
-	printf("FLAG\n");
 	if (decide_path(cmd))
 		path = cmd->args[0];
 	else
@@ -127,7 +126,7 @@ int	exec_external(t_shell *shell, t_cmd *cmd, t_env *env)
 	}
 	if (pid == 0)
 	{
-		fprintf(stderr, "redir infile=[%s]\n",cmd->redir && cmd->redir->infile ? cmd->redir->infile : "NULL");
+		// fprintf(stderr, "redir infile=[%s]\n",cmd->redir && cmd->redir->infile ? cmd->redir->infile : "NULL");
 		if (cmd->redir && wrapper_redirections(cmd->redir) != 0)
 		{
 			free_split(arr);
