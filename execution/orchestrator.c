@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:57:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/25 16:03:20 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/26 10:23:47 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,50 @@ int	shell_loop(t_shell *shell, t_cmd_node *cmd_list)
 	return (exec_single_cmd(shell, *shell->env, cmd_list));
 }
 
+static int	wrapper_all(t_shell *shell, t_cmd_node *node, t_env **env, int status)
+{
+	int		save_in;
+	int		save_out;
+
+	save_in = dup(STDIN_FILENO);
+	save_out = dup(STDOUT_FILENO);
+	if (save_in < 0 || save_out < 0)
+		return (perror("wrapper dup2"), 1);
+	if (node->cmd->redir && (node->cmd->redir->infile || node->cmd->redir->outfile))
+	{
+		status = wrapper_redirections(node->cmd->redir);
+		if (status != 0)
+		{
+			dup2(save_in, STDIN_FILENO);
+			dup2(save_out, STDOUT_FILENO);
+			close(save_in);
+			close(save_out);
+			return (status);
+		}
+	}
+	status = wrapper_builtin(shell, node, env);
+	dup2(save_in, STDIN_FILENO);
+	dup2(save_out, STDOUT_FILENO);
+	close(save_in);
+	close(save_out);
+	return (status);
+}
+
 int	exec_single_cmd(t_shell *shell, t_env *env, t_cmd_node *cmd_list)
 {
 	int	status;
 
-		status = 0;
+	status = 0;
 	if (cmd_list->cmd->built_in_name == BUILTIN_NONE)
 		status = exec_external(shell, cmd_list->cmd, env);
 	else
-		status = wrapper_builtin(shell, cmd_list, shell->env);
+		status = wrapper_all(shell, cmd_list, shell->env, 0);
 	shell->exit = status;
 	update_shell_status(shell->env, shell);
 	return (status);
 }
+
+
 
 // void	free_env(t_env **env)
 // {

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/22 14:52:09 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/26 09:07:17 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 extern int	g_signal;
 
 typedef enum e_out_type {
-	OUT_NONE, // -> input
+	IN_FILE, // -> input
 	OUT_APPEND,
 	OUT_OVERWRITE
 }	t_out_type;
