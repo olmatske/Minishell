@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/15 14:24:28 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/27 15:08:54 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ int			linked_list_for_token(t_token **head, t_token **tail,
 int			input_validation(t_token *list);
 int			handle_type(t_token **head, t_token **tail, char *line, int *i);
 t_cmd_node	*cmd_building(t_token *token_list);
+t_redir		*new_redir(t_token *curr);
+void		append_redir(t_redir **head, t_redir *new);
+void	redir_builder(char **file_type, t_token *current);
 void		variable_substitution(t_token **token_list, t_env *copied_env);
 int			quote_status(char c, int *in_double, int *in_single);
 void		delete_empty_node(t_token **head, t_token *to_delete);

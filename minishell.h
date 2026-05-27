@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/27 14:32:43 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/27 15:07:24 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_redir {
 	char		*heredoc_delimiter;
 	char		*outfile;
 	t_out_type	out_type;
+	struct s_redir		*next;
 }	t_redir;
 
 

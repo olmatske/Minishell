@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:09:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/27 14:10:38 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/27 15:15:57 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,27 @@ static int	append(int fd)
 int	wrapper_redirections(t_redir *redir)
 {
 	// printf("infile: %s\noutfile: %s\n", redir->infile, redir->outfile);
-	int	exit;
+	int	status;
 
 	if (!redir)
 		return (0);
-	exit = 0;
-	if (redir->infile)
-		exit = input(open(redir->infile, O_RDONLY));
-	if (redir->outfile && redir->out_type == OUT_OVERWRITE)
-		exit = overwrite(open(redir->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644));
-	if (redir->outfile && redir->out_type == OUT_APPEND)
-		exit = append(open(redir->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644));
-	return (exit);
+	status = 0;
+	while (redir)
+	{
+		if (redir->infile)
+			status = input(open(redir->infile, O_RDONLY));
+		else if (redir->outfile && redir->out_type == OUT_OVERWRITE)
+			status = overwrite(open(redir->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644));
+		else if (redir->outfile && redir->out_type == OUT_APPEND)
+			status = append(open(redir->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644));
+		if (status != 0)
+			return (1);
+		redir = redir->next;
+
+	}
+	return (status);
 }
+
 
 // int create_file(char *filename)
 // {

@@ -6,7 +6,7 @@
 #    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/05/22 12:28:27 by olmatske         ###   ########.fr        #
+#    Updated: 2026/05/27 15:06:48 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ PARSING =	minishell.c \
 			parsing/substitution.c \
 			parsing/tokenization.c \
 			parsing/validation.c \
-			parsing/debug.c
+			parsing/debug.c \
+			parsing/redirection_building.c
 
 EXECUTION =	execution/builtin.c \
 			execution/executor.c \

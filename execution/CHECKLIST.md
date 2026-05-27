@@ -178,6 +178,9 @@
 
 - [ ] execve are for external!!!!
 
+- [ ] grep hi <./test_files/infile_big <./test_files/infile
+	-> LEAKS!!!
+
 ### Allowed functions
 ------------------------------------------------
 readline
