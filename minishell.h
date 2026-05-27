@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/26 17:54:16 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/27 14:32:43 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_redir {
 	char		*outfile;
 	t_out_type	out_type;
 }	t_redir;
+
 
 typedef enum e_built_in_name {
 	BUILTIN_NONE,

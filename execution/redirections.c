@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:09:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/26 14:47:34 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/27 14:10:38 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 static int	input(int fd)
 {
 	if (fd < 0)
-		return (perror("infile fd:"), 1);
+		return (1);
 	if (dup2(fd, STDIN_FILENO) < 0)
-		return (perror("infile dup2:"), 1);
+		return (perror("Minishell: infile dup2:"), 1);
 	close(fd);
 	return (0);
 }

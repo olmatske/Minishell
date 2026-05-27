@@ -123,6 +123,11 @@
 				Minishell$ Minishell$  <------ !!! when pressing down key
 				Minishell$ 
 
+- [ ] open fd nach signals bei heredoc
+		-> close the fd if a signal comes throgh during heredoc!!!
+- [ ] open fd im child proccess is not supposed to happen!!
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ### Roadmap

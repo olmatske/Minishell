@@ -6,11 +6,12 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:48:16 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/26 17:57:50 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/27 14:32:54 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "../execution/execution.h"
 #include "../minishell.h"
 
 static void	redir_builder(char **file_type, t_token *current)
@@ -26,14 +27,14 @@ static void	redir_builder(char **file_type, t_token *current)
 	filename = current->next->value;
 	if (current->type == IN && access(filename, R_OK) == -1)
 	{
-		perror(filename);
-		exit(1);
+		fprintf(stderr, "%s %s: %s\n", M, filename, strerror(errno));
+		// exit(1);
 	}
 	if ((current->type == OUT || current->type == APPEND) 
 		&& access(filename, W_OK) == -1 && errno != ENOENT)
 	{
-		perror(filename);
-		exit(1);
+		fprintf(stderr, "%s %s: %s\n", M, filename, strerror(errno));
+		// exit(1);
 	}
 	*file_type = ft_strdup(current->next->value);
 	if (*file_type == NULL)
@@ -52,6 +53,14 @@ static void	redir_builder(char **file_type, t_token *current)
 // 		ft_error("Error: Memory allocation failed\n", 1);
 // }
 
+
+// static void	distribute_redir(t_cmd_node *cmd, t_token *current)
+// {
+// 	t_redir	*new;
+
+// 	if (!cmd->cmd->redir_list)
+// 		cmd
+// }
 
 // deleted: new_cmd->cmd->redir->out_type = IN_FILE; line 32 - 33
 static void	distribute_redir(t_cmd_node *new_cmd, t_token *current)

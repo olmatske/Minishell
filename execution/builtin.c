@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/26 10:14:50 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/27 13:45:56 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,8 @@ int	cd(char **path, t_env *env, t_shell *shell)
 	if (chdir(path[1]) == -1)
 	{
 		fprintf(stderr, "%s %s: cd: %s\n", M, path[1], FD);
-		shell->exit = 1;
-		return (1);
+		shell->exit = 0;
+		return (0);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 12:39:56 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/26 19:12:21 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/27 13:42:58 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,10 @@ static int	pipe_loop(t_pipex *p)
 		if (p->curr->cmd->redir && wrapper_redirections(p->curr->cmd->redir) != 0)
 			exit (1);
 		child_loop(p->i, p->cmd_count, p->pipe_fd, p->prev_read);
-		// if (p->curr->cmd->built_in_name == BUILTIN_NONE)
-		// 	exec_external_child(p->shell, p->curr->cmd, *(p->shell->env));
+		if (p->curr->cmd->redir 
+				&& wrapper_redirections(p->curr->cmd->redir) != 0)
+			exit(1);
+			// exec_external_child(p->shell, p->curr->cmd, *(p->shell->env));
 		exit(execution(p->shell, p->curr, p->shell->env));
 	}
 	else
