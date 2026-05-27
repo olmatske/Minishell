@@ -6,7 +6,7 @@
 #    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/05/27 15:06:48 by olmatske         ###   ########.fr        #
+#    Updated: 2026/05/27 21:21:21 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ EXECUTION =	execution/builtin.c \
 			execution/orchestrator.c \
 			execution/pipe_helpers.c \
 			execution/redirections.c \
-			execution/export.c \
+			execution/builtin_export.c \
 			execution/builtin_echo.c \
 			execution/helpers.c \
 			execution/checkers.c

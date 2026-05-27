@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all_about_errors.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 15:24:03 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/31 17:15:37 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/27 21:48:42 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

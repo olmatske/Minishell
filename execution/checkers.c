@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 12:15:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/25 15:58:19 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/27 21:40:44 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,3 +43,8 @@ void	update_shell_status(t_env **env, t_shell *shell)
 		update_variable(env, "?", curr_status);
 	free(curr_status);
 }
+
+// int	is_var_explansion(char *str)
+// {
+// 	if ()
+// }

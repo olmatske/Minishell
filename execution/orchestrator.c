@@ -6,12 +6,11 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:57:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/26 14:47:31 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/27 20:44:46 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
-#include "../minishell.h"
 
 int	shell_loop(t_shell *shell, t_cmd_node *cmd_list)
 {
@@ -75,8 +74,6 @@ void	free_all(t_shell *shell, t_env **env, t_cmd_node *cmd)
 		gc_free_all(shell);
 	if (shell)
 		free(shell);
-	// if (env)
-	// 	free_env_list(env);
 }
 
 // void	free_env(t_env **env)

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/27 13:45:56 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/27 21:24:47 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int	wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 		}
 		else
 		{
-			return (fprintf(stderr, "%s %s", M, I), 1);
+			free_split(split);
+			return (fprintf(stderr, "%s %s\n", M, I), 1);
 		}
 	}
 	else if (cmd_node->cmd->built_in_name == BUILTIN_UNSET)
@@ -141,9 +142,9 @@ int	cd(char **path, t_env *env, t_shell *shell)
 	}
 	if (chdir(path[1]) == -1)
 	{
-		fprintf(stderr, "%s %s: cd: %s\n", M, path[1], FD);
-		shell->exit = 0;
-		return (0);
+		fprintf(stderr, "%s cd: %s: %s\n", M, path[1], FD);
+		shell->exit = 1;
+		return (1);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:09:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/27 15:15:57 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/27 21:18:32 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	input(int fd)
 	if (fd < 0)
 		return (1);
 	if (dup2(fd, STDIN_FILENO) < 0)
-		return (perror("Minishell: infile dup2:"), 1);
+		return (1);
 	close(fd);
 	return (0);
 }
@@ -26,9 +26,9 @@ static int	input(int fd)
 static int	overwrite(int fd)
 {
 	if (fd < 0)
-		return (perror("overwrite fd:"), 1);
+		return (1);
 	if (dup2(fd, STDOUT_FILENO) < 0)
-		return (perror("overwrite dup2:"), 1);
+		return (1);
 	close(fd);
 	return (0);
 }
@@ -36,9 +36,9 @@ static int	overwrite(int fd)
 static int	append(int fd)
 {
 	if (fd < 0)
-		return (perror("append fd:"), 1);
+		return (1);
 	if (dup2(fd, STDOUT_FILENO) < 0)
-		return (perror("append dup2:"), 1);
+		return (1);
 	close(fd);
 	return (0);
 }
@@ -59,6 +59,10 @@ int	wrapper_redirections(t_redir *redir)
 			status = overwrite(open(redir->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644));
 		else if (redir->outfile && redir->out_type == OUT_APPEND)
 			status = append(open(redir->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644));
+		if (status != 0 && redir->infile)
+			return (fprintf(stderr, "%s %s: %s\n", M, redir->infile, strerror(errno)), 1);
+		else if (status != 0 && redir->out_type)
+			return (fprintf(stderr, "%s %s: %s\n", M, redir->outfile, strerror(errno)), 1);
 		if (status != 0)
 			return (1);
 		redir = redir->next;

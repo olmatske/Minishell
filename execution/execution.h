@@ -6,14 +6,14 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/26 09:55:53 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/27 22:16:14 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
 
-# define C	"Command not found\n"
+# define C	"command not found\n"
 # define M	"Minishell:"
 # define I	"not a valid identifier"
 # define A	"too many arguments"
@@ -30,7 +30,12 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/errno.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include "../minishell.h"
+
+
+struct stat	st;
 
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
@@ -76,14 +81,14 @@ void	redirect_input(int fd);
 void	redirect_output(int fd);
 int		execution(t_shell *shell, t_cmd_node *cmd, t_env **env);
 
-// redirections.c ////////////////////////////////////////////////////////////////
+// redirections.c //////////////////////////////////////////////////////////////
 int		wrapper_redirections(t_redir *redir);
 // int		create_file(char *filename);
 // void	input(int fd);
 // void	overwrite(char **text);
 // void	append(char **argv);
 
-// export.c /////////////////////////////////////////////////////////////////////
+// builtin_export.c ////////////////////////////////////////////////////////////////////
 void	append_variable(t_env **env, char *name, char *value);
 void	print_export(char **arr);
 int		check_var(t_env *env, char *var);
@@ -103,6 +108,8 @@ void	free_env_list(t_env **head);
 
 char	*gc_strdup(t_shell *shell, const char *s1);
 char	*gc_strjoin(t_shell *shell, char const *s1, char const *s2);
+
+
 
 #endif
 
