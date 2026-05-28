@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/27 21:24:47 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/28 21:38:55 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,31 +121,42 @@ int	ft_env(t_env **env)
 
 int	cd(char **path, t_env *env, t_shell *shell)
 {
-	t_env *curr;
+	t_env	*curr;
+	char	old_path[PATHLEN];
+	char	new_path[PATHLEN];
+	char	*target;
 
 	curr = env;
-	if (path[2])
+	if (!path || !path[0])
+		return (1);
+	if (path[1] && path[2])
 		return (fprintf(stderr, "%s cd: %s\n", M, A), 1);
-	if (!path || !ft_strcmp(path[1], "~"))
+	target = path[1];
+	if (!target || !ft_strcmp(target, "~"))
 	{
 		while (curr)
 		{
 			if (!ft_strcmp(curr->name, "HOME"))
 			{
-				path = &curr->value;
+				target = curr->value;
 				break;
 			}
 			curr = curr->next;
 		}
-		if (!path[1])
+		if (!target)
 			fprintf(stderr, "%s HOME not set\n", M);
 	}
-	if (chdir(path[1]) == -1)
+	if (!getcwd(old_path, sizeof(old_path)))
+		return (perror("pre chdir: getcwd"), 1);
+	if (chdir(target) == -1)
 	{
-		fprintf(stderr, "%s cd: %s: %s\n", M, path[1], FD);
+		fprintf(stderr, "%s cd: %s: %s\n", M, target, FD);
 		shell->exit = 1;
 		return (1);
 	}
+	if (!getcwd(new_path, sizeof(new_path)))
+		return (perror("post chdir: getcwd"), 1);
+	update_pwd(shell->env, new_path, old_path);
 	return (0);
 }
 
@@ -167,7 +178,7 @@ int	export(t_shell *shell, t_env **env, char *arg, char **split)
 			return (1);
 		}
 		if (!check_var(*env, arg))
-			append_variable(env, arg, NULL);
+			append_var(env, arg, NULL);
 		return (0);
 	}
 	name = ft_substr(arg, 0, equal - arg);
@@ -184,9 +195,9 @@ int	export(t_shell *shell, t_env **env, char *arg, char **split)
 	if (!value)
 		return (free(name), 1);
 	if (check_var(*env, name))
-		update_variable(env, name, value);
+		update_var(env, name, value);
 	else
-		append_variable(env, name, value);
+		append_var(env, name, value);
 	free(name);
 	free(value);
 	return (0);

@@ -6,12 +6,14 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/28 15:35:03 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/28 18:43:30 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTION_H
 # define EXECUTION_H
+
+# define PATHLEN	4096
 
 # define C	"command not found\n"
 # define M	"Minishell:"
@@ -25,6 +27,7 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include <string.h>
+#include <limits.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <sys/types.h>
@@ -38,10 +41,6 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
-
-// int main(int argc, char **argv);
-int main(int argc, char **argv, char **envp);
-
 
 // builtin.c ///////////////////////////////////////////////////////////////////
 int		wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env);
@@ -58,7 +57,7 @@ int		exec_pipeline(t_shell *shell, t_cmd_node *cmd_list);
 
 // externals.c /////////////////////////////////////////////////////////////////
 int		exec_external(t_shell *shell, t_cmd *cmd, t_env *env);
-void	exec_external_child(t_shell *shell, t_cmd *cmd, t_env *env);
+// void	exec_external_child(t_shell *shell, t_cmd *cmd, t_env *env);
 void	free_split(char **str);
 
 // garbage_collector.c /////////////////////////////////////////////////////////
@@ -68,7 +67,7 @@ int		gc_add(t_shell *shell, void *ptr);
 void	gc_single_free(t_shell *shell, void *ptr);
 void	gc_free_all(t_shell *shell);
 
-// orchestrator /////////////////////////////////////////////////////////////////
+// orchestrator ////////////////////////////////////////////////////////////////
 int		shell_loop(t_shell *shell, t_cmd_node *cmd_list);
 int		exec_single_cmd(t_shell *shell, t_env *environment, t_cmd_node *cmd_list);
 void	free_all(t_shell *shell, t_env **env, t_cmd_node *cmd);
@@ -82,16 +81,12 @@ int		execution(t_shell *shell, t_cmd_node *cmd, t_env **env);
 
 // redirections.c //////////////////////////////////////////////////////////////
 int		wrapper_redirections(t_redir *redir);
-// int		create_file(char *filename);
-// void	input(int fd);
-// void	overwrite(char **text);
-// void	append(char **argv);
 
-// builtin_export.c ////////////////////////////////////////////////////////////////////
-void	append_variable(t_env **env, char *name, char *value);
+// builtin_export.c ////////////////////////////////////////////////////////////
+void	append_var(t_env **env, char *name, char *value);
 void	print_export(char **arr);
 int		check_var(t_env *env, char *var);
-void	update_variable(t_env **env, char *name, char *value);
+void	update_var(t_env **env, char *name, char *value);
 char	**env_array_for_export(t_env *env);
 
 // builtin_echo.c //////////////////////////////////////////////////////////////
@@ -99,6 +94,8 @@ int		echo(char **str);
 
 // checkers.c //////////////////////////////////////////////////////////////////
 int		check_export(char *str);
+char	*search_var_value(t_env *env, char *var);
+void	update_pwd(t_env **env, char *new_path, char *old_path);
 
 int		ft_strcmp(char *a, char *b);
 int		isnumstr(const char *str);

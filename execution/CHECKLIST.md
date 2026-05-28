@@ -85,22 +85,15 @@
 - [ ] apparently storing exit code in env is wrong
 - [ ] Ctrl+\ doesn't work
 
-# - [ ] update $PWD when changing directories
+- [X] update $PWD when changing directories
+- [ ] leaks when doing just cd
 # - [ ] Heredoc
 # - [ ] Minishell$ pwd
-				/Users/oli/42/Minishell
-				curr status: 0
-				shell status: 0
-				Minishell$ $?
-				0: Command not found
-				curr status: 0
-				shell status: 0
-				Minishell$ Minishell$  <------ !!! when pressing down key
-				Minishell$ 
+# - [ ] remove fsanitizer from Makefile
 
 - [ ] open fd nach signals bei heredoc
 		-> close the fd if a signal comes throgh during heredoc!!!
-- [ ] open fd im child proccess is not supposed to happen!!
+- [ ] open fd in child proccess is not supposed to happen!!
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////

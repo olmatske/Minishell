@@ -63,7 +63,7 @@ void	print_export(char **arr)
 }
 ////////////////////////////////////////////////////////////////////////////////
 
-void	update_variable(t_env **env, char *name, char *value)
+void	update_var(t_env **env, char *name, char *value)
 {
 	t_env	*curr;
 
@@ -83,7 +83,7 @@ void	update_variable(t_env **env, char *name, char *value)
 	}
 }
 
-void	append_variable(t_env **env, char *name, char *value)
+void	append_var(t_env **env, char *name, char *value)
 {
 	t_env	*curr;
 	t_env	*new;
