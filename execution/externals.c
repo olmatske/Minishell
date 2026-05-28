@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/27 22:19:42 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/28 15:35:09 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int	exec_external(t_shell *shell, t_cmd *cmd, t_env *env)
 	int		pid;
 	int		status;
 	int		saved_errno;
+	struct	stat	st;
 
 	arr = env_array_for_execution(env);
 	if (!arr)
