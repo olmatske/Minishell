@@ -6,13 +6,15 @@
 #    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/05/27 21:21:21 by olmatske         ###   ########.fr        #
+#    Updated: 2026/05/28 22:25:05 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
+SUPP_FILE = leak.supp
+LSAN = LSAN_OPTIONS=suppressions=$(SUPP_FILE)
 
 PARSING =	minishell.c \
 			env_for_execution.c \
@@ -34,6 +36,7 @@ PARSING =	minishell.c \
 			parsing/redirection_building.c
 
 EXECUTION =	execution/builtin.c \
+			execution/builtin_cd.c \
 			execution/executor.c \
 			execution/externals.c \
 			execution/garbage_collector.c \
@@ -78,4 +81,8 @@ re:
 	$(MAKE) fclean
 	$(MAKE) all
 
-.PHONY: all clean fclean re
+run: $(NAME)
+	$(LSAN) ./$(NAME)
+
+
+.PHONY: all clean fclean re run

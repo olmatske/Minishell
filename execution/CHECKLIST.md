@@ -74,22 +74,16 @@
 - [X] when doing echo and a pipe it still prints with echo
 - [X] >> doesn't seem to be working
 - [X] cat < nonexistent.txt goes into infinite loop
-- [ ] heredoc is missing
-- [ ] echo "first" > out.tct < in.txt   oli@Olgas-MacBook-Air zsh: no such file or directory: in.txt
-- [ ] > test.txt goes into infinite loop
+- [X] heredoc is missing
+- [X] echo "first" > out.tct < in.txt   oli@Olgas-MacBook-Air zsh: no such file or directory: in.txt
+- [X] > test.txt goes into infinite loop
 		-> smth wrong with redirections...
-# - [ ] echo "fail" > dev/full -> /dev/full: No space left on device 
-- [ ] cat > > -> syntax error near unexpected token '>'
-- [ ] exits!!!
-- [ ] update old pwd and new pwd in env after calling cd !!!
-- [ ] apparently storing exit code in env is wrong
-- [ ] Ctrl+\ doesn't work
-
-- [X] update $PWD when changing directories
-- [ ] leaks when doing just cd
-# - [ ] Heredoc
-# - [ ] Minishell$ pwd
-# - [ ] remove fsanitizer from Makefile
+- [X] echo "fail" > dev/full -> /dev/full: No space left on device 
+- [X] cat > > -> syntax error near unexpected token '>'
+- [X] exits!!!
+- [X] update old pwd and new pwd in env after calling cd !!!
+- [X] apparently storing exit code in env is wrong
+- [X] Ctrl+\ doesn't work
 
 - [ ] open fd nach signals bei heredoc
 		-> close the fd if a signal comes throgh during heredoc!!!
@@ -146,8 +140,14 @@
 
 - [ ] execve are for external!!!!
 
-- [ ] grep hi <./test_files/infile_big <./test_files/infile
-	-> LEAKS!!!
+- [X] grep hi <./test_files/infile_big <./test_files/infile
+	-> LEAKS!!! was only the readline leaks
+- [X] update $PWD when changing directories
+- [X] leaks when doing just cd
+# - [X] Minishell$ pwd
+# - [ ] Norminette
+# - [ ] Heredoc
+# - [ ] remove fsanitizer from Makefile
 
 ### Allowed functions
 ------------------------------------------------
