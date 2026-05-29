@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_export.c                                          :+:      :+:    :+:   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 11:05:12 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/13 11:08:04 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 11:17:01 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	swap_array(char **a, char **b)
 {
-	char *tmp;
+	char	*tmp;
 
 	tmp = *a;
 	*a = *b;
@@ -27,7 +27,7 @@ static void	sort_array(char **str)
 	int	i;
 
 	if (!str)
-		return;
+		return ;
 	swapped = 1;
 	i = 0;
 	while (swapped)
@@ -61,6 +61,3 @@ void	print_export(char **arr)
 	}
 	free_env_array(arr);
 }
-////////////////////////////////////////////////////////////////////////////////
-
-

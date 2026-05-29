@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 12:15:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/28 18:43:05 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 11:51:20 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,34 +44,43 @@ void	update_shell_status(t_env **env, t_shell *shell)
 	free(curr_status);
 }
 
-char	*search_var_value(t_env *env, char *var)
-{
-	t_env	*curr;
-	if (!check_var(env, var))
-		return (NULL);
-	curr = env;
-	while (curr)
-	{
-		if (!ft_strcmp(var, curr->name))
-			return (curr->value);
-		curr = curr->next;
-	}
-	return (NULL);
-}
-
 void	update_pwd(t_env **env, char *new_path, char *old_path)
 {
 	if (!new_path || !old_path)
 		return ;
-
 	if (!check_var(*env, "PWD"))
 		append_var(env, "PWD", new_path);
 	else
 		update_var(env, "PWD", new_path);
-
-
 	if (!check_var(*env, "OLDPWD"))
 		append_var(env, "OLDPWD", old_path);
 	else
 		update_var(env, "OLDPWD", old_path);
+}
+
+int	echo_n_check(char **str)
+{
+	int	i;
+	int	k;
+	int	found;
+
+	i = 1;
+	k = 0;
+	found = 0;
+	while (str[i])
+	{
+		if (str[i][0] != '-')
+			break ;
+		k = 1;
+		while (str[i][k] == 'n')
+			k++;
+		if (str[i][k] == '\0')
+		{
+			i++;
+			found = 1;
+		}
+		else
+			break ;
+	}
+	return (found);
 }

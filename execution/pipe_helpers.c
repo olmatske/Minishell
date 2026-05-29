@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 13:24:58 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/29 09:59:26 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 11:48:30 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	open_file(char *file, int mode)
 {
 	int	fd;
-	
+
 	fd = -1;
 	if (mode == 0)
 		fd = open(file, O_RDONLY);
@@ -31,9 +31,9 @@ int	open_file(char *file, int mode)
 
 int	pipe_count(t_cmd_node *cmd_list)
 {
+	int			i;
 	t_cmd_node	*curr;
-	int	i;
-	
+
 	curr = cmd_list;
 	i = 0;
 	if (curr->next)
@@ -47,12 +47,13 @@ int	pipe_count(t_cmd_node *cmd_list)
 	}
 	return (i);
 }
+
 void	redirect_input(int fd)
 {
 	if (fd != -1)
 	{
 		if (dup2(fd, STDIN_FILENO) == -1)
-		perror("dup2 stdin");
+			perror("dup2 stdin");
 		close(fd);
 	}
 }
@@ -62,7 +63,7 @@ void	redirect_output(int fd)
 	if (fd != -1)
 	{
 		if (dup2(fd, STDOUT_FILENO) == -1)
-		perror("dup2 stdout");
+			perror("dup2 stdout");
 		close(fd);
 	}
 }

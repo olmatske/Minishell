@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 09:46:43 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/29 10:30:29 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 12:03:08 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static	int	wrapper_export(t_shell *shell, t_env **env, t_cmd *cmd)
 	{
 		free_split(split);
 		return (fprintf(stderr, "%s %s\n", M, I), 1);
-
 	}
 	exit = export(shell, env, cmd->args[1], split);
 	free_split(split);

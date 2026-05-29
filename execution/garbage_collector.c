@@ -6,17 +6,15 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 15:32:56 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/10 15:25:15 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 11:57:00 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-// valgrind --leak-check=full ./minishell
-
-void	*gc_malloc(t_shell *shell, size_t size) // size used with sizeof(xyz)
+void	*gc_malloc(t_shell *shell, size_t size)
 {
-	void *ptr;
+	void	*ptr;
 
 	ptr = malloc(size);
 	if (!shell)
@@ -32,12 +30,12 @@ void	*gc_malloc(t_shell *shell, size_t size) // size used with sizeof(xyz)
 		gc_free_all(shell);
 		exit(1);
 	}
-	return(ptr);
+	return (ptr);
 }
 
-void	*gc_calloc(t_shell *shell, size_t count, size_t size) // size used with sizeof(xyz) - count is how much you need
+void	*gc_calloc(t_shell *shell, size_t count, size_t size)
 {
-	void *ptr;
+	void	*ptr;
 
 	if (size != 0 && count > __SIZE_MAX__ / size)
 		return (NULL);
@@ -49,7 +47,7 @@ void	*gc_calloc(t_shell *shell, size_t count, size_t size) // size used with siz
 
 int	gc_add(t_shell *shell, void *ptr)
 {
-	pre_zero *new;
+	pre_zero	*new;
 
 	new = malloc(sizeof(pre_zero));
 	if (!new)
@@ -73,7 +71,7 @@ void	gc_single_free(t_shell *shell, void *ptr)
 		curr = curr->next;
 	}
 	if (!curr)
-		return;
+		return ;
 	if (prev)
 		prev->next = curr->next;
 	else
@@ -88,7 +86,7 @@ void	gc_free_all(t_shell *shell)
 	pre_zero	*kill;
 
 	if (!shell)
-		return;
+		return ;
 	kill = shell->gc;
 	while (kill)
 	{
@@ -99,4 +97,3 @@ void	gc_free_all(t_shell *shell)
 	}
 	shell->gc = NULL;
 }
-

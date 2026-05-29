@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:57:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/29 09:59:18 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 11:47:22 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	shell_loop(t_shell *shell, t_cmd_node *cmd_list)
 {
-	// printf("%s\n%s\n%s\n", cmd_list->cmd->args[0], cmd_list->cmd->args[1], cmd_list->cmd->args[2]);
 	if (!cmd_list)
 		return (0);
 	if (pipe_count(cmd_list))
@@ -22,7 +21,7 @@ int	shell_loop(t_shell *shell, t_cmd_node *cmd_list)
 	return (exec_single_cmd(shell, *shell->env, cmd_list));
 }
 
-static int	wrapper_all(t_shell *shell, t_cmd_node *node, t_env **env, int status)
+static int	wrapper_all(t_shell *shell, t_cmd_node *n, t_env **env, int exit)
 {
 	int		save_in;
 	int		save_out;
@@ -31,24 +30,24 @@ static int	wrapper_all(t_shell *shell, t_cmd_node *node, t_env **env, int status
 	save_out = dup(STDOUT_FILENO);
 	if (save_in < 0 || save_out < 0)
 		return (perror("wrapper dup2"), 1);
-	if (node->cmd->redir && (node->cmd->redir->infile || node->cmd->redir->outfile))
+	if (n->cmd->redir && (n->cmd->redir->infile || n->cmd->redir->outfile))
 	{
-		status = wrapper_redirections(node->cmd->redir);
-		if (status != 0)
+		exit = wrapper_redirections(n->cmd->redir);
+		if (exit != 0)
 		{
 			dup2(save_in, STDIN_FILENO);
 			dup2(save_out, STDOUT_FILENO);
 			close(save_in);
 			close(save_out);
-			return (status);
+			return (exit);
 		}
 	}
-	status = wrapper_builtins(shell, node, env);
+	exit = wrapper_builtins(shell, n, env);
 	dup2(save_in, STDIN_FILENO);
 	dup2(save_out, STDOUT_FILENO);
 	close(save_in);
 	close(save_out);
-	return (status);
+	return (exit);
 }
 
 int	exec_single_cmd(t_shell *shell, t_env *env, t_cmd_node *cmd_list)
@@ -75,25 +74,3 @@ void	free_all(t_shell *shell, t_env **env, t_cmd_node *cmd)
 	if (shell)
 		free(shell);
 }
-
-// void	free_env(t_env **env)
-// {
-// 	t_env	*curr;
-// 	t_env	*next;
-
-// 	if (env == NULL || (*env) == NULL)
-// 		return ;
-// 	curr = *env;
-// 	while (curr)
-// 	{
-// 		next = curr->next;
-// 		if (curr->name)
-// 			free(curr->name);
-// 		if (curr->value)
-// 			free(curr->value);
-// 		if (curr)
-// 			free(curr);
-// 		curr = next;
-// 	}
-// 	*env = NULL;
-// }

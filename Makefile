@@ -6,7 +6,7 @@
 #    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/05/29 09:57:31 by olmatske         ###   ########.fr        #
+#    Updated: 2026/05/29 11:41:47 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,9 +45,10 @@ EXECUTION =	execution/builtins_1.c \
 			execution/pipe_helpers.c \
 			execution/redirections.c \
 			execution/builtin_export.c \
-			execution/builtin_echo.c \
 			execution/helpers.c \
 			execution/helpers_var.c \
+			execution/homeless_functions.c \
+			execution/paths.c \
 			execution/checkers.c
 
 GNL =		get_next_line/get_next_line.c \

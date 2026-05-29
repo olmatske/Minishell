@@ -6,37 +6,37 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 13:41:29 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/29 09:55:29 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 11:24:58 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-static int	echo_n_check(char **str)
+int	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 {
-	int	i;
-	int	k;
-	int	found;
+	int	exit_status;
 
-	i = 1;
-	k = 0;
-	found = 0;
-	while (str[i])
+	printf("exit\n");
+	if (!cmd->cmd->args[1])
+		exit_status = shell->exit;
+	else if (!isnumstr(cmd->cmd->args[1]))
 	{
-		if (str[i][0] != '-')
-			break;
-		k = 1;
-		while (str[i][k] == 'n')
-			k++;
-		if (str[i][k] == '\0')
-		{
-			i++;
-			found = 1;
-		}
-		else
-			break;
+		fprintf(stderr, "%s %s: %s\n", M, cmd->cmd->args[1], N);
+		rl_clear_history();
+		free_all(shell, env, cmd);
+		exit (2);
 	}
-	return (found);
+	else if (cmd->cmd->args[2])
+	{
+		exit_status = 1;
+		fprintf(stderr, "%s %s\n", M, A);
+		return (1);
+	}
+	else
+		exit_status = ft_atoi(cmd->cmd->args[1]);
+	rl_clear_history();
+	free_all(shell, env, cmd);
+	exit(exit_status);
 }
 
 int	echo(char **str)
@@ -97,7 +97,7 @@ int	cd(char **path, t_env *env, t_shell *shell)
 			if (!ft_strcmp(curr->name, "HOME"))
 			{
 				target = curr->value;
-				break;
+				break ;
 			}
 			curr = curr->next;
 		}
@@ -109,8 +109,9 @@ int	cd(char **path, t_env *env, t_shell *shell)
 
 int	pwd(void)
 {
-	char *path = getcwd(NULL, 0);
+	char	*path;
 
+	path = getcwd(NULL, 0);
 	if (!path)
 	{
 		perror("pwd");
