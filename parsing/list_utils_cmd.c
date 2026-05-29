@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 17:33:49 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/16 15:11:13 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 18:39:52 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,19 @@
 
 static void	free_redir(t_redir *redir)
 {
-	if (redir == NULL)
-		return ;
-	if (redir->infile != NULL)
+	t_redir	*next;
+
+	while (redir)
+	{
+		next = redir->next;
+		if (redir->heredoc_delimiter != NULL && redir->infile != NULL)
+			unlink(redir->infile);
 		free(redir->infile);
-	if (redir->outfile != NULL)
 		free(redir->outfile);
-	if (redir->heredoc_delimiter != NULL)
 		free(redir->heredoc_delimiter);
-	free(redir);
+		free(redir);
+		redir = next;
+	}
 }
 
 void	free_args(char **args)

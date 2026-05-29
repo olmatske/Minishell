@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 18:17:01 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 18:34:39 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int			env_list_length(t_env *head);
 char		*append_new_line(char *line, char *new_chunk);
 void		just_copy(char *old_w, int *i, char **new_w);
 void		expand_env(char *old_w, int *i, char **new_w, t_env *env);
+char		*heredoc(char *delimiter, int counter, t_env *env);
 
 ////////////////////////////////////////////////////////////////////////////////
 int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);
