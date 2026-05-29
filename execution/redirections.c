@@ -6,19 +6,18 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/08 19:09:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/26 14:47:34 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 12:05:57 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-// cat < file.txt outputs file content to shell
 static int	input(int fd)
 {
 	if (fd < 0)
-		return (perror("infile fd:"), 1);
+		return (1);
 	if (dup2(fd, STDIN_FILENO) < 0)
-		return (perror("infile dup2:"), 1);
+		return (1);
 	close(fd);
 	return (0);
 }
@@ -26,9 +25,9 @@ static int	input(int fd)
 static int	overwrite(int fd)
 {
 	if (fd < 0)
-		return (perror("overwrite fd:"), 1);
+		return (1);
 	if (dup2(fd, STDOUT_FILENO) < 0)
-		return (perror("overwrite dup2:"), 1);
+		return (1);
 	close(fd);
 	return (0);
 }
@@ -36,45 +35,37 @@ static int	overwrite(int fd)
 static int	append(int fd)
 {
 	if (fd < 0)
-		return (perror("append fd:"), 1);
+		return (1);
 	if (dup2(fd, STDOUT_FILENO) < 0)
-		return (perror("append dup2:"), 1);
+		return (1);
 	close(fd);
 	return (0);
 }
 
-int	wrapper_redirections(t_redir *redir)
+int	wrapper_redirections(t_redir *r)
 {
-	// printf("infile: %s\noutfile: %s\n", redir->infile, redir->outfile);
-	int	exit;
+	int	s;
 
-	if (!redir)
+	if (!r)
 		return (0);
-	exit = 0;
-	if (redir->infile)
-		exit = input(open(redir->infile, O_RDONLY));
-	if (redir->outfile && redir->out_type == OUT_OVERWRITE)
-		exit = overwrite(open(redir->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644));
-	if (redir->outfile && redir->out_type == OUT_APPEND)
-		exit = append(open(redir->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644));
-	return (exit);
+	s = 0;
+	while (r)
+	{
+		if (r->infile)
+			s = input(open(r->infile, O_RDONLY));
+		else if (r->outfile && r->out_type == OUT_OVERWRITE)
+			s = overwrite(open(r->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644));
+		else if (r->outfile && r->out_type == OUT_APPEND)
+			s = append(open(r->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644));
+		if (s != 0 && r->infile)
+			return (fprintf(stderr, "%s %s: %s\n",
+					M, r->infile, strerror(errno)), 1);
+		else if (s != 0 && r->out_type)
+			return (fprintf(stderr, "%s %s: %s\n",
+					M, r->outfile, strerror(errno)), 1);
+		if (s != 0)
+			return (1);
+		r = r->next;
+	}
+	return (s);
 }
-
-// int create_file(char *filename)
-// {
-// 	int		fd;
-	
-// 	fd = open(filename, O_CREAT | O_RDWR, 0644);
-// 	if (fd < 0)
-// 	{
-// 		perror("open");
-// 		return (1);
-// 	}
-// 	if (close(fd) < 0)
-// 	{
-// 		perror("close");
-// 		return (1);
-// 	}
-// 	return (0);
-// }
-

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/26 17:54:16 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/27 20:40:24 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ typedef struct s_redir {
 	char		*heredoc_delimiter;
 	char		*outfile;
 	t_out_type	out_type;
+	struct s_redir		*next;
 }	t_redir;
+
 
 typedef enum e_built_in_name {
 	BUILTIN_NONE,
@@ -121,5 +123,6 @@ int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);
 void		free_all(t_shell *shell, t_env **env, t_cmd_node *cmd);
 int			ft_strcmp(char *a, char *b);
 void		update_shell_status(t_env **env, t_shell *shell);
+void		free_redir_list(t_redir *redir);
 ////////////////////////////////////////////////////////////////////////////////
 #endif

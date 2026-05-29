@@ -6,13 +6,15 @@
 #    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/05/22 12:28:27 by olmatske         ###   ########.fr        #
+#    Updated: 2026/05/29 11:41:47 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
+SUPP_FILE = leak.supp
+LSAN = LSAN_OPTIONS=suppressions=$(SUPP_FILE)
 
 PARSING =	minishell.c \
 			env_for_execution.c \
@@ -30,18 +32,23 @@ PARSING =	minishell.c \
 			parsing/substitution.c \
 			parsing/tokenization.c \
 			parsing/validation.c \
-			parsing/debug.c
+			parsing/debug.c \
+			parsing/redirection_building.c
 
-EXECUTION =	execution/builtin.c \
+EXECUTION =	execution/builtins_1.c \
+			execution/builtins_2.c \
+			execution/wrappers.c \
 			execution/executor.c \
 			execution/externals.c \
 			execution/garbage_collector.c \
 			execution/orchestrator.c \
 			execution/pipe_helpers.c \
 			execution/redirections.c \
-			execution/export.c \
-			execution/builtin_echo.c \
+			execution/builtin_export.c \
 			execution/helpers.c \
+			execution/helpers_var.c \
+			execution/homeless_functions.c \
+			execution/paths.c \
 			execution/checkers.c
 
 GNL =		get_next_line/get_next_line.c \
@@ -77,4 +84,8 @@ re:
 	$(MAKE) fclean
 	$(MAKE) all
 
-.PHONY: all clean fclean re
+run: $(NAME)
+	$(LSAN) ./$(NAME)
+
+
+.PHONY: all clean fclean re run

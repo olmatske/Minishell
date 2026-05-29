@@ -6,30 +6,13 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 12:39:56 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/26 14:09:45 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 11:36:12 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-static t_pipex	*pipex_init(t_shell *shell, t_cmd_node *cmd_list)
-{
-	t_pipex	*p;
-
-	p = gc_malloc(shell, sizeof(t_pipex));
-	p->curr = cmd_list;
-	p->shell = shell;
-	p->cmd_count = pipe_count(cmd_list);
-	p->pids = gc_malloc(shell, sizeof(pid_t) * p->cmd_count);
-	p->pipe_fd[0] = -1;
-	p->pipe_fd[1] = -1;
-	p->i = 0;
-	p->prev_read = -1;
-	return (p);
-}
-
-
-static void	child_loop(int i, int cmd_count, int *pipe_fd, int prev_read)
+void	child_loop(int i, int cmd_count, int *pipe_fd, int prev_read)
 {
 	if (prev_read != -1)
 		redirect_input(prev_read);
@@ -39,7 +22,7 @@ static void	child_loop(int i, int cmd_count, int *pipe_fd, int prev_read)
 		close(pipe_fd[0]);
 }
 
-static void	parent_loop(int i, int cmd_count, int *pipe_fd, int *prev_read)
+void	parent_loop(int i, int cmd_count, int *pipe_fd, int *prev_read)
 {
 	if (i < cmd_count - 1)
 		close(pipe_fd[1]);
@@ -50,8 +33,8 @@ static void	parent_loop(int i, int cmd_count, int *pipe_fd, int *prev_read)
 	else
 		*prev_read = -1;
 }
-	
-static int	pipe_loop(t_pipex *p)
+
+int	pipe_loop(t_pipex *p)
 {
 	if (p->i < p->cmd_count - 1 && pipe(p->pipe_fd) == -1)
 		return (perror("pipes"), 1);
@@ -60,11 +43,13 @@ static int	pipe_loop(t_pipex *p)
 		return (perror("fork"), 1);
 	if (p->pids[p->i] == 0)
 	{
-		child_loop(p->i, p->cmd_count, p->pipe_fd, p->prev_read);
-		if (p->curr->cmd->redir && wrapper_redirections(p->curr->cmd->redir) != 0)
+		if (p->curr->cmd->redir
+			&& wrapper_redirections(p->curr->cmd->redir) != 0)
 			exit (1);
-		if (p->curr->cmd->built_in_name == BUILTIN_NONE)
-			exec_external_child(p->shell, p->curr->cmd, *(p->shell->env));
+		child_loop(p->i, p->cmd_count, p->pipe_fd, p->prev_read);
+		if (p->curr->cmd->redir
+			&& wrapper_redirections(p->curr->cmd->redir) != 0)
+			exit(1);
 		exit(execution(p->shell, p->curr, p->shell->env));
 	}
 	else
@@ -72,22 +57,11 @@ static int	pipe_loop(t_pipex *p)
 	return (0);
 }
 
-int	exec_pipeline(t_shell *shell, t_cmd_node *cmd_list)
+int	wait_pipeline(t_shell *shell, t_pipex *p)
 {
-	t_pipex	*p;
-	int		status;
-	int		last_status;
+	int	status;
+	int	last_status;
 
-	p = pipex_init(shell, cmd_list);
-	if (!p)
-		return (1);
-	while (p->i < p->cmd_count)
-	{
-		if (pipe_loop(p) == 1)
-			return (1);
-		p->curr = p->curr->next;
-		p->i++;
-	}
 	last_status = 0;
 	p->i = 0;
 	while (p->i < p->cmd_count)
@@ -104,6 +78,22 @@ int	exec_pipeline(t_shell *shell, t_cmd_node *cmd_list)
 		shell->exit = 128 + WTERMSIG(last_status);
 	else
 		shell->exit = 1;
-	update_shell_status(shell->env, shell);
-	return (0);
+	return (update_shell_status(shell->env, shell), 0);
+}
+
+int	exec_pipeline(t_shell *shell, t_cmd_node *cmd_list)
+{
+	t_pipex	*p;
+
+	p = pipex_init(shell, cmd_list);
+	if (!p)
+		return (1);
+	while (p->i < p->cmd_count)
+	{
+		if (pipe_loop(p) == 1)
+			return (1);
+		p->curr = p->curr->next;
+		p->i++;
+	}
+	return (wait_pipeline(shell, p));
 }
