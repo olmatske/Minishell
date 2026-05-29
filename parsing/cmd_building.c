@@ -6,73 +6,19 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:48:16 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 18:49:11 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 21:30:46 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
 
-static void	redir_builder(char **file_type, t_token *current)
+static void	distribute_redir(t_cmd_node *new_cmd, t_redir **tail, t_token *curr)
 {
-	char	*filename;
+	t_redir	*node;
 
-	if (*file_type != NULL)
-		free(*file_type);
-	if (current->next == NULL || current->next->type == IN
-		|| current->next->type == OUT || current->next->type == APPEND
-		|| current->next->type == HEREDOC)
-		ft_error("Syntax error near unsexpected token 'newline'\n", 2);
-	filename = current->next->value;
-	if (current->type == IN && access(filename, R_OK) == -1)
-	{
-		perror(filename);
-		exit(1);
-	}
-	if ((current->type == OUT || current->type == APPEND)
-		&& access(filename, W_OK) == -1 && errno != ENOENT)
-	{
-		perror(filename);
-		exit(1);
-	}
-	*file_type = ft_strdup(current->next->value);
-	if (*file_type == NULL)
-		ft_error("Error: Memory allocation failed\n", 1);
-}
-// static void	redir_builder(char **file_type, t_token *current)
-// {
-// 	if (*file_type != NULL)
-// 		free(*file_type);
-// 	if (current->next == NULL || current->next->type == IN 
-// 		|| current->next->type == OUT || current->next->type == APPEND 
-// 		|| current->next->type == HEREDOC)
-// 		ft_error("Syntax error near unsexpected token 'newline'\n", 2);
-// 	*file_type = ft_strdup(current->next->value);
-// 	if (*file_type == NULL)
-// 		ft_error("Error: Memory allocation failed\n", 1);
-// }
-// deleted: new_cmd->cmd->redir->out_type = IN_FILE; line 32 - 33
-
-static void	distribute_redir(t_cmd_node *new_cmd, t_token *current)
-{
-	if (new_cmd->cmd->redir == NULL)
-	{
-		new_cmd->cmd->redir = ft_calloc(1, sizeof (t_redir));
-		if (new_cmd->cmd->redir == NULL)
-			ft_error("Error: Memory allocation failed\n", 1);
-	}
-	if (current->type == IN)
-		redir_builder(&new_cmd->cmd->redir->infile, current);
-	else if (current->type == OUT || current->type == APPEND)
-	{
-		if (current->type == OUT)
-			new_cmd->cmd->redir->out_type = OUT_OVERWRITE;
-		else if (current->type == APPEND)
-			new_cmd->cmd->redir->out_type = OUT_APPEND;
-		redir_builder(&new_cmd->cmd->redir->outfile, current);
-	}
-	else if (current->type == HEREDOC)
-		redir_builder(&new_cmd->cmd->redir->heredoc_delimiter, current);
+	node = create_new_redir_node(curr);
+	add_node_to_redir_list(&new_cmd->cmd->redir, tail, node);
 }
 
 static void	distribute_word(t_cmd_node *new_cmd, t_token *current)
@@ -92,6 +38,9 @@ static void	distribute_word(t_cmd_node *new_cmd, t_token *current)
 
 static t_token	*token_type_distributor(t_cmd_node *new_cmd, t_token *head)
 {
+	t_redir	*redir_tail;
+
+	redir_tail = NULL;
 	while (head != NULL && head->type != PIPE)
 	{
 		if (head->type == WORD)
@@ -99,7 +48,7 @@ static t_token	*token_type_distributor(t_cmd_node *new_cmd, t_token *head)
 		else if (head->type == IN || head->type == OUT
 			|| head->type == APPEND || head->type == HEREDOC)
 		{
-			distribute_redir(new_cmd, head);
+			distribute_redir(new_cmd, &redir_tail, head);
 			if (head->next != NULL)
 				head = head->next;
 		}
@@ -133,26 +82,3 @@ t_cmd_node	*cmd_building(t_token *token_list)
 	}
 	return (head);
 }
-
-// static void	distribute_redir(t_cmd_node *new_cmd, t_token *current)
-// {
-// 	if (new_cmd->cmd->redir == NULL)
-// 	{
-// 		new_cmd->cmd->redir = ft_calloc(1, sizeof (t_redir));
-// 		if (new_cmd->cmd->redir == NULL)
-// 			ft_error("Error: Memory allocation failed\n", 1);
-// 		new_cmd->cmd->redir->out_type = IN_FILE;
-// 	}
-// 	if (current->type == IN)
-// 		redir_builder(&new_cmd->cmd->redir->infile, current);
-// 	else if (current->type == OUT || current->type == APPEND)
-// 	{
-// 		if (current->type == OUT)
-// 			new_cmd->cmd->redir->out_type = OUT_OVERWRITE;
-// 		else if (current->type == APPEND)
-// 			new_cmd->cmd->redir->out_type = OUT_APPEND;
-// 		redir_builder(&new_cmd->cmd->redir->outfile, current);
-// 	}
-// 	else if (current->type == HEREDOC)
-// 		redir_builder(&new_cmd->cmd->redir->heredoc_delimiter, current);
-// }

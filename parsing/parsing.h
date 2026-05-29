@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 18:54:12 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 21:31:47 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ int			linked_list_for_token(t_token **head, t_token **tail,
 int			input_validation(t_token *list);
 int			handle_type(t_token **head, t_token **tail, char *line, int *i);
 t_cmd_node	*cmd_building(t_token *token_list);
+t_redir		*create_new_redir_node(t_token *current);
+void		add_node_to_redir_list(t_redir **head, t_redir **tail, t_redir *node);
+void		redir_builder(char **file_type, t_token *current);
 void		variable_substitution(t_token **token_list, t_env *copied_env);
 int			quote_status(char c, int *in_double, int *in_single);
 void		delete_empty_node(t_token **head, t_token *to_delete);
