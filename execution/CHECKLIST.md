@@ -11,13 +11,13 @@
 		- [X] fix -n
 	- [X] echo -n (do not output the trailing newline)
 	- [X] env ([ ] redo and only use the env struct)
-#	- [X] export
-#		- [X] fix updating variable if it exists
+	- [X] export
+		- [X] fix updating variable if it exists
 	- [X] unset
 	- [X] exit
-#	- [ ] externals paths etc
-- [ ] expander
-- [ ] external functions
+	- [X] externals paths etc
+- [X] expander
+- [X] external functions
 - [ ] heredoc
 	-> cat << EOF
 		hello
@@ -106,10 +106,10 @@
 	- [X] >> "append" should redirect output in append mode.
 		-> [ ] signals for exiting write mode!
 
-- [ ] externals
-	- [ ] absolute path
-	- [ ] relative path
-	- [ ] command
+- [X] externals
+	- [X] absolute path
+	- [X] relative path
+	- [X] command
 		-> search until :
 		-> yoink the string
 		-> append yoinked string + '/' + command
@@ -124,10 +124,10 @@
 - [X] change builtin.c
 	- [X] envp to struct
 	- [X] args
-- [ ] exit signals
-- [ ] add functions to header and clean up
-- [ ] increment and execute commands if pipes
-- [ ] norminette
+- [X] exit
+- [X] add functions to header and clean up
+- [X] increment and execute commands if pipes
+- [X] norminette
 
 
 - [X] garbage collecter
@@ -144,8 +144,9 @@
 	-> LEAKS!!! was only the readline leaks
 - [X] update $PWD when changing directories
 - [X] leaks when doing just cd
-# - [X] Minishell$ pwd
-# - [ ] Norminette
+- [X] Minishell$ pwd
+- [X] Norminette
+# - [ ] > text.txt does not create file, but it should
 # - [ ] Heredoc
 # - [ ] remove fsanitizer from Makefile
 
