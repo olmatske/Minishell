@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 18:50:43 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/14 15:29:01 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 18:48:24 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static int	validate_redirect(t_token *list)
 		{
 			if (current->next == NULL || current->next->type != WORD)
 			{
-				ft_error("Minishell: syntax error around REDIRECTION sign\n", 2);
+				ft_error("Minishell: syntax error around "
+					"REDIRECTION sign\n", 2);
 				return (-1);
 			}
 		}

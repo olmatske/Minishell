@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/15 14:24:28 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 18:54:12 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,5 @@ char		*search_env(t_env *env, char *name);
 char		*append_str(char *old_w, char *suffix);
 void		delete_empty_node(t_token **head, t_token *to_delete);
 void		check_for_builtin(t_cmd_node *node);
-		
-void		print_token_list_debug(t_token *head);
-void		print_cmd_list_debug(t_cmd_node *head);
+
 #endif

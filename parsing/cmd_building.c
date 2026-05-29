@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_building.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:48:16 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/26 17:57:50 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 18:49:11 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void	redir_builder(char **file_type, t_token *current)
 
 	if (*file_type != NULL)
 		free(*file_type);
-	if (current->next == NULL || current->next->type == IN 
-		|| current->next->type == OUT || current->next->type == APPEND 
+	if (current->next == NULL || current->next->type == IN
+		|| current->next->type == OUT || current->next->type == APPEND
 		|| current->next->type == HEREDOC)
 		ft_error("Syntax error near unsexpected token 'newline'\n", 2);
 	filename = current->next->value;
@@ -29,7 +29,7 @@ static void	redir_builder(char **file_type, t_token *current)
 		perror(filename);
 		exit(1);
 	}
-	if ((current->type == OUT || current->type == APPEND) 
+	if ((current->type == OUT || current->type == APPEND)
 		&& access(filename, W_OK) == -1 && errno != ENOENT)
 	{
 		perror(filename);
@@ -51,9 +51,8 @@ static void	redir_builder(char **file_type, t_token *current)
 // 	if (*file_type == NULL)
 // 		ft_error("Error: Memory allocation failed\n", 1);
 // }
-
-
 // deleted: new_cmd->cmd->redir->out_type = IN_FILE; line 32 - 33
+
 static void	distribute_redir(t_cmd_node *new_cmd, t_token *current)
 {
 	if (new_cmd->cmd->redir == NULL)
@@ -134,7 +133,6 @@ t_cmd_node	*cmd_building(t_token *token_list)
 	}
 	return (head);
 }
-
 
 // static void	distribute_redir(t_cmd_node *new_cmd, t_token *current)
 // {

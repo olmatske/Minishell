@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 18:28:46 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 18:51:36 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,25 @@
 static int	process_heredocs(t_cmd_node *cmd_list, t_env *env)
 {
 	t_cmd_node	*current;
-	t_redir		*current_redir;
+	t_redir		*curr_redir;
 	int			counter;
 
 	current = cmd_list;
 	counter = 0;
-	while(current)
+	while (current)
 	{
-		current_redir = current->cmd->redir;
-		while (current_redir)
+		curr_redir = current->cmd->redir;
+		while (curr_redir)
 		{
-			if (current_redir->heredoc_delimiter != NULL)
+			if (curr_redir->heredoc_delimiter != NULL)
 			{
 				counter++;
-				current_redir->infile = heredoc(current_redir->heredoc_delimiter, counter, env);
-				if (current_redir->infile == NULL)
+				curr_redir->infile = heredoc(curr_redir->heredoc_delimiter,
+						counter, env);
+				if (curr_redir->infile == NULL)
 					return (-1);
 			}
-			current_redir = current_redir->next;
+			curr_redir = curr_redir->next;
 		}
 		current = current->next;
 	}

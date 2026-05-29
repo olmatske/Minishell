@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:52:47 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 16:37:37 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 18:55:11 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	quote_status(char c, int *in_double, int *in_single)
 	if (c == '\"' && *in_single == NO)
 	{
 		*in_double = !(*in_double);
-			return (YES);
+		return (YES);
 	}
 	else if (c == '\'' && *in_double == NO)
 	{
 		*in_single = !(*in_single);
-			return (YES);
+		return (YES);
 	}
 	return (NO);
 }
@@ -49,7 +49,6 @@ static int	has_unclosed_quotes(char *line)
 
 char	*read_full_command(char *line)
 {
-
 	char	*tmp;
 	char	*next;
 
@@ -66,7 +65,6 @@ char	*read_full_command(char *line)
 	}
 	return (line);
 }
-
 
 int	check_quotes(char *line)
 {
