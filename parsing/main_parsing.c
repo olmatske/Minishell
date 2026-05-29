@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 18:51:36 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 22:30:50 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static t_token	*create_tokens(char *line)
 	tail = NULL;
 	while (line[i])
 	{
-		while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == 32))
+		while (line[i] && ((line[i] >= '\t' && line[i] <= '\r')
+				|| line[i] == ' '))
 			i++;
 		if (line[i] == '\0')
 			break ;

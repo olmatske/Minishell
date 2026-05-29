@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 21:31:47 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 22:31:46 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ typedef struct s_token {
 }	t_token;
 
 int			check_quotes(char *line);
-void		free_env_list(t_env **head);
-void		free_list_token(t_token **head);
 void		add_node_to_token_list(t_token **head, t_token **tail,
 				t_token *node);
 void		add_node_to_env_list(t_env **head, t_env **tail, t_env *node);
@@ -52,7 +50,8 @@ int			input_validation(t_token *list);
 int			handle_type(t_token **head, t_token **tail, char *line, int *i);
 t_cmd_node	*cmd_building(t_token *token_list);
 t_redir		*create_new_redir_node(t_token *current);
-void		add_node_to_redir_list(t_redir **head, t_redir **tail, t_redir *node);
+void		add_node_to_redir_list(t_redir **head, t_redir **tail,
+				t_redir *node);
 void		redir_builder(char **file_type, t_token *current);
 void		variable_substitution(t_token **token_list, t_env *copied_env);
 int			quote_status(char c, int *in_double, int *in_single);
@@ -62,10 +61,14 @@ void		add_node_to_cmd_list(t_cmd_node **head, t_cmd_node **tail,
 				t_cmd_node *node);
 t_cmd_node	*create_empty_cmd_node(void);
 void		free_args(char **args);
+void		free_list_token(t_token **head);
 char		*append_char(char *old_w, char c);
 char		*search_env(t_env *env, char *name);
 char		*append_str(char *old_w, char *suffix);
-void		delete_empty_node(t_token **head, t_token *to_delete);
 void		check_for_builtin(t_cmd_node *node);
+char		*append_new_line(char *line, char *new_chunk);
+void		just_copy(char *old_w, int *i, char **new_w);
+void		expand_env(char *old_w, int *i, char **new_w, t_env *env);
+char		*heredoc(char *delimiter, int counter, t_env *env);
 
 #endif

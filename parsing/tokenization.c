@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:18 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/26 13:23:16 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 22:29:45 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static int	get_word_length(char *line, int i)
 			inside_single_quotes = !inside_single_quotes;
 		if (inside_single_quotes == NO && inside_double_quotes == NO)
 		{
-			if ((line[i + len] >= 9 && line[i + len] <= 13)
-				|| line[i + len] == 32
+			if ((line[i + len] >= '\t' && line[i + len] <= '\r')
+				|| line[i + len] == ' '
 				|| line[i + len] == '|'
 				|| line[i + len] == '>'
 				|| line[i + len] == '<')

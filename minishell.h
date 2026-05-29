@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 21:41:06 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 22:12:37 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,6 @@ void		free_cmd_list(t_cmd_node *cmd_list);
 void		free_env_list(t_env **head);
 void		free_redir_list(t_redir *redir);
 int			env_list_length(t_env *head);
-char		*append_new_line(char *line, char *new_chunk);
-void		just_copy(char *old_w, int *i, char **new_w);
-void		expand_env(char *old_w, int *i, char **new_w, t_env *env);
-char		*heredoc(char *delimiter, int counter, t_env *env);
 
 ////////////////////////////////////////////////////////////////////////////////
 int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);

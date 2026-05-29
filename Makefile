@@ -3,16 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/05/22 12:28:27 by olmatske         ###   ########.fr        #
+#    Updated: 2026/05/29 22:03:46 by anshuval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
+SUPP_FILE = leak.supp
+LSAN = LSAN_OPTIONS=suppressions=$(SUPP_FILE)
 
 PARSING =	minishell.c \
 			env_for_execution.c \
@@ -20,8 +22,10 @@ PARSING =	minishell.c \
 			parsing/builtins.c \
 			parsing/cmd_building.c \
 			parsing/grammar.c \
+			parsing/heredoc.c \
 			parsing/list_utils_cmd.c \
 			parsing/list_utils_env.c \
+			parsing/list_utils_redir.c \
 			parsing/list_utils_token.c \
 			parsing/main_parsing.c \
 			parsing/shell_env.c \
@@ -29,19 +33,22 @@ PARSING =	minishell.c \
 			parsing/substitution_utils.c \
 			parsing/substitution.c \
 			parsing/tokenization.c \
-			parsing/validation.c \
-			parsing/debug.c
+			parsing/validation.c 
 
-EXECUTION =	execution/builtin.c \
+EXECUTION =	execution/builtins_1.c \
+			execution/builtins_2.c \
+			execution/wrappers.c \
 			execution/executor.c \
 			execution/externals.c \
 			execution/garbage_collector.c \
 			execution/orchestrator.c \
 			execution/pipe_helpers.c \
 			execution/redirections.c \
-			execution/export.c \
-			execution/builtin_echo.c \
+			execution/builtin_export.c \
 			execution/helpers.c \
+			execution/helpers_var.c \
+			execution/homeless_functions.c \
+			execution/paths.c \
 			execution/checkers.c
 
 GNL =		get_next_line/get_next_line.c \
@@ -76,5 +83,8 @@ fclean:
 re:
 	$(MAKE) fclean
 	$(MAKE) all
+
+run: $(NAME)
+	$(LSAN) ./$(NAME)
 
 .PHONY: all clean fclean re

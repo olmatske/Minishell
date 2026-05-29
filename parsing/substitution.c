@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:25 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 21:34:42 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 22:20:25 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	expand_env(char *old_w, int *i, char **new_w, t_env *env)
 	char	*value;
 
 	(*i)++;
-	if (old_w[*i] == '\0' || old_w[*i] == ' ' || old_w[*i] == '\''
-		|| old_w[*i] == '\"')
+	if (old_w[*i] == '\0' || old_w[*i] == ' ' || old_w[*i] == '\t'
+		|| old_w[*i] == '\'' || old_w[*i] == '\"')
 	{
 		*new_w = append_char(*new_w, '$');
 		return ;

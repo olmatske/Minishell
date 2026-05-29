@@ -6,11 +6,12 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 16:36:57 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 17:48:44 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 22:55:16 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing.h"
+#include "../minishell.h"
 
 static char	*create_filename(int counter)
 {
@@ -87,6 +88,8 @@ char	*heredoc(char *delimiter, int counter, t_env *env)
 	while (1)
 	{
 		line = readline("> ");
+		if (g_signal == 130)
+			return (free(line), free(heredoc), NULL);
 		if (line == NULL)
 			break ;
 		if (ft_strncmp(line, delimiter, (ft_strlen(delimiter) + 1)) == 0)
