@@ -6,20 +6,20 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:25 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/14 13:45:32 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 17:03:17 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
 
-static void	just_copy(char *old_w, int *i, char **new_w)
+void	just_copy(char *old_w, int *i, char **new_w)
 {
 	*new_w = append_char(*new_w, old_w[*i]);
 	(*i)++;
 }
 
-static void	expand_env(char *old_w, int *i, char **new_w, t_env *env)
+void	expand_env(char *old_w, int *i, char **new_w, t_env *env)
 {
 	int		start;
 	char	*name;

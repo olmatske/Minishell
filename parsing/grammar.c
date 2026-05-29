@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:52:47 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/11 15:59:52 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 16:37:37 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,13 @@ char	*read_full_command(char *line)
 		next = readline("> ");
 		if (next == NULL)
 			return (free(line), NULL);
-		tmp = append_str(line, "\n");
-		if (tmp == NULL)
-			return (free(line), free(next), NULL);
-		free(line);
-		line = ft_strjoin(tmp, next);
+		line = append_new_line(line, next);
 		if (line == NULL)
-			return (free(tmp), free(next), NULL);
-		free(next);
-		free(tmp);
+			return (NULL);
 	}
 	return (line);
 }
+
 
 int	check_quotes(char *line)
 {

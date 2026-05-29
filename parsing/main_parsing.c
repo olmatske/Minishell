@@ -6,12 +6,39 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/11 14:19:03 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/29 18:17:47 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
+
+static int	process_heredocs(t_cmd_node *cmd_list, t_env *env)
+{
+	t_cmd_node	*current;
+	t_redir		*current_redir;
+	int			counter;
+
+	current = cmd_list;
+	counter = 0;
+	while(current)
+	{
+		current_redir = current->cmd->redir;
+		while (current)
+		{
+			if (current_redir->heredoc_delimiter != NULL)
+			{
+				counter++;
+				current_redir->infile = heredoc(current_redir->heredoc_delimiter, counter, env);
+				if (current_redir->infile == -1)
+					return (-1);
+			}
+			current_redir = current_redir->next;
+		}
+		current = current->next;
+	}
+	return (0);
+}
 
 static t_token	*create_tokens(char *line)
 {
@@ -48,16 +75,16 @@ t_cmd_node	*main_parsing(char *line, t_env *copied_env)
 		free_list_token(&token_list);
 		return (NULL);
 	}
-	// printf("before substitution\n");
-	// print_token_list_debug(token_list);
 	variable_substitution(&token_list, copied_env);
-	// printf("after substitution\n");
-	// print_token_list_debug(token_list);
 	cmd_list = cmd_building(token_list);
-	// printf("cmd_list created:\n");
-	// print_token_list_debug(token_list);
 	free_list_token(&token_list);
-	// printf("CMD LIST CREATED:\n");
-	// print_cmd_list_debug(cmd_list);
+	if (cmd_list != NULL)
+	{
+		if (process_heredocs(cmd_list, copied_env) == -1)
+		{
+			free_cmd_list(cmd_list);
+			return (NULL);
+		}
+	}
 	return (cmd_list);
 }

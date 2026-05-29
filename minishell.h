@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/26 17:54:16 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 18:17:01 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ typedef enum e_out_type {
 }	t_out_type;
 
 typedef struct s_redir {
-	char		*infile;
-	char		*heredoc_delimiter;
-	char		*outfile;
-	t_out_type	out_type;
+	char			*infile;
+	char			*heredoc_delimiter;
+	char			*outfile;
+	t_out_type		out_type;
+	struct s_redir	*next;
 }	t_redir;
 
 typedef enum e_built_in_name {
@@ -115,6 +116,9 @@ int			is_it_space_only(char *line);
 void		free_cmd_list(t_cmd_node *cmd_list);
 void		free_env_list(t_env **head);
 int			env_list_length(t_env *head);
+char		*append_new_line(char *line, char *new_chunk);
+void		just_copy(char *old_w, int *i, char **new_w);
+void		expand_env(char *old_w, int *i, char **new_w, t_env *env);
 
 ////////////////////////////////////////////////////////////////////////////////
 int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);
