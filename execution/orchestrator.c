@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/30 13:57:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/27 20:44:46 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 09:59:18 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	wrapper_all(t_shell *shell, t_cmd_node *node, t_env **env, int status
 			return (status);
 		}
 	}
-	status = wrapper_builtin(shell, node, env);
+	status = wrapper_builtins(shell, node, env);
 	dup2(save_in, STDIN_FILENO);
 	dup2(save_out, STDOUT_FILENO);
 	close(save_in);

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 13:24:58 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/27 21:48:05 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 09:59:26 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,5 @@ int	execution(t_shell *shell, t_cmd_node *cmd, t_env **env)
 {
 	if (cmd->cmd->built_in_name == BUILTIN_NONE)
 		return (exec_external(shell, cmd->cmd, *env));
-	return (wrapper_builtin(shell, cmd, env));
+	return (wrapper_builtins(shell, cmd, env));
 }

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/28 18:43:30 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 09:59:06 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 // FUNCTIONS ///////////////////////////////////////////////////////////////////
 
 // builtin.c ///////////////////////////////////////////////////////////////////
-int		wrapper_builtin(t_shell *shell, t_cmd_node *cmd_node, t_env **env);
+int		wrapper_builtins(t_shell *shell, t_cmd_node *cmd_node, t_env **env);
 int		echo(char **str);
 int		pwd(void);
 int		ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd);

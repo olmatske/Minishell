@@ -6,7 +6,7 @@
 #    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/05/28 22:25:05 by olmatske         ###   ########.fr        #
+#    Updated: 2026/05/29 09:57:31 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,9 @@ PARSING =	minishell.c \
 			parsing/debug.c \
 			parsing/redirection_building.c
 
-EXECUTION =	execution/builtin.c \
-			execution/builtin_cd.c \
+EXECUTION =	execution/builtins_1.c \
+			execution/builtins_2.c \
+			execution/wrappers.c \
 			execution/executor.c \
 			execution/externals.c \
 			execution/garbage_collector.c \
@@ -46,6 +47,7 @@ EXECUTION =	execution/builtin.c \
 			execution/builtin_export.c \
 			execution/builtin_echo.c \
 			execution/helpers.c \
+			execution/helpers_var.c \
 			execution/checkers.c
 
 GNL =		get_next_line/get_next_line.c \
