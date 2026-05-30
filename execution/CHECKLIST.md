@@ -144,9 +144,15 @@
 	-> LEAKS!!! was only the readline leaks
 - [X] update $PWD when changing directories
 - [X] leaks when doing just cd
+<<<<<<< HEAD
 - [X] Minishell$ pwd
 - [X] Norminette
 # - [ ] > text.txt does not create file, but it should
+=======
+# - [X] Minishell$ pwd
+# - [X] Norminette
+# - [ ] file creation
+>>>>>>> main
 # - [ ] Heredoc
 # - [ ] remove fsanitizer from Makefile
 
