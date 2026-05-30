@@ -6,40 +6,12 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 17:33:49 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/27 20:36:26 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/30 22:07:41 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
-
-// static void	free_redir(t_redir *redir)
-// {
-// 	if (redir == NULL)
-// 		return ;
-// 	if (redir->infile != NULL)
-// 		free(redir->infile);
-// 	if (redir->outfile != NULL)
-// 		free(redir->outfile);
-// 	if (redir->heredoc_delimiter != NULL)
-// 		free(redir->heredoc_delimiter);
-// 	free(redir);
-// }
-
-void	free_redir_list(t_redir *redir)
-{
-	t_redir	*next;
-
-	while (redir)
-	{
-		next = redir->next;
-		free(redir->heredoc_delimiter);
-		free(redir->infile);
-		free(redir->outfile);
-		free(redir);
-		redir = next;
-	}
-}
 
 void	free_args(char **args)
 {

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/27 20:40:24 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/30 22:04:15 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ typedef enum e_out_type {
 }	t_out_type;
 
 typedef struct s_redir {
-	char		*infile;
-	char		*heredoc_delimiter;
-	char		*outfile;
-	t_out_type	out_type;
-	struct s_redir		*next;
+	char			*infile;
+	char			*heredoc_delimiter;
+	char			*outfile;
+	t_out_type		out_type;
+	struct s_redir	*next;
 }	t_redir;
 
 
@@ -106,9 +106,9 @@ typedef struct s_pipex {
 
 int			main(int argc, char **argv, char **envp);
 t_env		*shell_env(char **envp);
-t_cmd_node	*main_parsing(char *line, t_env *copied_env);
+t_cmd_node	*main_parsing(char **line, t_env *copied_env);
 char		**env_array_for_execution(t_env *copied_env);
-char		**env_array_without_value(t_env *copied_env);
+char		**env_array_without_value(t_env *copied_env); // check!!
 char		**free_env_array(char **env_array);
 void		ft_error(char *s, int exit_code);
 void		ft_perror(char *s);
@@ -116,6 +116,7 @@ void		replace_signals(void);
 int			is_it_space_only(char *line);
 void		free_cmd_list(t_cmd_node *cmd_list);
 void		free_env_list(t_env **head);
+void		free_redir_list(t_redir *redir);
 int			env_list_length(t_env *head);
 
 ////////////////////////////////////////////////////////////////////////////////

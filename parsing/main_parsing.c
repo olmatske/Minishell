@@ -6,12 +6,40 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/11 14:19:03 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/30 17:34:22 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "../minishell.h"
+
+static int	process_heredocs(t_cmd_node *cmd_list, t_env *env)
+{
+	t_cmd_node	*current;
+	t_redir		*curr_redir;
+	int			counter;
+
+	current = cmd_list;
+	counter = 0;
+	while (current)
+	{
+		curr_redir = current->cmd->redir;
+		while (curr_redir)
+		{
+			if (curr_redir->heredoc_delimiter != NULL)
+			{
+				counter++;
+				curr_redir->infile = heredoc(curr_redir->heredoc_delimiter,
+						counter, env);
+				if (curr_redir->infile == NULL)
+					return (-1);
+			}
+			curr_redir = curr_redir->next;
+		}
+		current = current->next;
+	}
+	return (0);
+}
 
 static t_token	*create_tokens(char *line)
 {
@@ -24,7 +52,8 @@ static t_token	*create_tokens(char *line)
 	tail = NULL;
 	while (line[i])
 	{
-		while (line[i] && ((line[i] >= 9 && line[i] <= 13) || line[i] == 32))
+		while (line[i] && ((line[i] >= '\t' && line[i] <= '\r')
+				|| line[i] == ' '))
 			i++;
 		if (line[i] == '\0')
 			break ;
@@ -34,13 +63,15 @@ static t_token	*create_tokens(char *line)
 	return (head);
 }
 
-t_cmd_node	*main_parsing(char *line, t_env *copied_env)
+t_cmd_node	*main_parsing(char **line, t_env *copied_env)
 {
 	t_token		*token_list;
 	t_cmd_node	*cmd_list;
 
-	check_quotes(line);
-	token_list = create_tokens(line);
+	*line = check_quotes(*line);
+	if (*line == NULL)
+		return (NULL);
+	token_list = create_tokens(*line);
 	if (token_list == NULL)
 		return (NULL);
 	if (input_validation(token_list) == -1)
@@ -48,16 +79,13 @@ t_cmd_node	*main_parsing(char *line, t_env *copied_env)
 		free_list_token(&token_list);
 		return (NULL);
 	}
-	// printf("before substitution\n");
-	// print_token_list_debug(token_list);
 	variable_substitution(&token_list, copied_env);
-	// printf("after substitution\n");
-	// print_token_list_debug(token_list);
 	cmd_list = cmd_building(token_list);
-	// printf("cmd_list created:\n");
-	// print_token_list_debug(token_list);
 	free_list_token(&token_list);
-	// printf("CMD LIST CREATED:\n");
-	// print_cmd_list_debug(cmd_list);
+	if (cmd_list != NULL && process_heredocs(cmd_list, copied_env) == -1)
+	{
+		free_cmd_list(cmd_list);
+		return (NULL);
+	}
 	return (cmd_list);
 }

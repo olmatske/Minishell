@@ -1,2 +1,6 @@
-# tester/
+tester/
+a.out
+.vscode/
+.DS_STORE
 *.o
+*.a

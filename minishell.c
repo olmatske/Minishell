@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/22 15:00:05 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/30 15:01:07 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	g_signal = 0;
 
 static t_shell	*shell_init(t_shell *shell, t_env **env)
 {
@@ -26,30 +28,36 @@ static t_shell	*shell_init(t_shell *shell, t_env **env)
 	return (shell);
 }
 
+static void	execute(char **line, t_env *copied_env, t_shell *shell)
+{
+	t_cmd_node	*cmd_list;
+
+	add_history(*line);
+	cmd_list = main_parsing(line, copied_env);
+	if (cmd_list != NULL)
+		shell_loop(shell, cmd_list);
+	free_cmd_list(cmd_list);
+}
+
 static void	minishell_loop(t_env *copied_env, t_shell *shell)
 {
 	char		*line;
-	t_cmd_node	*cmd_list;
 
-	// shell = malloc(sizeof(t_shell)); // prev: shell = NULL;
 	replace_signals();
 	while (1)
 	{
+		g_signal = 0;
 		line = readline("Minishell$ ");
+		if (g_signal == 130)
+		{
+			shell->exit = 130;
+			update_shell_status(&copied_env, shell);
+		}
 		if (line == NULL)
 			break ;
-		else if (line[0] == '\0' || is_it_space_only(line) == 1)
-		{
-			free(line);
-			continue ;
-		}
-		else
-			add_history(line);
-		cmd_list = main_parsing(line, copied_env);
-		if (cmd_list != NULL)
-			shell_loop(shell, cmd_list);
+		if (line[0] != '\0' && is_it_space_only(line) != 1)
+			execute(&line, copied_env, shell);
 		free(line);
-		free_cmd_list(cmd_list);
 	}
 	free_all(shell, NULL, NULL);
 }

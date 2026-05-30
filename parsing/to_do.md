@@ -41,4 +41,4 @@
 		- [x] builtin name like echo
 	- [x] if there is a pipe in the input the node will be pointing to the next node. OTHERWISE THERE WILL BE ONLY ONE NODE FOR ONE COMMAND
 ### hleaks
-	- [ ] memory leaks at exit
+	- [x] memory leaks at exit

@@ -6,7 +6,7 @@
 #    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/05/29 11:41:47 by olmatske         ###   ########.fr        #
+#    Updated: 2026/05/30 22:07:29 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,11 @@ PARSING =	minishell.c \
 			parsing/builtins.c \
 			parsing/cmd_building.c \
 			parsing/grammar.c \
+			parsing/heredoc_utils.c \
+			parsing/heredoc.c \
 			parsing/list_utils_cmd.c \
 			parsing/list_utils_env.c \
+			parsing/list_utils_redir.c \
 			parsing/list_utils_token.c \
 			parsing/main_parsing.c \
 			parsing/shell_env.c \
@@ -31,9 +34,7 @@ PARSING =	minishell.c \
 			parsing/substitution_utils.c \
 			parsing/substitution.c \
 			parsing/tokenization.c \
-			parsing/validation.c \
-			parsing/debug.c \
-			parsing/redirection_building.c
+			parsing/validation.c 
 
 EXECUTION =	execution/builtins_1.c \
 			execution/builtins_2.c \
@@ -87,5 +88,4 @@ re:
 run: $(NAME)
 	$(LSAN) ./$(NAME)
 
-
-.PHONY: all clean fclean re run
+.PHONY: all clean fclean re
