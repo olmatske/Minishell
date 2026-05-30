@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 16:36:57 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 21:13:52 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/30 23:02:05 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ static char	*read_from_heredoc(char *delimiter, t_env *env)
 		{
 			free(line);
 			free(heredoc);
+			heredoc = NULL;
 			break ;
 		}
 		if (check_line_status(delimiter, line) == -1)
@@ -93,15 +94,23 @@ static char	*read_from_heredoc(char *delimiter, t_env *env)
 		if (line == NULL)
 		{
 			free(heredoc);
+			heredoc = NULL;
 			break ;
 		}
 		new_heredoc = append_new_line(heredoc, line);
-		if (heredoc == NULL)
+		if (new_heredoc == NULL)
 		{
 			free(heredoc);
+			heredoc = NULL;
 			break ;
 		}
-			return (NULL);
+		heredoc = new_heredoc;
+	}
+	replace_signals();
+	if (copy_stdin >= 0)
+	{
+		dup2(copy_stdin, 0);
+		close(copy_stdin);
 	}
 	return (heredoc);
 }
