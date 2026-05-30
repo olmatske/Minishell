@@ -145,7 +145,8 @@
 - [X] update $PWD when changing directories
 - [X] leaks when doing just cd
 # - [X] Minishell$ pwd
-# - [ ] Norminette
+# - [X] Norminette
+# - [ ] file creation
 # - [ ] Heredoc
 # - [ ] remove fsanitizer from Makefile
 
