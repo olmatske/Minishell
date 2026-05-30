@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 14:21:34 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/30 15:01:07 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	minishell_loop(t_env *copied_env, t_shell *shell)
 		if (line == NULL)
 			break ;
 		if (line[0] != '\0' && is_it_space_only(line) != 1)
-			execute(*line, copied_env, shell);
+			execute(&line, copied_env, shell);
 		free(line);
 	}
 	free_all(shell, NULL, NULL);

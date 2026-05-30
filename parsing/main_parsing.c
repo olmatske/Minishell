@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 14:19:18 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/30 17:34:22 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,10 @@ t_cmd_node	*main_parsing(char **line, t_env *copied_env)
 	variable_substitution(&token_list, copied_env);
 	cmd_list = cmd_building(token_list);
 	free_list_token(&token_list);
-	if (cmd_list != NULL)
+	if (cmd_list != NULL && process_heredocs(cmd_list, copied_env) == -1)
 	{
-		if (process_heredocs(cmd_list, copied_env) == -1)
-		{
-			free_cmd_list(cmd_list);
-			return (NULL);
-		}
+		free_cmd_list(cmd_list);
+		return (NULL);
 	}
 	return (cmd_list);
 }

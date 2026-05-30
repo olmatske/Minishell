@@ -4,16 +4,24 @@ mandatory cases
 		overall purpose
 - [x]  empty command should print out the next prompt. spases or tabs behave the same way
 - [x]  check commands with absolute paths or without paths. both should work the same way
+		/bin/ls vs ls, /usr/bin/env vs env
 - [x]  echo without arguments should print out a new empty line and then give the usual prompt
 - [x]  echo -n should print out a new line with the usual prompt(without an empty line)
-- [x]  exit with “exit cat” 
-		prints out exit and on the next line bash: exit: cat: numeric argument required.
+- [ ]  echo - n should print out a new line with - n. !!! ours prints out nMinishell$ without a newline after n!!!
+- [ ]  exit with “exit cat” 
+		should print out exit and on the next line bash: exit: cat: numeric argument required.
 		the second line is very questionabble - should it be included or not.
 		then exits directly. the text is hardly to catch before the exit. a text message
 		appears for the error - the terminal process "/usr/bin/bash" terminated with exit code: 2.
+		ours prints out "
+		exit
+		Minishell: cat: numeric argument required
+		"
+		acceptable or not?
 - [ ]  exit with one or more numeric arguments 
 		!! ours exits with 
-		cat: 3: No such file or directory. the actual exits and gives a window the process...terminated with exit code 3 !! to check - is exit treated as a builtin
+		cat: 3: No such file or directory. the actual exits and gives a window 
+		the process...terminated with exit code 3 !! to check - is exit treated as a builtin
 		can exit only with one numeric argument or without any arguments. with no arguments
 		the error runs as folows: the terminal process "/usr/bin/bash" terminated with exit code: 1.
 		with one numeric argument the error takes the numeric argument as the exit code
@@ -21,7 +29,8 @@ mandatory cases
 		!! the error for the exit with	too many numeric arguments 
 		ours:  exit
 		Minishell: too many arguments
-		actual: exit\nbash: exit: too many arguments.
+		actual: exit
+		bash: exit: too many arguments.
 - [x]  echo $? should print out the last exit code
 - [x]  ctrl-C writes out ^C and jumps to the new line
 - [x]  ctrl-D in an empty prompt should close the terminal
@@ -33,10 +42,12 @@ mandatory cases
 		and give a prompt on a new line
 - [x]  running ctrl-D after a blocking command (like grep b) should just give a prompt on a new line
 		without writing anything
-- [ ]  !!!doesnt work!!! running ctrl-\ after a blocking command (like grep b) should write ^\Quit (core dumped) on the line
+- [ ]  !!!doesnt work!!! running ctrl-\ after a blocking command (like grep b) should write 
+		^\Quit (core dumped) on the line
 		and give a prompt on a new line
 - [ ]  !! heredoc woks partially! without a command at the front it does not work
-		the info after the delimeter should not be added to the history. adds only the main command
+		the info after the delimeter should not be added to the history. adds only the main command. 
+		check for the NULL at the beginning
 		Minishell$ << EOF
 		> lkjsd
 		> sadkjf
@@ -44,45 +55,36 @@ mandatory cases
 		(null): command not found
 		Minishell$ 
 - [x]  history is working
-- [ ]  create the new environmental variables !! MYVAR=hello adds itto the end and then adds an extra newline
-- [ ]  cd should work correctly with . and .. !! displays still Minishell$. but pwd shows the correct folder. check if this is ok, but probably not
+- [ ]  create the new environmental variables !! export MYVAR=hello adds it to the end and then adds an extra newline
+- [ ]  create the new environmental variables !! MYVAR=hello alone does not work. (command not found)
+- [x]  cd should work correctly with . and .. !! displays still Minishell$. but pwd shows the correct folder. 
+		check if this is ok
 - [x]  unset PATH should crash the $PATH
-- [x]  """"""'"$USER"'""""""
-- [ ]  """""""'"$USER"'"""""" double free
-	==25000==ERROR: AddressSanitizer: attempting double-free on 0x603000004210 in thread T0:
-    #0 0x49a022 in free (/home/anshuval/Documents/Minishell/minishell+0x49a022)
-    #1 0x4cdc69 in read_full_command /home/anshuval/Documents/Minishell/parsing/grammar.c:65:3
-    #2 0x4ce076 in check_quotes /home/anshuval/Documents/Minishell/parsing/grammar.c:78:10
-    #3 0x4d0583 in main_parsing /home/anshuval/Documents/Minishell/parsing/main_parsing.c:71:2
-    #4 0x4cb929 in execute /home/anshuval/Documents/Minishell/minishell.c:36:13
-    #5 0x4cb884 in minishell_loop /home/anshuval/Documents/Minishell/minishell.c:59:4
-    #6 0x4cb4ae in main /home/anshuval/Documents/Minishell/minishell.c:83:2
-    #7 0x7c5c30229d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-    #8 0x7c5c30229e3f in __libc_start_main csu/../csu/libc-start.c:392:3
-    #9 0x41f3c4 in _start (/home/anshuval/Documents/Minishell/minishell+0x41f3c4)
-
-0x603000004210 is located 0 bytes inside of 19-byte region [0x603000004210,0x603000004223)
-freed by thread T0 here:
-    #0 0x49a022 in free (/home/anshuval/Documents/Minishell/minishell+0x49a022)
-    #1 0x4d1edc in append_str /home/anshuval/Documents/Minishell/parsing/substitution_utils.c:52:2
-    #2 0x4cdc2b in read_full_command /home/anshuval/Documents/Minishell/parsing/grammar.c:62:9
-    #3 0x4ce076 in check_quotes /home/anshuval/Documents/Minishell/parsing/grammar.c:78:10
-    #4 0x4d0583 in main_parsing /home/anshuval/Documents/Minishell/parsing/main_parsing.c:71:2
-    #5 0x4cb929 in execute /home/anshuval/Documents/Minishell/minishell.c:36:13
-    #6 0x4cb884 in minishell_loop /home/anshuval/Documents/Minishell/minishell.c:59:4
-    #7 0x4cb4ae in main /home/anshuval/Documents/Minishell/minishell.c:83:2
-    #8 0x7c5c30229d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-
-previously allocated by thread T0 here:
-    #0 0x49a28d in malloc (/home/anshuval/Documents/Minishell/minishell+0x49a28d)
-    #1 0x7c5c305e8bac in xmalloc (/lib/x86_64-linux-gnu/libreadline.so.8+0x39bac)
-
-SUMMARY: AddressSanitizer: double-free (/home/anshuval/Documents/Minishell/minishell+0x49a022) in free
-==25000==ABORTING
-- [ ]  /bin/echo """""""'"$USER"'"""""" !!! double free if iserted from here. output below. check why
+- [x]  """"""'"$USER"'"""""" 'anshuval': command not found
+- [x]  """""""'"$USER"'"""""" double free
+- [ ]  /bin/echo """""""'"$USER"'"""""" 
 		should wait for the quotes to be closed then write out the user name with
 		anything put after the > prompt on a new line 
-- [ ]  cat << "$US"E"R” !!! delimiter $USER does not work. ctrl+c does not end the heredoc as expected. ctrl+d does
+		!!! leaks
+		Minishell$ /bin/echo/ """""'"$USER"'""""
+		> "
+		Minishell: /bin/echo/: Not a directory
+
+		=================================================================
+		==131464==ERROR: LeakSanitizer: detected memory leaks
+
+		Direct leak of 32 byte(s) in 1 object(s) allocated from:
+			#0 0x49a28d in malloc (/home/anshuval/Documents/Minishell/minishell+0x49a28d)
+			#1 0x71c3d7ed2bac in xmalloc (/lib/x86_64-linux-gnu/libreadline.so.8+0x39bac)
+
+		Indirect leak of 372 byte(s) in 21 object(s) allocated from:
+			#0 0x49a28d in malloc (/home/anshuval/Documents/Minishell/minishell+0x49a28d)
+			#1 0x71c3d7ed2bac in xmalloc (/lib/x86_64-linux-gnu/libreadline.so.8+0x39bac)
+
+		SUMMARY: AddressSanitizer: 404 byte(s) leaked in 22 allocation(s).
+		Minishell$ 
+- [ ]  cat << "$US"E"R” !!! delimiter $USER does not work. ctrl+c does not end the heredoc as expected.
+		ctrl+d does
 		delimiter is $USER. - all the quotes should be deleted,
 		but as $US is not set it should not print out any user name 
 		Minishell$ cat << "$US"E"R"
@@ -92,44 +94,10 @@ SUMMARY: AddressSanitizer: double-free (/home/anshuval/Documents/Minishell/minis
 		> $USER
 		> ^C
 		> 
-		
-		
-		Minishell$ """"""'"$USER"'""""""
-	"$USER": command not found
-	Minishell$ cat << "$US"E"R”
-	> USER
-	=================================================================
-	==19417==ERROR: AddressSanitizer: attempting double-free on 0x6030000022f0 in thread T0:
-		#0 0x49a022 in free (/home/anshuval/Documents/Minishell/minishell+0x49a022)
-		#1 0x4cdc69 in read_full_command /home/anshuval/Documents/Minishell/parsing/grammar.c:65:3
-		#2 0x4ce076 in check_quotes /home/anshuval/Documents/Minishell/parsing/grammar.c:78:10
-		#3 0x4d0583 in main_parsing /home/anshuval/Documents/Minishell/parsing/main_parsing.c:71:2
-		#4 0x4cb929 in execute /home/anshuval/Documents/Minishell/minishell.c:36:13
-		#5 0x4cb884 in minishell_loop /home/anshuval/Documents/Minishell/minishell.c:59:4
-		#6 0x4cb4ae in main /home/anshuval/Documents/Minishell/minishell.c:83:2
-		#7 0x72fe7e629d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-		#8 0x72fe7e629e3f in __libc_start_main csu/../csu/libc-start.c:392:3
-		#9 0x41f3c4 in _start (/home/anshuval/Documents/Minishell/minishell+0x41f3c4)
-
-	0x6030000022f0 is located 0 bytes inside of 19-byte region [0x6030000022f0,0x603000002303)
-	freed by thread T0 here:
-		#0 0x49a022 in free (/home/anshuval/Documents/Minishell/minishell+0x49a022)
-		#1 0x4d1edc in append_str /home/anshuval/Documents/Minishell/parsing/substitution_utils.c:52:2
-		#2 0x4cdc2b in read_full_command /home/anshuval/Documents/Minishell/parsing/grammar.c:62:9
-		#3 0x4ce076 in check_quotes /home/anshuval/Documents/Minishell/parsing/grammar.c:78:10
-		#4 0x4d0583 in main_parsing /home/anshuval/Documents/Minishell/parsing/main_parsing.c:71:2
-		#5 0x4cb929 in execute /home/anshuval/Documents/Minishell/minishell.c:36:13
-		#6 0x4cb884 in minishell_loop /home/anshuval/Documents/Minishell/minishell.c:59:4
-		#7 0x4cb4ae in main /home/anshuval/Documents/Minishell/minishell.c:83:2
-		#8 0x72fe7e629d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-
-	previously allocated by thread T0 here:
-		#0 0x49a28d in malloc (/home/anshuval/Documents/Minishell/minishell+0x49a28d)
-		#1 0x72fe7eb53bac in xmalloc (/lib/x86_64-linux-gnu/libreadline.so.8+0x39bac)
-
-	SUMMARY: AddressSanitizer: double-free (/home/anshuval/Documents/Minishell/minishell+0x49a022) in free
-	==19417==ABORTING
-- [ ]  echo "" "" "" -n -n -n !!! prints out reversed before the minishell prompt, without spaces and only two -n
+	
+- [x]  echo "" "" "" -n -n -n !!! prints out reversed before the minishell prompt, without spaces and 
+		only two -n
+		solved it by tracking the quotation marks - if there were quotation marks than the node was not deleted
 		should just print out    -n -n -n
 - [ ]  cd ~/Desktop/ !!! cd: ~/Desktop/: No such file or directory
 		should return to the folder under Desktop
@@ -137,49 +105,25 @@ SUMMARY: AddressSanitizer: double-free (/home/anshuval/Documents/Minishell/minis
 		should return "username"
 - [x]  /bin/echo "'"'$USER'"'"
 		should return '$USER'
-- [ x]  env
+- [x]  env
 		should print out the env without the ? node at thhe end 
 - [ ]  export
 		should print out the env list in alphabetical order without the ? 
-		node at thhe beginning and with prefix declare -x and all the values after the = sign are in quotation marks
+		node at thhe beginning and with prefix declare -x and all the values after the = sign are in
+		quotation marks
 		!!! prints out with ? on top and without quotation marks
 - [x]  +echo "" "" "" -n -n -n -n
 		command not found 127
-- [ ]  heredoc should ignore ctrl + z !!! doesnt ignore and aborts. ctrl+z aborts minishell in all the cases. is it correct?
+- [x]  heredoc should ignore ctrl + z !!! doesnt ignore and aborts. ctrl+z aborts minishell in all the cases.
+		is it correct?
 		Minishell$ cat << EOF
 		> ^Z
 		[1]+  Stopped                 ./minishell
-
-Minishell$ /bin/echo """""""'"$USER"'""""""
-> "
-=================================================================
-==17772==ERROR: AddressSanitizer: attempting double-free on 0x604000000450 in thread T0:
-    #0 0x49a022 in free (/home/anshuval/Documents/Minishell/minishell+0x49a022)
-    #1 0x4cdc69 in read_full_command /home/anshuval/Documents/Minishell/parsing/grammar.c:65:3
-    #2 0x4ce076 in check_quotes /home/anshuval/Documents/Minishell/parsing/grammar.c:78:10
-    #3 0x4d0583 in main_parsing /home/anshuval/Documents/Minishell/parsing/main_parsing.c:71:2
-    #4 0x4cb929 in execute /home/anshuval/Documents/Minishell/minishell.c:36:13
-    #5 0x4cb884 in minishell_loop /home/anshuval/Documents/Minishell/minishell.c:59:4
-    #6 0x4cb4ae in main /home/anshuval/Documents/Minishell/minishell.c:83:2
-    #7 0x7a1400829d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-    #8 0x7a1400829e3f in __libc_start_main csu/../csu/libc-start.c:392:3
-    #9 0x41f3c4 in _start (/home/anshuval/Documents/Minishell/minishell+0x41f3c4)
-
-0x604000000450 is located 0 bytes inside of 33-byte region [0x604000000450,0x604000000471)
-freed by thread T0 here:
-    #0 0x49a022 in free (/home/anshuval/Documents/Minishell/minishell+0x49a022)
-    #1 0x4d1edc in append_str /home/anshuval/Documents/Minishell/parsing/substitution_utils.c:52:2
-    #2 0x4cdc2b in read_full_command /home/anshuval/Documents/Minishell/parsing/grammar.c:62:9
-    #3 0x4ce076 in check_quotes /home/anshuval/Documents/Minishell/parsing/grammar.c:78:10
-    #4 0x4d0583 in main_parsing /home/anshuval/Documents/Minishell/parsing/main_parsing.c:71:2
-    #5 0x4cb929 in execute /home/anshuval/Documents/Minishell/minishell.c:36:13
-    #6 0x4cb884 in minishell_loop /home/anshuval/Documents/Minishell/minishell.c:59:4
-    #7 0x4cb4ae in main /home/anshuval/Documents/Minishell/minishell.c:83:2
-    #8 0x7a1400829d8f in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
-
-previously allocated by thread T0 here:
-    #0 0x49a28d in malloc (/home/anshuval/Documents/Minishell/minishell+0x49a28d)
-    #1 0x7a1400c7cbac in xmalloc (/lib/x86_64-linux-gnu/libreadline.so.8+0x39bac)
-
-SUMMARY: AddressSanitizer: double-free (/home/anshuval/Documents/Minishell/minishell+0x49a022) in free
-==17772==ABORTING
+		Minishell$ /bin/echo """""""'"$USER"'""""""
+		> "
+- [ ]  heredoc should respond to ctrl + c
+- [ ]  heredoc should give out a comment on the ctrl + d 
+		bash: warning: here-document at line 42 delimited by end-of-file (wanted `EOF')
+		check that this is a standard warning. if yes should pass the delimiter and - how to count the lines
+- [ ]  env prints out the ?=0 at the end ???? in some cases. why?? not always. no logic on that
+- [ ]  delete the GNL from everywhere - header, makefile and itself. it is not used anywhere

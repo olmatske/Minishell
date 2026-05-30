@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 14:19:52 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/30 17:21:31 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void		add_node_to_redir_list(t_redir **head, t_redir **tail,
 void		redir_builder(char **file_type, t_token *current);
 void		variable_substitution(t_token **token_list, t_env *copied_env);
 int			quote_status(char c, int *in_double, int *in_single);
-void		delete_empty_node(t_token **head, t_token *to_delete);
 int			malloc_args_array(t_cmd_node *new_cmd, t_token *head);
 void		add_node_to_cmd_list(t_cmd_node **head, t_cmd_node **tail,
 				t_cmd_node *node);
