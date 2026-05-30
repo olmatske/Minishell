@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:52:47 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 22:32:40 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/30 14:17:18 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ char	*read_full_command(char *line)
 			return (free(line), NULL);
 		tmp = append_str(line, "\n");
 		if (tmp == NULL)
-			return (free(line), free(next), NULL);
-		free(line);
+			return (free(next), NULL);
 		line = ft_strjoin(tmp, next);
 		if (line == NULL)
 			return (free(tmp), free(next), NULL);
@@ -72,11 +71,11 @@ char	*read_full_command(char *line)
 	return (line);
 }
 
-int	check_quotes(char *line)
+char	*check_quotes(char *line)
 {
 	while (has_unclosed_quotes(line) == YES)
 		line = read_full_command(line);
-	return (YES);
+	return (line);
 }
 
 int	is_it_space_only(char *line)

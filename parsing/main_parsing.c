@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 22:30:50 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/30 14:19:18 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,15 @@ static t_token	*create_tokens(char *line)
 	return (head);
 }
 
-t_cmd_node	*main_parsing(char *line, t_env *copied_env)
+t_cmd_node	*main_parsing(char **line, t_env *copied_env)
 {
 	t_token		*token_list;
 	t_cmd_node	*cmd_list;
 
-	check_quotes(line);
-	token_list = create_tokens(line);
+	*line = check_quotes(*line);
+	if (*line == NULL)
+		return (NULL);
+	token_list = create_tokens(*line);
 	if (token_list == NULL)
 		return (NULL);
 	if (input_validation(token_list) == -1)

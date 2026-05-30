@@ -44,8 +44,8 @@ mandatory cases
 		(null): command not found
 		Minishell$ 
 - [x]  history is working
-- [ ]  create the new environmental variables !! MYVAR=hello adds itto the end and then adds another newline. bash adds it somewhere in the middle 
-- [ ]  cd should work correctly with . and .. !! displays still Minishell$. but pwd shows the correct folder. check if this is ok
+- [ ]  create the new environmental variables !! MYVAR=hello adds itto the end and then adds an extra newline
+- [ ]  cd should work correctly with . and .. !! displays still Minishell$. but pwd shows the correct folder. check if this is ok, but probably not
 - [x]  unset PATH should crash the $PATH
 - [x]  """"""'"$USER"'""""""
 - [ ]  """""""'"$USER"'"""""" double free
@@ -82,7 +82,7 @@ SUMMARY: AddressSanitizer: double-free (/home/anshuval/Documents/Minishell/minis
 - [ ]  /bin/echo """""""'"$USER"'"""""" !!! double free if iserted from here. output below. check why
 		should wait for the quotes to be closed then write out the user name with
 		anything put after the > prompt on a new line 
-- [ ]  cat << "$US"E"R” !!! delimiter $USER does not work. ctrl+c does not end the heredoc asexpected. ctrl+d does
+- [ ]  cat << "$US"E"R” !!! delimiter $USER does not work. ctrl+c does not end the heredoc as expected. ctrl+d does
 		delimiter is $USER. - all the quotes should be deleted,
 		but as $US is not set it should not print out any user name 
 		Minishell$ cat << "$US"E"R"

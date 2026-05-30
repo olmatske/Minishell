@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 22:31:46 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/30 14:19:52 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_token {
 	struct s_token	*next;
 }	t_token;
 
-int			check_quotes(char *line);
+char		*check_quotes(char *line);
 void		add_node_to_token_list(t_token **head, t_token **tail,
 				t_token *node);
 void		add_node_to_env_list(t_env **head, t_env **tail, t_env *node);
