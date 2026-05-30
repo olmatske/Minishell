@@ -92,6 +92,17 @@
 		 deleted:    libft/libft.a
         deleted:    minishell
 
+- [X] echo "fail" > dev/full -> /dev/full: No space left on device 
+- [X] cat > > -> syntax error near unexpected token '>'
+- [X] exits!!!
+- [X] update old pwd and new pwd in env after calling cd !!!
+- [X] apparently storing exit code in env is wrong
+- [X] Ctrl+\ doesn't work
+
+- [ ] open fd nach signals bei heredoc
+		-> close the fd if a signal comes throgh during heredoc!!!
+- [ ] open fd in child proccess is not supposed to happen!!
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 

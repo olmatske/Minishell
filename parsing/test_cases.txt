@@ -1,60 +1,114 @@
 mandatory cases
-- [ ]  make -n to check if the compilation uses the -Wall -Wextra -Werror
-- [ ]  check that only one global variable is used (not a struct). why is it used for the signals, what's it
+- [x]  make -n to check if the compilation uses the -Wall -Wextra -Werror
+- [x]  check that only one global variable is used (not a struct). why is it used for the signals, what's it
 		overall purpose
-- [ ]  empty command should print out the next prompt. spases or tabs behave the same way
-- [ ]  check commands with absolute paths or without paths. both should work the same way
-- [ ]  echo without arguments should print out a new empty line and then give the usual prompt
-- [ ]  echo -n should print out a new line with the usual prompt(without an empty line)
+- [x]  empty command should print out the next prompt. spases or tabs behave the same way
+- [x]  check commands with absolute paths or without paths. both should work the same way
+		/bin/ls vs ls, /usr/bin/env vs env
+- [x]  echo without arguments should print out a new empty line and then give the usual prompt
+- [x]  echo -n should print out a new line with the usual prompt(without an empty line)
+- [ ]  echo - n should print out a new line with - n. !!! ours prints out nMinishell$ without a newline after n and without the dash!!!
 - [ ]  exit with “exit cat” 
-		prints out exit and on the next line bash: exit: cat: numeric argument required.
+		should print out exit and on the next line bash: exit: cat: numeric argument required.
 		the second line is very questionabble - should it be included or not.
 		then exits directly. the text is hardly to catch before the exit. a text message
 		appears for the error - the terminal process "/usr/bin/bash" terminated with exit code: 2.
-- [ ]  exit with one or more numeric arguments
+		ours prints out "
+		exit
+		Minishell: cat: numeric argument required
+		"
+		misses the exit word
+- [ ]  exit with one or more numeric arguments 
+		!! ours exits with 
+		cat: 3: No such file or directory. the actual exits and gives a window 
+		the process...terminated with exit code 3 !! to check - is exit treated as a builtin
 		can exit only with one numeric argument or without any arguments. with no arguments
 		the error runs as folows: the terminal process "/usr/bin/bash" terminated with exit code: 1.
 		with one numeric argument the error takes the numeric argument as the exit code
 		exit 55 will have error: the terminal process "/usr/bin/bash" terminated with exit code: 55.
-		the error for the exit with	too many numeric arguments is exit\nbash: exit: too many arguments.
-		but it does not exit
-- [ ]  echo $? should print out the last exit code
-- [ ]  ctrl-C writes out ^C and jumps to the new line
-- [ ]  ctrl-D in an empty prompt should close the terminal
-- [ ]  ctrl-\ should do nothing
-- [ ]  ctrl-C in a prompt with smth already written in it should add ^C  and give a new line with prompt
-		it should not be stored in history
-- [ ]  ctrl-D and ctrl-\ in a prompt with smth already written in it should do nothing
-- [ ]  running ctrl-C after a blocking command (like grep b) should write ^C on the line
+		!! the error for the exit with	too many numeric arguments 
+		ours:  exit
+		Minishell: too many arguments
+		actual: exit
+		bash: exit: too many arguments.
+		missing word exit
+- [x]  echo $? should print out the last exit code
+- [x]  ctrl-C writes out ^C and jumps to the new line
+- [x]  ctrl-D in an empty prompt should close the terminal
+- [x]  ctrl-\ should do nothing
+- [x]  ctrl-C in a prompt with smth already written in it should add ^C  and give a new line with prompt
+		it should not be stored in history 
+- [x]  ctrl-D and ctrl-\ in a prompt with smth already written in it should do nothing
+- [x]  running ctrl-C after a blocking command (like grep b) should write ^C on the line
 		and give a prompt on a new line
-- [ ]  running ctrl-D after a blocking command (like grep b) should just give a prompt on a new line
+- [x]  running ctrl-D after a blocking command (like grep b) should just give a prompt on a new line
 		without writing anything
-- [ ]  running ctrl-\ after a blocking command (like grep b) should write ^\Quit (core dumped) on the line
+- [ ]  !!!doesnt work!!! running ctrl-\ after a blocking command (like grep b) should write 
+		^\Quit (core dumped) on the line
 		and give a prompt on a new line
-- [ ]  the info after the delimeter should not be added to the history (??)
-- [ ]  history is working
-- [ ]  how to create the new environmental variables
-- [ ]  cd should work correctly with . and ..
-- [ ]  unset env should crash the $PATH
-- [ ]  /bin/echo """""""'"$USER"'""""""
+- [x]  history is working
+- [ ]  create the new environmental variables !! export MYVAR=hello adds it to the end and then adds an extra newline
+- [ ]  create the new environmental variables !! MYVAR=hello alone does not work. (command not found)
+- [x]  cd should work correctly with . and .. !! displays still Minishell$. but pwd shows the correct folder. 
+		check if this is ok
+- [x]  unset PATH should crash the $PATH
+- [x]  """"""'"$USER"'"""""" 'anshuval': command not found
+- [x]  """""""'"$USER"'"""""" double free
+- [x]  /bin/echo """""""'"$USER"'"""""" 
 		should wait for the quotes to be closed then write out the user name with
 		anything put after the > prompt on a new line 
-- [ ]  cat << "$US"E"R” 
-		delimiter is $USER. - all the quotes should be deleted,
-		but as $US is not set it should not print out any user name 
-- [ ]  echo "" "" "" -n -n -n
+		!!! leaks
+- [x]  echo "" "" "" -n -n -n !!! prints out reversed before the minishell prompt, without spaces and 
+		only two -n
+		solved it by tracking the quotation marks - if there were quotation marks than the node was not deleted
 		should just print out    -n -n -n
-- [ ]  cd ~/Desktop/
-		should return to the folder under Desktop
-- [ ]  /bin/echo '"'$USER'"'
+- [ ]  cd ~/Desktop/ !!! cd: ~/Desktop/: No such file or directory
+		should return to the folder under Desktop. ;ook up the tilda replacement with HOME from env
+- [x]  /bin/echo '"'$USER'"'
 		should return "username"
-- [ ]  /bin/echo "'"'$USER'"'"
+- [x]  /bin/echo "'"'$USER'"'"
 		should return '$USER'
-- [ ]  env
+- [x]  env
 		should print out the env without the ? node at thhe end 
 - [ ]  export
 		should print out the env list in alphabetical order without the ? 
-		node at thhe end and with prefix declare -x 
-- [ ]  +echo "" "" "" -n -n -n -n
+		node at thhe beginning and with prefix declare -x and all the values after the = sign are in
+		quotation marks
+		!!! prints out with ? on top and without quotation marks
+- [x]  +echo "" "" "" -n -n -n -n
 		command not found 127
-- [ ]  heredoc should ignore ctrl + z
+- [x]  heredoc should ignore ctrl + z !!! doesnt ignore and aborts. ctrl+z aborts minishell in all the cases.
+		is it correct?
+		Minishell$ cat << EOF
+		> ^Z
+		[1]+  Stopped                 ./minishell
+		Minishell$ /bin/echo """""""'"$USER"'""""""
+		> "
+- [ ]  env prints out the ?=0 at the end ???? in some cases. why?? not always. no logic on that
+- [ ]  delete the GNL from everywhere - header, makefile and itself. it is not used anywhere
+
+
+- [ ]  !! heredoc woks partially! without a command at the front it does not work
+		the info after the delimeter should not be added to the history. adds only the main command. 
+		check for the NULL at the beginning
+		Minishell$ << EOF
+		> lkjsd
+		> sadkjf
+		> EOF
+		(null): command not found
+		Minishell$ 
+- [ ]  cat << "$US"E"R” !!! delimiter $USER does not work. ctrl+c does not end the heredoc as expected.
+		ctrl+d does
+		delimiter is $USER. - all the quotes should be deleted,
+		but as $US is not set it should not print out any user name 
+		Minishell$ cat << "$US"E"R"
+		> $USER
+		> USER
+		> US
+		> $USER
+		> ^C
+		> 
+- [ ]  heredoc should respond to ctrl + c
+- [ ]  heredoc should give out a comment on the ctrl + d 
+		bash: warning: here-document at line 42 delimited by end-of-file (wanted `EOF')
+		check that this is a standard warning. if yes should pass the delimiter and - how to count the lines

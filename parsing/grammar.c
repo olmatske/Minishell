@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:52:47 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/11 15:59:52 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/30 14:17:18 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ int	quote_status(char c, int *in_double, int *in_single)
 	if (c == '\"' && *in_single == NO)
 	{
 		*in_double = !(*in_double);
-			return (YES);
+		return (YES);
 	}
 	else if (c == '\'' && *in_double == NO)
 	{
 		*in_single = !(*in_single);
-			return (YES);
+		return (YES);
 	}
 	return (NO);
 }
@@ -49,7 +49,6 @@ static int	has_unclosed_quotes(char *line)
 
 char	*read_full_command(char *line)
 {
-
 	char	*tmp;
 	char	*next;
 
@@ -62,8 +61,7 @@ char	*read_full_command(char *line)
 			return (free(line), NULL);
 		tmp = append_str(line, "\n");
 		if (tmp == NULL)
-			return (free(line), free(next), NULL);
-		free(line);
+			return (free(next), NULL);
 		line = ft_strjoin(tmp, next);
 		if (line == NULL)
 			return (free(tmp), free(next), NULL);
@@ -73,14 +71,11 @@ char	*read_full_command(char *line)
 	return (line);
 }
 
-int	check_quotes(char *line)
+char	*check_quotes(char *line)
 {
-	if (has_unclosed_quotes(line) == YES)
-	{
-		while (has_unclosed_quotes(line) == YES)
-			line = read_full_command(line);
-	}
-	return (YES);
+	while (has_unclosed_quotes(line) == YES)
+		line = read_full_command(line);
+	return (line);
 }
 
 int	is_it_space_only(char *line)
@@ -90,7 +85,7 @@ int	is_it_space_only(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] != 32 && (line[i] < 9 || line[i] > 13))
+		if (line[i] != ' ' && (line[i] < '\t' || line[i] > '\r'))
 			return (0);
 		i++;
 	}
