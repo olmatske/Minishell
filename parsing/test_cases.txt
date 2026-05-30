@@ -84,10 +84,6 @@ mandatory cases
 		[1]+  Stopped                 ./minishell
 		Minishell$ /bin/echo """""""'"$USER"'""""""
 		> "
-- [ ]  env prints out the ?=0 at the end ???? in some cases. why?? not always. no logic on that
-- [ ]  delete the GNL from everywhere - header, makefile and itself. it is not used anywhere
-
-
 - [ ]  !! heredoc woks partially! without a command at the front it does not work
 		the info after the delimeter should not be added to the history. adds only the main command. 
 		check for the NULL at the beginning
@@ -97,6 +93,10 @@ mandatory cases
 		> EOF
 		(null): command not found
 		Minishell$ 
+- [ ]  env prints out the ?=0 at the end ???? in some cases. why?? not always. no logic on that
+- [ ]  delete the GNL from everywhere - header, makefile and itself. it is not used anywhere
+
+
 - [ ]  cat << "$US"E"R” !!! delimiter $USER does not work. ctrl+c does not end the heredoc as expected.
 		ctrl+d does
 		delimiter is $USER. - all the quotes should be deleted,
@@ -108,7 +108,7 @@ mandatory cases
 		> $USER
 		> ^C
 		> 
-- [ ]  heredoc should respond to ctrl + c
-- [ ]  heredoc should give out a comment on the ctrl + d 
+- [x]  heredoc should respond to ctrl + c
+- [x]  heredoc should give out a comment on the ctrl + d 
 		bash: warning: here-document at line 42 delimited by end-of-file (wanted `EOF')
 		check that this is a standard warning. if yes should pass the delimiter and - how to count the lines
