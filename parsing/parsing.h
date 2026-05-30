@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 17:21:31 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/30 20:07:58 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,10 @@ char		*append_char(char *old_w, char c);
 char		*search_env(t_env *env, char *name);
 char		*append_str(char *old_w, char *suffix);
 void		check_for_builtin(t_cmd_node *node);
-char		*append_new_line(char *line, char *new_chunk);
 void		just_copy(char *old_w, int *i, char **new_w);
 void		expand_env(char *old_w, int *i, char **new_w, t_env *env);
 char		*heredoc(char *delimiter, int counter, t_env *env);
+void		print_eof_warning(char *delimiter);
+char		*write_to_tmp_file(char *heredoc, int counter);
 
 #endif

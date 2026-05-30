@@ -55,11 +55,10 @@
 	-> likely because of the uninitialized shell exit status
 - [X] just cd does not rerout to $HOME
 - [X] echo status must be 1 if cd nonexistentpath
-- [ ] export PATH -> declare -x PATH (no ="")
+- [] export PATH -> declare -x PATH (no ="")
 - [X] pipes don't work apparently (env | grep TEST) -> they do
-- [ ] fix export so that it sees the difference between export PATH and export PATH= !!
+- [] fix export so that it sees the difference between export PATH and export PATH= !!
 - [X] env gets permanently sorted after export
-- [ ] exit 1 1 2 works, exit abc also works -> too many arguments / numeric argument required
 - [X] grep "NAME" goes into infinite loop
 		~/42/Minishell (execution*) » ./minishell                                               oli@Olgas-MacBook-Air
 		Minishell$ grep "NAME" Makefile
@@ -69,59 +68,27 @@
 				$(CC) $(CFLAGS) $(OBJECTS) $(LIBFT) -o $(NAME) -lreadline
 				$(RM) $(NAME) $(OBJECTS)
 		Minishell$ 
-- [ ] why does the tester fail on exit codes when everythings fine>??
-- [ ] echo "overwrite" > test.txt -> no output
-- [ ] > doesn't appear to be working, doesn't make a new file
-- [ ] when doing echo and a pipe it still prints with echo
-- [ ] >> doesn't seem to be working
-- [ ] cat < nonexistent.txt goes into infinite loop
-- [ ] heredoc is missing
-- [ ] echo "first" > out.tct < in.txt   oli@Olgas-MacBook-Air zsh: no such file or directory: in.txt
-- [ ] > test.txt goes into infinite loop
+- [X] why does the tester fail on exit codes when everythings fine>??
+- [X] echo "overwrite" > test.txt -> no output
+- [X] > doesn't appear to be working, doesn't make a new file
+- [X] when doing echo and a pipe it still prints with echo
+- [X] >> doesn't seem to be working
+- [X] cat < nonexistent.txt goes into infinite loop
+- [X] heredoc is missing
+- [X] echo "first" > out.tct < in.txt   oli@Olgas-MacBook-Air zsh: no such file or directory: in.txt
+- [X] > test.txt goes into infinite loop
 		-> smth wrong with redirections...
-# - [ ] echo "fail" > dev/full -> /dev/full: No space left on device 
-- [ ] cat > > -> syntax error near unexpected token '>'
-- [ ] exits!!!
-- [ ] update old pwd and new pwd in env after calling cd !!!
-- [ ] apparently storing exit code in env is wrong
-- [ ] Minishell$ echo $?
-			     0
-				 Minishell$ ls nonexistent; echo $?
-				 ls: 0: No such file or directory
-				 ls: echo: No such file or directory
-				 ls: nonexistent;: No such file or directory
-- [ ] ~/42/Minishell (execution*) » ./minishell
-									Minishell$ sdsgs
-									hello         
-									Minishell$ sdsgshello
-									Command not found
-									Minishell$ 
-									^C
-									^C
-									^C
-									osfjh
-									Minishell$ osfjh
-									Command not found
-									Minishell$
-- [ ] Ctrl+\ doesn't work
-- [ ] Minishell$ echo $HOME
-					/Users/oli
-				 Minishell$ echo $NO
-				 Minishell$ $NO
-				 Minishell$ $HOME
-					execve
-				 Minishell$ $USER
-		
-- [ ] Minishell$ pwd
-				/Users/oli/42/Minishell
-				curr status: 0
-				shell status: 0
-				Minishell$ $?
-				0: Command not found
-				curr status: 0
-				shell status: 0
-				Minishell$ Minishell$  <------ !!! when pressing down key
-				Minishell$ 
+- [X] echo "fail" > dev/full -> /dev/full: No space left on device 
+- [X] cat > > -> syntax error near unexpected token '>'
+- [X] exits!!!
+- [X] update old pwd and new pwd in env after calling cd !!!
+- [X] apparently storing exit code in env is wrong
+- [X] Ctrl+\ doesn't work
+
+- [ ] open fd nach signals bei heredoc
+		-> close the fd if a signal comes throgh during heredoc!!!
+- [ ] open fd in child proccess is not supposed to happen!!
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -172,6 +139,15 @@
 	- [X] gc_calloc - same as gc_malloc but fills space with NULL
 
 - [ ] execve are for external!!!!
+
+- [X] grep hi <./test_files/infile_big <./test_files/infile
+	-> LEAKS!!! was only the readline leaks
+- [X] update $PWD when changing directories
+- [X] leaks when doing just cd
+# - [X] Minishell$ pwd
+# - [ ] Norminette
+# - [ ] Heredoc
+# - [ ] remove fsanitizer from Makefile
 
 ### Allowed functions
 ------------------------------------------------

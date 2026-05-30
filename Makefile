@@ -6,7 +6,7 @@
 #    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/05/29 22:03:46 by anshuval         ###   ########.fr        #
+#    Updated: 2026/05/30 20:08:46 by anshuval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ PARSING =	minishell.c \
 			parsing/builtins.c \
 			parsing/cmd_building.c \
 			parsing/grammar.c \
+			parsing/heredoc_utils.c \
 			parsing/heredoc.c \
 			parsing/list_utils_cmd.c \
 			parsing/list_utils_env.c \

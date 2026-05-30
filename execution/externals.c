@@ -6,93 +6,31 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/26 13:26:50 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/29 11:44:05 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
 
-static int	decide_path(t_cmd *cmd)
+static void	child_exec(t_cmd *cmd, char *path, char **arr)
 {
-	char	*arg;
+	int			saved_errno;
+	struct stat	st;
 
-	if (!cmd || !cmd->args)
-		return (0);
-	arg = cmd->args[0];
-	if (!arg || arg[0] == '\0')
-		return (0);
-	return (ft_strchr(arg, '/') != NULL);
-}
-
-char	*get_path_value(char **env)
-{
-	int	i;
-
-	i = 0;
-	if (!env)
-		return (NULL);
-	while (env[i])
+	if (cmd->redir && wrapper_redirections(cmd->redir) != 0)
+		return (free_split(arr), exit(1));
+	if (stat(path, &st) == 0 && S_ISDIR(st.st_mode))
 	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-			return (env[i] + 5);
-		i++;
+		fprintf(stderr, "%s: Is a directory\n", path);
+		return (free_split(arr), exit(126));
 	}
-	return (NULL);
-}
-
-static char	*join_path(t_shell *shell, char *dir, char *cmd)
-{
-	char	*tmp;
-	char	*full;
-
-	if (!dir || dir[0] == '\0')
-		return (gc_strjoin(shell, "./", cmd));
-	tmp = gc_strjoin(shell, dir, "/");
-	if (!tmp)
-		return (NULL);
-	full = gc_strjoin(shell, tmp, cmd);
-	return (full);
-}
-
-void	free_split(char **str)
-{
-	int	i;
-
-	i = 0;
-	if (!str)
-		return ;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
-
-static char *resolve_path(t_shell *shell, t_cmd *cmd, char **env)
-{
-	char	*path_value;
-	char	**paths;
-	char	*full_path;
-	int		i;
-
-	i = 0;
-	path_value = get_path_value(env);
-	if (!path_value || !cmd || !cmd->args || !cmd->args[0])
-		return (NULL);
-	paths = ft_split(path_value, ':');
-	if (!paths)
-		return (NULL);
-	while (paths[i])
-	{
-		full_path = join_path(shell, paths[i], cmd->args[0]);
-		if (full_path && access(full_path, X_OK) == 0)
-			return (free_split(paths), full_path);
-		gc_single_free(shell, full_path);
-		i++;
-	}
-	free_split(paths);
-	return (NULL);
+	execve(path, cmd->args, arr);
+	saved_errno = errno;
+	fprintf(stderr, "%s %s: %s\n", M, path, strerror(saved_errno));
+	free_split(arr);
+	if (saved_errno == EACCES || saved_errno == EISDIR)
+		exit(126);
+	exit(127);
 }
 
 int	exec_external(t_shell *shell, t_cmd *cmd, t_env *env)
@@ -101,86 +39,25 @@ int	exec_external(t_shell *shell, t_cmd *cmd, t_env *env)
 	char	**arr;
 	int		pid;
 	int		status;
-	int		mpath;
 
 	arr = env_array_for_execution(env);
 	if (!arr)
-		return (fprintf(stderr, "%s malloc failure/n", M), 1);
-	path = NULL;
-	mpath = 0;
+		return (fprintf(stderr, "%s malloc failure\n", M), 1);
 	if (decide_path(cmd))
 		path = cmd->args[0];
 	else
-	{
 		path = resolve_path(shell, cmd, arr);
-		mpath = 1;
-	}
 	if (!path)
-		return (free_split(arr), fprintf(stderr, "%s: %s", cmd->args[0], C), 1);
+		return (free_split(arr),
+			fprintf(stderr, "%s: %s", cmd->args[0], C), 127);
 	pid = fork();
 	if (pid < 0)
-	{
-		// if (mpath)
-		// 	free(path);
 		return (free_split(arr), fprintf(stderr, "%s fork failure\n", M), 1);
-	}
 	if (pid == 0)
-	{
-		// fprintf(stderr, "redir infile=[%s]\n",cmd->redir && cmd->redir->infile ? cmd->redir->infile : "NULL");
-		if (cmd->redir && wrapper_redirections(cmd->redir) != 0)
-		{
-			free_split(arr);
-			exit(1);
-		}
-		execve(path, cmd->args, arr);
-		fprintf(stderr, "%s %s: %s\n", M, path, strerror(errno));
-		if (errno == EACCES || errno == EISDIR)
-			exit(126);
-		else
-			exit(127);
-	}
+		child_exec(cmd, path, arr);
 	waitpid(pid, &status, 0);
 	free_split(arr);
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
-	// if (mpath)
-	// 	free(path);
-	free_split(arr);
 	return (0);
 }
-
-void	exec_external_child(t_shell *shell, t_cmd *cmd, t_env *env)
-{
-	char	*path;
-	char	**arr;
-	int		mpath;
-
-	arr = env_array_for_execution(env);
-	if (!arr)
-		exit(1);
-	path = NULL;
-	mpath = 0;
-	if (decide_path(cmd))
-		path = cmd->args[0];
-	else
-	{
-		path = resolve_path(shell, cmd, arr);
-		mpath = 1;
-	}
-	if (!path)
-	{
-		free_split(arr);
-		fprintf(stderr, "%s: %s", cmd->args[0], C);
-		exit (127);
-	}
-	execve(path, cmd->args, arr);
-	fprintf(stderr, "%s %s: %s\n", M, path, strerror(errno));
-	if (mpath)
-		free(path);
-	free_split(arr);
-	if (errno == EACCES || errno == EISDIR)
-		exit (126);
-	exit (127);
-}
-
-
