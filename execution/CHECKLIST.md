@@ -88,6 +88,9 @@
 - [ ] open fd nach signals bei heredoc
 		-> close the fd if a signal comes throgh during heredoc!!!
 - [ ] open fd in child proccess is not supposed to happen!!
+- [ ] after compiling and make fclean-ing this happens:
+		 deleted:    libft/libft.a
+        deleted:    minishell
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
