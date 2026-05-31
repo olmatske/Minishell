@@ -166,6 +166,23 @@
 # - [ ] Heredoc
 # - [ ] remove fsanitizer from Makefile
 
+minishell:
+Minishell$ export PATH=""
+Minishell$ $?
+0: command not found
+Minishell$ 
+
+bash:
+olmatske@3-F-4:~/Curriculum/Minishell/tt$ export PATH=""
+olmatske@3-F-4:~/Curriculum/Minishell/tt$ $?
+bash: sed: No such file or directory
+bash: 0: No such file or directory
+
+
+
+
+
+
 ### Allowed functions
 ------------------------------------------------
 readline

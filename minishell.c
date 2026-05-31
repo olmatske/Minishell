@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 15:46:22 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/31 16:55:00 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,33 @@ static t_shell	*shell_init(t_shell *shell, t_env **env)
 	return (shell);
 }
 
+char	*get_input_line(const char *prompt)
+{
+	char	*line;
+
+	if (isatty(STDIN_FILENO))
+		line = readline(prompt);
+	else
+	{
+		line = get_next_line(STDIN_FILENO);
+		if (line != NULL)
+		{
+			char	*trimmed;
+
+			trimmed = ft_strtrim(line, "\n");
+			free(line);
+			line = trimmed;
+		}
+	}
+	return (line);
+}
+
 static void	execute(char **line, t_env *copied_env, t_shell *shell)
 {
 	t_cmd_node	*cmd_list;
 
-	add_history(*line);
+	if (isatty(STDIN_FILENO))
+		add_history(*line);
 	cmd_list = main_parsing(line, copied_env);
 	if (cmd_list != NULL)
 		shell_loop(shell, cmd_list);
@@ -47,7 +69,7 @@ static void	minishell_loop(t_env *copied_env, t_shell *shell)
 	while (1)
 	{
 		g_signal = 0;
-		line = readline("Minishell$ ");
+		line = get_input_line("Minishell$ ");
 		if (g_signal == 130)
 		{
 			shell->exit = 130;

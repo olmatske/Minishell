@@ -113,6 +113,7 @@ char		**free_env_array(char **env_array);
 void		ft_error(char *s, int exit_code);
 void		ft_perror(char *s);
 void		replace_signals(void);
+char		*get_input_line(const char *prompt);
 int			is_it_space_only(char *line);
 void		free_cmd_list(t_cmd_node *cmd_list);
 void		free_env_list(t_env **head);

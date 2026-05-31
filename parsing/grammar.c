@@ -56,7 +56,7 @@ char	*read_full_command(char *line)
 	next = NULL;
 	while (has_unclosed_quotes(line) == YES)
 	{
-		next = readline("> ");
+		next = get_input_line("> ");
 		if (next == NULL)
 			return (free(line), NULL);
 		tmp = append_str(line, "\n");
