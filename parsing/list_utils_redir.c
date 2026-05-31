@@ -6,12 +6,11 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 14:56:40 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/29 23:15:26 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 14:01:29 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../minishell.h"
 
 void	redir_builder(char **target_name, t_token *current)
 {

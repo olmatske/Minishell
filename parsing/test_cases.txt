@@ -101,6 +101,7 @@ mandatory cases
 		ctrl+d does
 		delimiter is $USER. - all the quotes should be deleted,
 		but as $US is not set it should not print out any user name 
+		and the bash does not expand the delimiter to anything else!!! just deleted the quotation marks!!
 		Minishell$ cat << "$US"E"R"
 		> $USER
 		> USER
@@ -108,6 +109,15 @@ mandatory cases
 		> $USER
 		> ^C
 		> 
+- [ ]  cat << "EOF”
+		> $USER
+		EOF
+		should not substitute the $USER and give out 
+		anshuval@3-F-3:~/Documents/Minishell$ cat << "EOF"
+		> $USER
+		> EOF
+		$USER
+		ours is still expanding to $USER substitution
 - [x]  heredoc should respond to ctrl + c
 - [x]  heredoc should give out a comment on the ctrl + d 
 		bash: warning: here-document at line 42 delimited by end-of-file (wanted `EOF')

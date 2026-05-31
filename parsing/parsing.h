@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 22:07:46 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/31 13:02:05 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef enum e_token_type {
 
 typedef struct s_token {
 	char			*value;
+	int				was_quoted;
 	t_token_type	type;
 	struct s_token	*next;
 }	t_token;
@@ -67,8 +68,9 @@ char		*append_str(char *old_w, char *suffix);
 void		check_for_builtin(t_cmd_node *node);
 void		just_copy(char *old_w, int *i, char **new_w);
 void		expand_env(char *old_w, int *i, char **new_w, t_env *env);
-char		*heredoc(char *delimiter, int counter, t_env *env);
+char		*heredoc(char *delimiter, int was_quoted, int counter, t_env *env);
 void		print_eof_warning(char *delimiter);
 char		*write_to_tmp_file(char *heredoc, int counter);
+int			get_delimiter_quote_status(t_token *token_list, char *delimiter);
 
 #endif

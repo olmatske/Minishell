@@ -6,12 +6,11 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 16:48:33 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 15:19:45 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 14:01:52 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../minishell.h"
 
 // prints a newline, prompts anew, clears the buffer, stores the signal exit
 // status to 130

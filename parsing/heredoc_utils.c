@@ -6,12 +6,24 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 15:32:58 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 20:06:12 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 14:01:10 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../minishell.h"
+
+int	get_delimiter_quote_status(t_token *token_list, char *delimiter)
+{
+	while (token_list)
+	{
+		if (token_list->type == WORD && token_list->value != NULL
+			&& ft_strncmp(token_list->value, delimiter,
+				(ft_strlen(delimiter) + 1)) == 0)
+			return (token_list->was_quoted);
+		token_list = token_list->next;
+	}
+	return (NO);
+}
 
 void	print_eof_warning(char *delimiter)
 {

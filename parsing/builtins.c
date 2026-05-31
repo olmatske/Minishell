@@ -6,12 +6,11 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 13:23:33 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/14 13:39:40 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 14:00:55 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../minishell.h"
 
 void	check_for_builtin(t_cmd_node *node)
 {

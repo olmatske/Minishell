@@ -6,12 +6,11 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:18 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 22:29:45 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 14:02:10 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../minishell.h"
 
 static int	get_word_length(char *line, int i)
 {

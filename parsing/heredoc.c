@@ -6,12 +6,11 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 16:36:57 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 23:02:05 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 14:01:15 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../minishell.h"
 
 static char	*append_new_line(char *line, char *new_chunk)
 {
@@ -40,6 +39,8 @@ static char	*expand_line(char *line, t_env *env)
 			just_copy(line, &i, &expanded);
 	}
 	free(line);
+	if (expanded == NULL)
+		return (ft_strdup(""));
 	return (expanded);
 }
 
@@ -66,7 +67,7 @@ static void	handle_heredoc_sigint(int sig)
 	close(0);
 }
 
-static char	*read_from_heredoc(char *delimiter, t_env *env)
+static char	*read_from_heredoc(char *delimiter, int was_quoted, t_env *env)
 {
 	char	*heredoc;
 	char	*new_heredoc;
@@ -90,12 +91,15 @@ static char	*read_from_heredoc(char *delimiter, t_env *env)
 		}
 		if (check_line_status(delimiter, line) == -1)
 			break ;
-		line = expand_line(line, env);
-		if (line == NULL)
+		if (was_quoted == NO)
 		{
-			free(heredoc);
-			heredoc = NULL;
-			break ;
+			line = expand_line(line, env);
+			if (line == NULL)
+			{
+				free(heredoc);
+				heredoc = NULL;
+				break ;
+			}
 		}
 		new_heredoc = append_new_line(heredoc, line);
 		if (new_heredoc == NULL)
@@ -115,14 +119,14 @@ static char	*read_from_heredoc(char *delimiter, t_env *env)
 	return (heredoc);
 }
 
-char	*heredoc(char *delimiter, int counter, t_env *env)
+char	*heredoc(char *delimiter, int was_quoted, int counter, t_env *env)
 {
 	char	*heredoc;
 	char	*filename;
 
 	heredoc = NULL;
 	filename = NULL;
-	heredoc = read_from_heredoc(delimiter, env);
+	heredoc = read_from_heredoc(delimiter, was_quoted, env);
 	if (heredoc == NULL && g_signal == 130)
 		return (NULL);
 	filename = write_to_tmp_file(heredoc, counter);
