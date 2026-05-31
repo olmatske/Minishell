@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 09:46:43 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/29 12:03:08 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/30 23:12:14 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,34 @@ int	wrapper_builtins(t_shell *shell, t_cmd_node *cmd_node, t_env **env)
 		exit = wrapper_export(shell, env, cmd_node->cmd);
 	else if (cmd_node->cmd->built_in_name == BUILTIN_UNSET)
 		exit = unset(env, cmd_node->cmd->args[1]);
+	return (exit);
+}
+
+int	wrapper_all(t_shell *shell, t_cmd_node *n, t_env **env, int exit)
+{
+	int		save_in;
+	int		save_out;
+
+	save_in = dup(STDIN_FILENO);
+	save_out = dup(STDOUT_FILENO);
+	if (save_in < 0 || save_out < 0)
+		return (perror("wrapper dup2"), 1);
+	if (n->cmd->redir && (n->cmd->redir->infile || n->cmd->redir->outfile))
+	{
+		exit = wrapper_redirections(n->cmd->redir);
+		if (exit != 0)
+		{
+			dup2(save_in, STDIN_FILENO);
+			dup2(save_out, STDOUT_FILENO);
+			close(save_in);
+			close(save_out);
+			return (exit);
+		}
+	}
+	exit = wrapper_builtins(shell, n, env);
+	dup2(save_in, STDIN_FILENO);
+	dup2(save_out, STDOUT_FILENO);
+	close(save_in);
+	close(save_out);
 	return (exit);
 }
