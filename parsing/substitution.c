@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:25 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 14:02:03 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 20:54:40 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@ static void	delete_empty_node(t_token **head, t_token *to_delete)
 	{
 		if (current == to_delete)
 		{
-			if (prev != NULL && (prev->type == IN || prev->type == OUT
-					|| prev->type == APPEND || prev->type == HEREDOC))
-				return (ft_error("Redirection error\n", 1));
 			if (prev == NULL)
 				*head = current->next;
 			else
@@ -74,7 +71,7 @@ static char	*dollars_and_quotes(char *value, t_env *env, int *had_quotes,
 	return (new_line);
 }
 
-static void	substitute_word(t_token **list, t_token *word, t_token *prev,
+static int	substitute_word(t_token **list, t_token *word, t_token *prev,
 		t_env *copied_env)
 {
 	int		had_quotes;
@@ -87,6 +84,19 @@ static void	substitute_word(t_token **list, t_token *word, t_token *prev,
 		is_delimiter = YES;
 	new_line = dollars_and_quotes(word->value, copied_env,
 			&had_quotes, is_delimiter);
+	if ((new_line == NULL || new_line[0] == '\0') && had_quotes == NO)
+	{
+		if (prev != NULL && (prev->type == IN || prev->type == OUT
+				|| prev->type == APPEND || prev->type == HEREDOC))
+		{
+			ft_putstr_fd("Minishell: ", STDERR_FILENO);
+			ft_putstr_fd(word->value, STDERR_FILENO);
+			ft_putstr_fd(": ambiguous redirect\n", STDERR_FILENO);
+			free(new_line);
+			exit_status(copied_env, 1);
+			return (-1);
+		}
+	}
 	word->was_quoted = had_quotes;
 	free(word->value);
 	word->value = new_line;
@@ -94,13 +104,14 @@ static void	substitute_word(t_token **list, t_token *word, t_token *prev,
 	{
 		word->value = ft_strdup("");
 		if (word->value == NULL)
-			ft_error("Error: Memory allocation failed\n", 1);
+			return (-1);
 	}
 	if (word->value == NULL || (word->value[0] == '\0' && had_quotes != YES))
 		delete_empty_node(list, word);
+	return (0);
 }
 
-void	variable_substitution(t_token **token_list, t_env *copied_env)
+int	variable_substitution(t_token **token_list, t_env *copied_env)
 {
 	t_token	*current;
 	t_token	*prev;
@@ -112,8 +123,12 @@ void	variable_substitution(t_token **token_list, t_env *copied_env)
 	{
 		next = current->next;
 		if (current->type == WORD)
-			substitute_word(token_list, current, prev, copied_env);
+		{
+			if (substitute_word(token_list, current, prev, copied_env) == -1)
+				return (-1);
+		}
 		prev = current;
 		current = next;
 	}
+	return (0);
 }

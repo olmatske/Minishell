@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:52:47 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 18:27:59 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 19:53:45 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*read_full_command(char *line)
 	while (has_unclosed_quotes(line) == YES)
 	{
 		next = readline("> ");
-		if (g_signal  == 130 || next == NULL)
+		if (g_signal == 130 || next == NULL)
 		{
 			free(next);
 			free(line);

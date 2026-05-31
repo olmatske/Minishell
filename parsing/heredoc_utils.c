@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 15:32:58 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 14:01:10 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 20:40:11 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	get_delimiter_quote_status(t_token *token_list, char *delimiter)
 
 void	print_eof_warning(char *delimiter)
 {
-	ft_putstr_fd("Minishell: warning: here-document delimited by ", 2);
-	ft_putstr_fd("end-of-file (wanted '", 2);
-	ft_putstr_fd(delimiter, 2);
-	ft_putstr_fd("')\n", 2);
+	ft_putstr_fd("Minishell: warning: here-document ", STDERR_FILENO);
+	ft_putstr_fd("delimited by end-of-file (wanted '", STDERR_FILENO);
+	ft_putstr_fd(delimiter, STDERR_FILENO);
+	ft_putstr_fd("')\n", STDERR_FILENO);
 }
 
 static char	*create_filename(int counter)

@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 18:23:48 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 20:05:56 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_redir		*create_new_redir_node(t_token *current);
 void		add_node_to_redir_list(t_redir **head, t_redir **tail,
 				t_redir *node);
 void		redir_builder(char **file_type, t_token *current);
-void		variable_substitution(t_token **token_list, t_env *copied_env);
+int			variable_substitution(t_token **token_list, t_env *copied_env);
 int			quote_status(char c, int *in_double, int *in_single);
 int			malloc_args_array(t_cmd_node *new_cmd, t_token *head);
 void		add_node_to_cmd_list(t_cmd_node **head, t_cmd_node **tail,
@@ -75,5 +75,6 @@ int			get_delimiter_quote_status(t_token *token_list, char *delimiter);
 int			start_interrupt_prompt(void);
 void		end_interrupt_prompt(int copy_stdin);
 char		*join_prefix(char *base, char *add, char *suffix);
+void		exit_status(t_env *env, int status);
 
 #endif

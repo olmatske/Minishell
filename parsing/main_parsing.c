@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 14:01:40 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 20:19:32 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,19 +76,14 @@ t_cmd_node	*main_parsing(char **line, t_env *copied_env)
 	if (token_list == NULL)
 		return (NULL);
 	if (input_validation(token_list) == -1)
-	{
-		free_list_token(&token_list);
-		return (NULL);
-	}
-	variable_substitution(&token_list, copied_env);
+		return (free_list_token(&token_list), NULL);
+	if (variable_substitution(&token_list, copied_env) == -1)
+		return (free_list_token(&token_list), NULL);
 	cmd_list = cmd_building(token_list);
 	if (cmd_list != NULL
 		&& process_heredocs(cmd_list, token_list, copied_env) == -1)
-	{
-		free_list_token(&token_list);
-		free_cmd_list(cmd_list);
-		return (NULL);
-	}
+		return (free_list_token(&token_list),
+			free_cmd_list(cmd_list), NULL);
 	free_list_token(&token_list);
 	return (cmd_list);
 }

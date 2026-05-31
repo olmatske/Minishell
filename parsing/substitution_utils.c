@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:30:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 18:22:46 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 20:23:31 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,23 @@ char	*join_prefix(char *base, char *add, char *suffix)
 	result = append_str(tmp, add);
 	free(add);
 	return (result);
+}
+
+void	exit_status(t_env *env, int status)
+{
+	char	*status_str;
+
+	while (env)
+	{
+		if (ft_strncmp(env->name, "?", 2) == 0)
+		{
+			status_str = ft_itoa(status);
+			if (status_str == NULL)
+				return ;
+			free(env->value);
+			env->value = status_str;
+			return ;
+		}
+		env = env->next;
+	}
 }
