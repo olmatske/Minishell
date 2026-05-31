@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:52:47 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 14:01:05 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 18:27:59 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,26 @@ static int	has_unclosed_quotes(char *line)
 
 char	*read_full_command(char *line)
 {
-	char	*tmp;
 	char	*next;
+	int		copy_stdin;
 
-	tmp = NULL;
 	next = NULL;
+	copy_stdin = start_interrupt_prompt();
 	while (has_unclosed_quotes(line) == YES)
 	{
 		next = readline("> ");
-		if (next == NULL)
-			return (free(line), NULL);
-		tmp = append_str(line, "\n");
-		if (tmp == NULL)
-			return (free(next), NULL);
-		line = ft_strjoin(tmp, next);
+		if (g_signal  == 130 || next == NULL)
+		{
+			free(next);
+			free(line);
+			line = NULL;
+			break ;
+		}
+		line = join_prefix(line, next, "\n");
 		if (line == NULL)
-			return (free(tmp), free(next), NULL);
-		free(next);
-		free(tmp);
+			break ;
 	}
+	end_interrupt_prompt(copy_stdin);
 	return (line);
 }
 

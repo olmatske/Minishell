@@ -7,7 +7,7 @@ mandatory cases
 		/bin/ls vs ls, /usr/bin/env vs env
 - [x]  echo without arguments should print out a new empty line and then give the usual prompt
 - [x]  echo -n should print out a new line with the usual prompt(without an empty line)
-- [ ]  echo - n should print out a new line with - n. !!! ours prints out nMinishell$ without a newline after n and without the dash!!!
+- [x]  echo - n should print out a new line with - n. !!! ours prints out nMinishell$ without a newline after n and without the dash!!!
 - [ ]  exit with “exit cat” 
 		should print out exit and on the next line bash: exit: cat: numeric argument required.
 		the second line is very questionabble - should it be included or not.
@@ -96,6 +96,16 @@ mandatory cases
 - [ ]  env prints out the ?=0 at the end ???? in some cases. why?? not always. no logic on that
 - [ ]  delete the GNL from everywhere - header, makefile and itself. it is not used anywhere
 
+
+- [ ]  nshuval@2-C-2:~/Documents/Minishell$ cat << EOF
+		> $USER
+		> KK
+		> $$USER
+		> EOF
+		anshuval
+		KK
+		347220USER
+		in bash $$USER expands damn it to shell pid!!!!!!!!!!!!!!!! and i do not have an allowed function for it!!!
 - [ ]  check exits for ft_error!!!! especially for redirections
 - [ ]  the unclosed quotes are not interrupted by ctrl C
 - [x]  cat << "$US"E"R” !!! delimiter $USER does not work. ctrl+c does not end the heredoc as expected.

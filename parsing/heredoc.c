@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 16:36:57 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 14:01:15 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 15:48:09 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,14 +59,6 @@ static int	check_line_status(char *delimiter, char *line)
 	return (0);
 }
 
-static void	handle_heredoc_sigint(int sig)
-{
-	(void)sig;
-	g_signal = 130;
-	write(1, "\n", 1);
-	close(0);
-}
-
 static char	*read_from_heredoc(char *delimiter, int was_quoted, t_env *env)
 {
 	char	*heredoc;
@@ -77,8 +69,7 @@ static char	*read_from_heredoc(char *delimiter, int was_quoted, t_env *env)
 	heredoc = NULL;
 	new_heredoc = NULL;
 	line = NULL;
-	copy_stdin = dup(0);
-	signal(SIGINT, handle_heredoc_sigint);
+	copy_stdin = start_interrupt_prompt();
 	while (1)
 	{
 		line = readline("> ");
@@ -110,12 +101,7 @@ static char	*read_from_heredoc(char *delimiter, int was_quoted, t_env *env)
 		}
 		heredoc = new_heredoc;
 	}
-	replace_signals();
-	if (copy_stdin >= 0)
-	{
-		dup2(copy_stdin, 0);
-		close(copy_stdin);
-	}
+	end_interrupt_prompt(copy_stdin);
 	return (heredoc);
 }
 

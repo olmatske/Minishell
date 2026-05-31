@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 13:02:05 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 18:23:48 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,8 @@ char		*heredoc(char *delimiter, int was_quoted, int counter, t_env *env);
 void		print_eof_warning(char *delimiter);
 char		*write_to_tmp_file(char *heredoc, int counter);
 int			get_delimiter_quote_status(t_token *token_list, char *delimiter);
+int			start_interrupt_prompt(void);
+void		end_interrupt_prompt(int copy_stdin);
+char		*join_prefix(char *base, char *add, char *suffix);
 
 #endif
