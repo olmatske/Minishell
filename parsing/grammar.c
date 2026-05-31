@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:52:47 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 19:53:45 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 23:03:09 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ char	*read_full_command(char *line)
 			line = NULL;
 			break ;
 		}
-		line = join_prefix(line, next, "\n");
+		line = join_prefix(line, "\n", next);
+		free (next);
 		if (line == NULL)
 			break ;
 	}

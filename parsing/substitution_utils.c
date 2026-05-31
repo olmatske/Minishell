@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:30:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 20:23:31 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 22:33:14 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,52 +59,12 @@ char	*search_env(t_env *env, char *name)
 	return (NULL);
 }
 
-char	*append_char(char *old_w, char c)
+void	search_dollar_or_copy(char *line, int *i, char **expand, t_env *env)
 {
-	char	*new_w;
-	int		len;
-
-	len = 0;
-	if (old_w != NULL)
-		len = ft_strlen(old_w);
-	new_w = malloc(len + 2);
-	if (new_w == NULL)
-	{
-		free(old_w);
-		return (NULL);
-	}
-	if (old_w != NULL)
-		ft_strlcpy(new_w, old_w, len + 1);
-	new_w[len] = c;
-	new_w[len + 1] = '\0';
-	free(old_w);
-	return (new_w);
-}
-
-char	*append_str(char *old_w, char *suffix)
-{
-	char	*new_w;
-
-	if (suffix == NULL)
-		return (old_w);
-	if (old_w == NULL)
-		return (ft_strdup(suffix));
-	new_w = ft_strjoin(old_w, suffix);
-	free(old_w);
-	return (new_w);
-}
-
-char	*join_prefix(char *base, char *add, char *suffix)
-{
-	char	*tmp;
-	char	*result;
-
-	tmp = append_str(base, suffix);
-	if (tmp == NULL)
-		return (free(add), NULL);
-	result = append_str(tmp, add);
-	free(add);
-	return (result);
+	if (line[*i] == '$')
+		expand_env(line, i, expand, env);
+	else
+		just_copy(line, i, expand);
 }
 
 void	exit_status(t_env *env, int status)

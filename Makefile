@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/05/30 22:07:29 by olmatske         ###   ########.fr        #
+#    Updated: 2026/05/31 22:31:10 by anshuval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ PARSING =	minishell.c \
 			parsing/main_parsing.c \
 			parsing/shell_env.c \
 			parsing/signals.c \
+			parsing/string_utils.c \
 			parsing/substitution_utils.c \
 			parsing/substitution.c \
 			parsing/tokenization.c \

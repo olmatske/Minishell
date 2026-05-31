@@ -6,22 +6,32 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 16:36:57 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 15:48:09 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 23:47:48 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-static char	*append_new_line(char *line, char *new_chunk)
+static int	is_interrupted(char *line, char **heredoc, char *delimiter)
 {
-	char	*tmp;
-
-	tmp = append_str(line, new_chunk);
-	free(new_chunk);
-	if (tmp == NULL)
-		return (NULL);
-	line = append_str(tmp, "\n");
-	return (line);
+	if (g_signal == 130 || line == NULL)
+	{
+		free(line);
+		if (g_signal == 130)
+		{
+			free(*heredoc);
+			*heredoc = NULL;
+		}
+		else
+			print_eof_warning(delimiter);
+		return (YES);
+	}
+	if (ft_strncmp(line, delimiter, (ft_strlen(delimiter) + 1)) == 0)
+	{
+		free (line);
+		return (YES);
+	}
+	return (NO);
 }
 
 static char	*expand_line(char *line, t_env *env)
@@ -32,74 +42,47 @@ static char	*expand_line(char *line, t_env *env)
 	i = 0;
 	expanded = NULL;
 	while (line[i])
-	{
-		if (line[i] == '$')
-			expand_env(line, &i, &expanded, env);
-		else
-			just_copy(line, &i, &expanded);
-	}
+		search_dollar_or_copy(line, &i, &expanded, env);
 	free(line);
 	if (expanded == NULL)
 		return (ft_strdup(""));
 	return (expanded);
 }
 
-static int	check_line_status(char *delimiter, char *line)
+static int	heredoc_loop(char **heredoc, char *delimiter, int was_quoted,
+		t_env *env)
 {
+	char	*line;
+
+	line = readline("> ");
+	if (is_interrupted(line, heredoc, delimiter) == YES)
+		return (NO);
+	if (was_quoted == NO)
+		line = expand_line(line, env);
 	if (line == NULL)
 	{
-		print_eof_warning(delimiter);
-		return (-1);
+		free(*heredoc);
+		*heredoc = NULL;
+		return (NO);
 	}
-	if (ft_strncmp(line, delimiter, (ft_strlen(delimiter) + 1)) == 0)
-	{
-		free (line);
-		return (-1);
-	}
-	return (0);
+	*heredoc = join_prefix(*heredoc, line, "\n");
+	free(line);
+	if (*heredoc == NULL)
+		return (NO);
+	return (YES);
 }
 
 static char	*read_from_heredoc(char *delimiter, int was_quoted, t_env *env)
 {
 	char	*heredoc;
-	char	*new_heredoc;
-	char	*line;
 	int		copy_stdin;
 
 	heredoc = NULL;
-	new_heredoc = NULL;
-	line = NULL;
 	copy_stdin = start_interrupt_prompt();
 	while (1)
 	{
-		line = readline("> ");
-		if (g_signal == 130)
-		{
-			free(line);
-			free(heredoc);
-			heredoc = NULL;
+		if (heredoc_loop(&heredoc, delimiter, was_quoted, env) == NO)
 			break ;
-		}
-		if (check_line_status(delimiter, line) == -1)
-			break ;
-		if (was_quoted == NO)
-		{
-			line = expand_line(line, env);
-			if (line == NULL)
-			{
-				free(heredoc);
-				heredoc = NULL;
-				break ;
-			}
-		}
-		new_heredoc = append_new_line(heredoc, line);
-		if (new_heredoc == NULL)
-		{
-			free(heredoc);
-			heredoc = NULL;
-			break ;
-		}
-		heredoc = new_heredoc;
 	}
 	end_interrupt_prompt(copy_stdin);
 	return (heredoc);
