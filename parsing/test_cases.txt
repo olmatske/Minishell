@@ -96,8 +96,9 @@ mandatory cases
 - [ ]  env prints out the ?=0 at the end ???? in some cases. why?? not always. no logic on that
 - [ ]  delete the GNL from everywhere - header, makefile and itself. it is not used anywhere
 
-
-- [ ]  cat << "$US"E"R” !!! delimiter $USER does not work. ctrl+c does not end the heredoc as expected.
+- [ ]  check exits for ft_error!!!! especially for redirections
+- [ ]  the unclosed quotes are not interrupted by ctrl C
+- [x]  cat << "$US"E"R” !!! delimiter $USER does not work. ctrl+c does not end the heredoc as expected.
 		ctrl+d does
 		delimiter is $USER. - all the quotes should be deleted,
 		but as $US is not set it should not print out any user name 
@@ -109,7 +110,7 @@ mandatory cases
 		> $USER
 		> ^C
 		> 
-- [ ]  cat << "EOF”
+- [x]  cat << "EOF”
 		> $USER
 		EOF
 		should not substitute the $USER and give out 
