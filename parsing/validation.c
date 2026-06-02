@@ -6,12 +6,11 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 18:50:43 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 22:31:13 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 14:02:16 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../minishell.h"
 
 // check for all the redirection signs in one place. according to the bash 
 // syntax the signs have to be followed by a word (a filename or a delimiter) 

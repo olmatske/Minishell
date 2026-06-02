@@ -6,12 +6,11 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 17:31:35 by anshuval          #+#    #+#             */
-/*   Updated: 2026/04/14 13:27:33 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 14:01:36 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../minishell.h"
 
 t_token	*create_new_token_node(t_token_type type, char *value)
 {

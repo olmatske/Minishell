@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   list_utils_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/31 17:33:49 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 22:07:41 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/31 14:01:19 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../minishell.h"
 
 void	free_args(char **args)
 {

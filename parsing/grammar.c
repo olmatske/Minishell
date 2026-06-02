@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   grammar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:52:47 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 14:17:18 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/02 15:21:54 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../minishell.h"
 
 int	quote_status(char c, int *in_double, int *in_single)
 {
@@ -49,25 +48,27 @@ static int	has_unclosed_quotes(char *line)
 
 char	*read_full_command(char *line)
 {
-	char	*tmp;
 	char	*next;
+	int		copy_stdin;
 
-	tmp = NULL;
 	next = NULL;
+	copy_stdin = start_interrupt_prompt();
 	while (has_unclosed_quotes(line) == YES)
 	{
-		next = get_input_line("> ");
-		if (next == NULL)
-			return (free(line), NULL);
-		tmp = append_str(line, "\n");
-		if (tmp == NULL)
-			return (free(next), NULL);
-		line = ft_strjoin(tmp, next);
+		next = readline("> ");
+		if (g_signal == 130 || next == NULL)
+		{
+			free(next);
+			free(line);
+			line = NULL;
+			break ;
+		}
+		line = join_prefix(line, "\n", next);
+		free (next);
 		if (line == NULL)
-			return (free(tmp), free(next), NULL);
-		free(next);
-		free(tmp);
+			break ;
 	}
+	end_interrupt_prompt(copy_stdin);
 	return (line);
 }
 

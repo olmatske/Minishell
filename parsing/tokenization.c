@@ -6,12 +6,11 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:18 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/29 22:29:45 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 21:38:24 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../minishell.h"
 
 static int	get_word_length(char *line, int i)
 {
@@ -42,24 +41,25 @@ static int	get_word_length(char *line, int i)
 	return (len);
 }
 
-static void	handle_words(t_token **head, t_token **tail, char *line, int *i)
+static int	handle_words(t_token **head, t_token **tail, char *line, int *i)
 {
 	int			len;
 	char		*value;
 
 	len = get_word_length(line, *i);
 	if (len < 1)
-		return ;
+		return (0);
 	value = ft_substr(line, *i, len);
 	if (value == NULL)
-		return ;
+		return (-1);
 	if (linked_list_for_token(head, tail, WORD, value) == -1)
 	{
 		free(value);
-		return ;
+		return (-1);
 	}
 	*i = *i + len;
 	free(value);
+	return (0);
 }
 
 // changed the flags of APPEND, HEREDOC etc, they were mixed up
@@ -100,6 +100,5 @@ int	handle_type(t_token **head, t_token **tail, char *line, int *i)
 	redir_status = handle_redir(head, tail, line, i);
 	if (redir_status != 1)
 		return (redir_status);
-	handle_words(head, tail, line, i);
-	return (0);
+	return (handle_words(head, tail, line, i));
 }

@@ -6,12 +6,11 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/10 09:14:35 by anshuval          #+#    #+#             */
-/*   Updated: 2026/03/31 17:58:38 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 14:01:25 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../minishell.h"
 
 void	free_env_list(t_env **head)
 {

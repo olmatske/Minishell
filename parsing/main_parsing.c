@@ -6,14 +6,14 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:46:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 17:34:22 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 20:19:32 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../minishell.h"
 
-static int	process_heredocs(t_cmd_node *cmd_list, t_env *env)
+static int	process_heredocs(t_cmd_node *cmd_list, t_token *token_list,
+		t_env *env)
 {
 	t_cmd_node	*current;
 	t_redir		*curr_redir;
@@ -30,7 +30,8 @@ static int	process_heredocs(t_cmd_node *cmd_list, t_env *env)
 			{
 				counter++;
 				curr_redir->infile = heredoc(curr_redir->heredoc_delimiter,
-						counter, env);
+						get_delimiter_quote_status(token_list,
+							curr_redir->heredoc_delimiter), counter, env);
 				if (curr_redir->infile == NULL)
 					return (-1);
 			}
@@ -75,17 +76,14 @@ t_cmd_node	*main_parsing(char **line, t_env *copied_env)
 	if (token_list == NULL)
 		return (NULL);
 	if (input_validation(token_list) == -1)
-	{
-		free_list_token(&token_list);
-		return (NULL);
-	}
-	variable_substitution(&token_list, copied_env);
+		return (free_list_token(&token_list), NULL);
+	if (variable_substitution(&token_list, copied_env) == -1)
+		return (free_list_token(&token_list), NULL);
 	cmd_list = cmd_building(token_list);
+	if (cmd_list != NULL
+		&& process_heredocs(cmd_list, token_list, copied_env) == -1)
+		return (free_list_token(&token_list),
+			free_cmd_list(cmd_list), NULL);
 	free_list_token(&token_list);
-	if (cmd_list != NULL && process_heredocs(cmd_list, copied_env) == -1)
-	{
-		free_cmd_list(cmd_list);
-		return (NULL);
-	}
 	return (cmd_list);
 }

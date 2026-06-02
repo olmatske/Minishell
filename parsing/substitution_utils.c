@@ -6,12 +6,11 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/07 15:30:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 17:21:46 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/05/31 22:33:14 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../minishell.h"
 
 void	just_copy(char *old_w, int *i, char **new_w)
 {
@@ -60,37 +59,29 @@ char	*search_env(t_env *env, char *name)
 	return (NULL);
 }
 
-char	*append_char(char *old_w, char c)
+void	search_dollar_or_copy(char *line, int *i, char **expand, t_env *env)
 {
-	char	*new_w;
-	int		len;
-
-	len = 0;
-	if (old_w != NULL)
-		len = ft_strlen(old_w);
-	new_w = malloc(len + 2);
-	if (new_w == NULL)
-	{
-		free(old_w);
-		return (NULL);
-	}
-	if (old_w != NULL)
-		ft_strlcpy(new_w, old_w, len + 1);
-	new_w[len] = c;
-	new_w[len + 1] = '\0';
-	free(old_w);
-	return (new_w);
+	if (line[*i] == '$')
+		expand_env(line, i, expand, env);
+	else
+		just_copy(line, i, expand);
 }
 
-char	*append_str(char *old_w, char *suffix)
+void	exit_status(t_env *env, int status)
 {
-	char	*new_w;
+	char	*status_str;
 
-	if (suffix == NULL)
-		return (old_w);
-	if (old_w == NULL)
-		return (ft_strdup(suffix));
-	new_w = ft_strjoin(old_w, suffix);
-	free(old_w);
-	return (new_w);
+	while (env)
+	{
+		if (ft_strncmp(env->name, "?", 2) == 0)
+		{
+			status_str = ft_itoa(status);
+			if (status_str == NULL)
+				return ;
+			free(env->value);
+			env->value = status_str;
+			return ;
+		}
+		env = env->next;
+	}
 }

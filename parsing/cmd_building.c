@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_building.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:48:16 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 22:07:35 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/31 14:01:01 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-#include "../execution/execution.h"
-#include "../minishell.h"
 
 static void	distribute_redir(t_cmd_node *new_cmd, t_redir **tail, t_token *curr)
 {

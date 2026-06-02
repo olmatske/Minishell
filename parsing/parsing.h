@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 22:07:46 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/31 22:51:19 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef enum e_token_type {
 
 typedef struct s_token {
 	char			*value;
+	int				was_quoted;
 	t_token_type	type;
 	struct s_token	*next;
 }	t_token;
@@ -53,7 +54,7 @@ t_redir		*create_new_redir_node(t_token *current);
 void		add_node_to_redir_list(t_redir **head, t_redir **tail,
 				t_redir *node);
 void		redir_builder(char **file_type, t_token *current);
-void		variable_substitution(t_token **token_list, t_env *copied_env);
+int			variable_substitution(t_token **token_list, t_env *copied_env);
 int			quote_status(char c, int *in_double, int *in_single);
 int			malloc_args_array(t_cmd_node *new_cmd, t_token *head);
 void		add_node_to_cmd_list(t_cmd_node **head, t_cmd_node **tail,
@@ -67,8 +68,15 @@ char		*append_str(char *old_w, char *suffix);
 void		check_for_builtin(t_cmd_node *node);
 void		just_copy(char *old_w, int *i, char **new_w);
 void		expand_env(char *old_w, int *i, char **new_w, t_env *env);
-char		*heredoc(char *delimiter, int counter, t_env *env);
+char		*heredoc(char *delimiter, int was_quoted, int counter, t_env *env);
 void		print_eof_warning(char *delimiter);
 char		*write_to_tmp_file(char *heredoc, int counter);
+int			get_delimiter_quote_status(t_token *token_list, char *delimiter);
+int			start_interrupt_prompt(void);
+void		end_interrupt_prompt(int copy_stdin);
+char		*join_prefix(char *base, char *added, char *suffix);
+void		search_dollar_or_copy(char *line, int *i, char **expand,
+				t_env *env);
+void		exit_status(t_env *env, int status);
 
 #endif
