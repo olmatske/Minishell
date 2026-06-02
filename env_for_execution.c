@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:23:09 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/21 16:49:21 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/02 15:08:54 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	**env_array_for_execution(t_env *copied_env)
 			return (free_env_array(env_array));
 		env_array[i] = ft_strjoin(tmp, current->value);
 		if (env_array[i] == NULL)
-			return (free_env_array(env_array));
+			return (free(tmp), free_env_array(env_array));
 		free(tmp);
 		current = current->next;
 		i++;
