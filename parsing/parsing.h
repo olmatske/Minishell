@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 22:51:19 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/02 15:43:48 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char		*write_to_tmp_file(char *heredoc, int counter);
 int			get_delimiter_quote_status(t_token *token_list, char *delimiter);
 int			start_interrupt_prompt(void);
 void		end_interrupt_prompt(int copy_stdin);
-char		*join_prefix(char *base, char *added, char *suffix);
+char		*join_prefix(char *base, char *s1, char *s2);
 void		search_dollar_or_copy(char *line, int *i, char **expand,
 				t_env *env);
 void		exit_status(t_env *env, int status);

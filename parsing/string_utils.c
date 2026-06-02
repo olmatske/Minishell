@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/31 21:55:08 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 23:02:15 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/02 15:43:27 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ char	*append_str(char *old_w, char *suffix)
 	return (new_w);
 }
 
-char	*join_prefix(char *base, char *added, char *suffix)
+char	*join_prefix(char *base, char *s1, char *s2)
 {
 	char	*tmp;
 	char	*result;
 
-	tmp = append_str(base, suffix);
+	tmp = append_str(base, s1);
 	if (tmp == NULL)
 		return (NULL);
-	result = append_str(tmp, added);
+	result = append_str(tmp, s2);
 	return (result);
 }
