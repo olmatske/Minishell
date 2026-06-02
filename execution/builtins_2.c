@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 13:41:29 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/02 20:51:47 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/02 21:00:02 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 	}
 	else if (!isnumstr(cmd->cmd->args[1]))
 	{
-		fprintf(stderr, "%s exit: %s: %s\n", M, cmd->cmd->args[1], N);
+		fprintf(stderr, C_RED"%s exit: %s: %s\n", M, cmd->cmd->args[1], N);
 		rl_clear_history();
 		free_all(shell, env, cmd);
 		exit (2);
@@ -31,7 +31,7 @@ int	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 	else if (cmd->cmd->args[2])
 	{
 		exit_status = 1;
-		fprintf(stderr, "%s %s\n", M, A);
+		fprintf(stderr, C_RED"%s %s\n", M, A);
 		return (1);
 	}
 	else
@@ -71,7 +71,7 @@ static int	change_dir(t_shell *shell, char *target)
 		return (perror("pre chdir: getcwd"), 1);
 	if (chdir(target) == -1)
 	{
-		fprintf(stderr, "%s cd: %s: %s\n", M, target, FD);
+		fprintf(stderr, C_RED"%s cd: %s: %s\n", M, target, FD);
 		shell->exit = 1;
 		return (1);
 	}
@@ -89,14 +89,14 @@ int	cd(char **path, t_env *env, t_shell *shell)
 	if (!path || !path[0])
 		return (1);
 	if (path[1] && path[2])
-		return (fprintf(stderr, "%s cd: %s\n", M, A), 1);
+		return (fprintf(stderr, C_RED"%s cd: %s\n", M, A), 1);
 	target = path[1];
 	if (!target)
 		expansion = expand_tilde("~", env);
 	else
 		expansion = expand_tilde(target, env);
 	if (!expansion)
-		return (fprintf(stderr, "%s HOME not set\n", M), 1);
+		return (fprintf(stderr, C_RED"%s HOME not set\n", M), 1);
 	shell->exit = change_dir(shell, expansion);
 	free(expansion);
 	return (shell->exit);
@@ -111,7 +111,7 @@ int	cd(char **path, t_env *env, t_shell *shell)
 // 	if (!path || !path[0])
 // 		return (1);
 // 	if (path[1] && path[2])
-// 		return (fprintf(stderr, "%s cd: %s\n", M, A), 1);
+// 		return (fprintf(stderr, C_RED"%s cd: %s\n", M, A), 1);
 // 	target = path[1];
 // 	if (!target || !ft_strcmp(target, "~"))
 // 	{
@@ -125,7 +125,7 @@ int	cd(char **path, t_env *env, t_shell *shell)
 // 			curr = curr->next;
 // 		}
 // 		if (!target)
-// 			fprintf(stderr, "%s HOME not set\n", M);
+// 			fprintf(stderr, C_RED"%s HOME not set\n", M);
 // 	}
 // 	return (change_dir(shell, target));
 // }
