@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/05/31 22:31:10 by anshuval         ###   ########.fr        #
+#    Updated: 2026/06/02 17:31:59 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

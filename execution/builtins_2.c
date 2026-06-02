@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 13:41:29 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/02 16:39:07 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/02 20:51:47 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,31 +83,52 @@ static int	change_dir(t_shell *shell, char *target)
 
 int	cd(char **path, t_env *env, t_shell *shell)
 {
-	t_env	*curr;
 	char	*target;
+	char	*expansion;
 
-	curr = env;
 	if (!path || !path[0])
 		return (1);
 	if (path[1] && path[2])
 		return (fprintf(stderr, "%s cd: %s\n", M, A), 1);
 	target = path[1];
-	if (!target || !ft_strcmp(target, "~"))
-	{
-		while (curr)
-		{
-			if (!ft_strcmp(curr->name, "HOME"))
-			{
-				target = curr->value;
-				break ;
-			}
-			curr = curr->next;
-		}
-		if (!target)
-			fprintf(stderr, "%s HOME not set\n", M);
-	}
-	return (change_dir(shell, target));
+	if (!target)
+		expansion = expand_tilde("~", env);
+	else
+		expansion = expand_tilde(target, env);
+	if (!expansion)
+		return (fprintf(stderr, "%s HOME not set\n", M), 1);
+	shell->exit = change_dir(shell, expansion);
+	free(expansion);
+	return (shell->exit);
 }
+
+// int	cd(char **path, t_env *env, t_shell *shell)
+// {
+// 	t_env	*curr;
+// 	char	*target;
+
+// 	curr = env;
+// 	if (!path || !path[0])
+// 		return (1);
+// 	if (path[1] && path[2])
+// 		return (fprintf(stderr, "%s cd: %s\n", M, A), 1);
+// 	target = path[1];
+// 	if (!target || !ft_strcmp(target, "~"))
+// 	{
+// 		while (curr)
+// 		{
+// 			if (!ft_strcmp(curr->name, "HOME"))
+// 			{
+// 				target = curr->value;
+// 				break ;
+// 			}
+// 			curr = curr->next;
+// 		}
+// 		if (!target)
+// 			fprintf(stderr, "%s HOME not set\n", M);
+// 	}
+// 	return (change_dir(shell, target));
+// }
 
 int	pwd(void)
 {

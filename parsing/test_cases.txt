@@ -62,7 +62,7 @@ mandatory cases
 		only two -n
 		solved it by tracking the quotation marks - if there were quotation marks than the node was not deleted
 		should just print out    -n -n -n
-- [ ]  cd ~/Desktop/ !!! cd: ~/Desktop/: No such file or directory
+- [X]  cd ~/Desktop/ !!! cd: ~/Desktop/: No such file or directory
 		should return to the folder under Desktop. ;ook up the tilda replacement with HOME from env
 - [x]  /bin/echo '"'$USER'"'
 		should return "username"
