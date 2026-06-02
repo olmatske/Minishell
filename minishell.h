@@ -6,12 +6,15 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/30 22:04:15 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/02 20:56:19 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+#define C_CYAN "\001\033[1;36m\002"
+#define C_RESET "\001\033[0m\002"
 
 # include <stdlib.h>
 # include <unistd.h>
