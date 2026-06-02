@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 13:41:29 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/29 11:24:58 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/02 16:39:07 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ int	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 {
 	int	exit_status;
 
-	printf("exit\n");
 	if (!cmd->cmd->args[1])
+	{
+		fprintf(stdout, "exit\n");
 		exit_status = shell->exit;
+	}
 	else if (!isnumstr(cmd->cmd->args[1]))
 	{
-		fprintf(stderr, "%s %s: %s\n", M, cmd->cmd->args[1], N);
+		fprintf(stderr, "%s exit: %s: %s\n", M, cmd->cmd->args[1], N);
 		rl_clear_history();
 		free_all(shell, env, cmd);
 		exit (2);
