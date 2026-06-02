@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/02 15:43:48 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/02 17:31:11 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ char		*join_prefix(char *base, char *s1, char *s2);
 void		search_dollar_or_copy(char *line, int *i, char **expand,
 				t_env *env);
 void		exit_status(t_env *env, int status);
+void		print_quote_warning(char *line);
 
 #endif
