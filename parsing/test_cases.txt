@@ -134,6 +134,12 @@ mandatory cases
 		bash: warning: here-document at line 42 delimited by end-of-file (wanted `EOF')
 		check that this is a standard warning. if yes should pass the delimiter and - how to count the lines
 
+- [ ]  when closing echo "hello with the ctrl d does not give out the bash notification
+anshuval@3-G-10:~/Documents/Minishell$ echo "hello
+> 
+bash: unexpected EOF while looking for matching `"'
+bash: syntax error: unexpected end of file
+
 Minishell$ cat << "$US"E"R"
 > dd
 > dd
