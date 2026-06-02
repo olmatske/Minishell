@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/29 12:05:36 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/30 23:18:35 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int			ft_strcmp(char *a, char *b);
 char		*gc_strdup(t_shell *shell, const char *s1);
 char		*gc_strjoin(t_shell *shell, char const *s1, char const *s2);
 int			isnumstr(const char *str);
+void		free_all(t_shell *shell, t_env **env, t_cmd_node *cmd);
 
 // homeless_functions.c ////////////////////////////////////////////////////////
 void		free_split(char **str);
@@ -109,8 +110,6 @@ int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);
 
 // redirections.c //////////////////////////////////////////////////////////////
 int			wrapper_redirections(t_redir *redir);
-int			exec_single_cmd(t_shell *shell, t_env *env, t_cmd_node *cmd_list);
-void		free_all(t_shell *shell, t_env **env, t_cmd_node *cmd);
 
 // paths.c /////////////////////////////////////////////////////////////////////
 int			decide_path(t_cmd *cmd);
@@ -130,5 +129,6 @@ int			wrapper_redirections(t_redir *r);
 
 // wrappers.c //////////////////////////////////////////////////////////////////
 int			wrapper_builtins(t_shell *shell, t_cmd_node *cmd_node, t_env **env);
+int			wrapper_all(t_shell *shell, t_cmd_node *n, t_env **env, int exit);
 
 #endif

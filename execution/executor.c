@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 12:39:56 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/29 11:36:12 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/30 22:44:02 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ int	pipe_loop(t_pipex *p)
 		return (perror("fork"), 1);
 	if (p->pids[p->i] == 0)
 	{
+		child_loop(p->i, p->cmd_count, p->pipe_fd, p->prev_read);
 		if (p->curr->cmd->redir
 			&& wrapper_redirections(p->curr->cmd->redir) != 0)
 			exit (1);
-		child_loop(p->i, p->cmd_count, p->pipe_fd, p->prev_read);
 		if (p->curr->cmd->redir
 			&& wrapper_redirections(p->curr->cmd->redir) != 0)
 			exit(1);
@@ -56,6 +56,29 @@ int	pipe_loop(t_pipex *p)
 		parent_loop(p->i, p->cmd_count, p->pipe_fd, &p->prev_read);
 	return (0);
 }
+
+// int	pipe_loop(t_pipex *p)
+// {
+// 	if (p->i < p->cmd_count - 1 && pipe(p->pipe_fd) == -1)
+// 		return (perror("pipes"), 1);
+// 	p->pids[p->i] = fork();
+// 	if (p->pids[p->i] == -1)
+// 		return (perror("fork"), 1);
+// 	if (p->pids[p->i] == 0)
+// 	{
+// 		if (p->curr->cmd->redir
+// 			&& wrapper_redirections(p->curr->cmd->redir) != 0)
+// 			exit (1);
+// 		child_loop(p->i, p->cmd_count, p->pipe_fd, p->prev_read);
+// 		if (p->curr->cmd->redir
+// 			&& wrapper_redirections(p->curr->cmd->redir) != 0)
+// 			exit(1);
+// 		exit(execution(p->shell, p->curr, p->shell->env));
+// 	}
+// 	else
+// 		parent_loop(p->i, p->cmd_count, p->pipe_fd, &p->prev_read);
+// 	return (0);
+// }
 
 int	wait_pipeline(t_shell *shell, t_pipex *p)
 {

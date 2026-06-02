@@ -80,7 +80,7 @@ static char	*read_from_heredoc(char *delimiter, t_env *env)
 	signal(SIGINT, handle_heredoc_sigint);
 	while (1)
 	{
-		line = readline("> ");
+		line = get_input_line("> ");
 		if (g_signal == 130)
 		{
 			free(line);

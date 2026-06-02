@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 12:15:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/29 11:51:20 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/31 15:15:26 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	echo_n_check(char **str)
 		k = 1;
 		while (str[i][k] == 'n')
 			k++;
-		if (str[i][k] == '\0')
+		if (str[i][k] == '\0' && k > 1)
 		{
 			i++;
 			found = 1;

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/18 14:42:46 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/25 15:52:05 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/05/30 23:08:32 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,15 @@ int	isnumstr(const char *str)
 		str++;
 	}
 	return (1);
+}
+
+void	free_all(t_shell *shell, t_env **env, t_cmd_node *cmd)
+{
+	(void)env;
+	if (cmd)
+		free_cmd_list(cmd);
+	if (shell)
+		gc_free_all(shell);
+	if (shell)
+		free(shell);
 }

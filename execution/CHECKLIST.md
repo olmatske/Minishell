@@ -11,13 +11,13 @@
 		- [X] fix -n
 	- [X] echo -n (do not output the trailing newline)
 	- [X] env ([ ] redo and only use the env struct)
-#	- [X] export
-#		- [X] fix updating variable if it exists
+	- [X] export
+		- [X] fix updating variable if it exists
 	- [X] unset
 	- [X] exit
-#	- [ ] externals paths etc
-- [ ] expander
-- [ ] external functions
+	- [X] externals paths etc
+- [X] expander
+- [X] external functions
 - [ ] heredoc
 	-> cat << EOF
 		hello
@@ -88,6 +88,9 @@
 - [ ] open fd nach signals bei heredoc
 		-> close the fd if a signal comes throgh during heredoc!!!
 - [ ] open fd in child proccess is not supposed to happen!!
+- [ ] after compiling and make fclean-ing this happens:
+		 deleted:    libft/libft.a
+        deleted:    minishell
 
 - [X] echo "fail" > dev/full -> /dev/full: No space left on device 
 - [X] cat > > -> syntax error near unexpected token '>'
@@ -117,10 +120,10 @@
 	- [X] >> "append" should redirect output in append mode.
 		-> [ ] signals for exiting write mode!
 
-- [ ] externals
-	- [ ] absolute path
-	- [ ] relative path
-	- [ ] command
+- [X] externals
+	- [X] absolute path
+	- [X] relative path
+	- [X] command
 		-> search until :
 		-> yoink the string
 		-> append yoinked string + '/' + command
@@ -135,10 +138,10 @@
 - [X] change builtin.c
 	- [X] envp to struct
 	- [X] args
-- [ ] exit signals
-- [ ] add functions to header and clean up
-- [ ] increment and execute commands if pipes
-- [ ] norminette
+- [X] exit
+- [X] add functions to header and clean up
+- [X] increment and execute commands if pipes
+- [X] norminette
 
 
 - [X] garbage collecter
@@ -155,11 +158,30 @@
 	-> LEAKS!!! was only the readline leaks
 - [X] update $PWD when changing directories
 - [X] leaks when doing just cd
+
 # - [X] Minishell$ pwd
 # - [X] Norminette
-# - [ ] file creation
+# - [ ] isatty(STDIN_FILENO) before readline, if it's not 0 you use readline, else gnl
+# - [ ] file creation ->	"> text.txt" does not create file, but it should
 # - [ ] Heredoc
 # - [ ] remove fsanitizer from Makefile
+
+minishell:
+Minishell$ export PATH=""
+Minishell$ $?
+0: command not found
+Minishell$ 
+
+bash:
+olmatske@3-F-4:~/Curriculum/Minishell/tt$ export PATH=""
+olmatske@3-F-4:~/Curriculum/Minishell/tt$ $?
+bash: sed: No such file or directory
+bash: 0: No such file or directory
+
+
+
+
+
 
 ### Allowed functions
 ------------------------------------------------
