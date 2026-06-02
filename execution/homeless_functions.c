@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 11:28:33 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/29 11:46:17 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/02 20:50:38 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,22 @@ t_pipex	*pipex_init(t_shell *shell, t_cmd_node *cmd_list)
 	p->i = 0;
 	p->prev_read = -1;
 	return (p);
+}
+
+char	*expand_tilde(char *arg, t_env *env)
+{
+	char	*home;
+
+	if (!arg || arg[0] != '~')
+		return (ft_strdup(arg));
+	if (arg[1] && arg[1] != '/')
+		return (ft_strdup(arg));
+	home = NULL;
+	if (!check_var(env, "HOME"))
+		return (NULL);
+	home = get_value(env, "HOME");
+	home = ft_strjoin(home, arg + 1);
+	if (!home)
+		return (NULL);
+	return (home);
 }

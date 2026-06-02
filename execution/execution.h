@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/30 23:18:35 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/02 20:46:31 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int			execution(t_shell *shell, t_cmd_node *cmd, t_env **env);
 void		update_var(t_env **env, char *name, char *value);
 void		append_var(t_env **env, char *name, char *value);
 int			check_var(t_env *env, char *var);
-char		*search_var_value(t_env *env, char *var);
+char		*get_value(t_env *env, char *var);
 
 // helpers.c ///////////////////////////////////////////////////////////////////
 int			ft_strcmp(char *a, char *b);
@@ -104,6 +104,7 @@ void		free_all(t_shell *shell, t_env **env, t_cmd_node *cmd);
 // homeless_functions.c ////////////////////////////////////////////////////////
 void		free_split(char **str);
 t_pipex		*pipex_init(t_shell *shell, t_cmd_node *cmd_list);
+char		*expand_tilde(char *arg, t_env *env);
 
 // orchestrator.c //////////////////////////////////////////////////////////////
 int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);

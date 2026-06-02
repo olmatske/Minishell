@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/13 11:05:12 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/29 11:17:01 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/02 21:31:55 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	print_export(char **arr)
 	i = 0;
 	while (arr[i])
 	{
+		if (!ft_strncmp(arr[i], "?=", 2))
+			i++;
 		printf("declare -x %s\n", arr[i]);
 		i++;
 	}

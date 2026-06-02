@@ -8,7 +8,7 @@ mandatory cases
 - [x]  echo without arguments should print out a new empty line and then give the usual prompt
 - [x]  echo -n should print out a new line with the usual prompt(without an empty line)
 - [x]  echo - n should print out a new line with - n. !!! ours prints out nMinishell$ without a newline after n and without the dash!!!
-- [ ]  exit with “exit cat” 
+- [X]  exit with “exit cat” 
 		should print out exit and on the next line bash: exit: cat: numeric argument required.
 		the second line is very questionabble - should it be included or not.
 		then exits directly. the text is hardly to catch before the exit. a text message
@@ -18,7 +18,7 @@ mandatory cases
 		Minishell: cat: numeric argument required
 		"
 		misses the exit word
-- [ ]  exit with one or more numeric arguments 
+- [?]  exit with one or more numeric arguments -> what do you mean by that?
 		!! ours exits with 
 		cat: 3: No such file or directory. the actual exits and gives a window 
 		the process...terminated with exit code 3 !! to check - is exit treated as a builtin
@@ -47,8 +47,8 @@ mandatory cases
 		^\Quit (core dumped) on the line
 		and give a prompt on a new line
 - [x]  history is working
-- [ ]  create the new environmental variables !! export MYVAR=hello adds it to the end and then adds an extra newline
-- [ ]  create the new environmental variables !! MYVAR=hello alone does not work. (command not found)
+- [X]  create the new environmental variables !! export MYVAR=hello adds it to the end and then adds an extra newline
+- [?]  create the new environmental variables !! MYVAR=hello alone does not work. (command not found) -> it's not supposed to
 - [x]  cd should work correctly with . and .. !! displays still Minishell$. but pwd shows the correct folder. 
 		check if this is ok
 - [x]  unset PATH should crash the $PATH
@@ -62,7 +62,7 @@ mandatory cases
 		only two -n
 		solved it by tracking the quotation marks - if there were quotation marks than the node was not deleted
 		should just print out    -n -n -n
-- [ ]  cd ~/Desktop/ !!! cd: ~/Desktop/: No such file or directory
+- [X]  cd ~/Desktop/ !!! cd: ~/Desktop/: No such file or directory
 		should return to the folder under Desktop. ;ook up the tilda replacement with HOME from env
 - [x]  /bin/echo '"'$USER'"'
 		should return "username"
@@ -70,7 +70,7 @@ mandatory cases
 		should return '$USER'
 - [x]  env
 		should print out the env without the ? node at thhe end 
-- [ ]  export
+- [X]  export
 		should print out the env list in alphabetical order without the ? 
 		node at thhe beginning and with prefix declare -x and all the values after the = sign are in
 		quotation marks
@@ -93,7 +93,7 @@ mandatory cases
 		> EOF
 		(null): command not found
 		Minishell$ 
-- [ ]  env prints out the ?=0 at the end ???? in some cases. why?? not always. no logic on that
+- [?]  env prints out the ?=0 at the end ???? in some cases. why?? not always. no logic on that -> never seen that
 - [x]  delete the GNL from everywhere - header, makefile and itself. it is not used anywhere
 
 

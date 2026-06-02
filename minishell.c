@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 16:55:00 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/02 20:56:05 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	minishell_loop(t_env *copied_env, t_shell *shell)
 	while (1)
 	{
 		g_signal = 0;
-		line = get_input_line("Minishell$ ");
+		line = get_input_line(C_CYAN"Minishell$ " C_RESET);
 		if (g_signal == 130)
 		{
 			shell->exit = 130;

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 09:43:40 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/29 11:23:56 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/02 20:42:52 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	check_var(t_env *env, char *var)
 	return (0);
 }
 
-char	*search_var_value(t_env *env, char *var)
+char	*get_value(t_env *env, char *var)
 {
 	t_env	*curr;
 
