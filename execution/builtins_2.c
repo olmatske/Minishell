@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 13:41:29 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/02 21:00:02 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/02 21:45:53 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 	}
 	else if (!isnumstr(cmd->cmd->args[1]))
 	{
-		fprintf(stderr, C_RED"%s exit: %s: %s\n", M, cmd->cmd->args[1], N);
+		fprintf(stderr, "exit\n"C_RED"%s exit: %s: %s\n", M, cmd->cmd->args[1], N);
 		rl_clear_history();
 		free_all(shell, env, cmd);
 		exit (2);
@@ -101,34 +101,6 @@ int	cd(char **path, t_env *env, t_shell *shell)
 	free(expansion);
 	return (shell->exit);
 }
-
-// int	cd(char **path, t_env *env, t_shell *shell)
-// {
-// 	t_env	*curr;
-// 	char	*target;
-
-// 	curr = env;
-// 	if (!path || !path[0])
-// 		return (1);
-// 	if (path[1] && path[2])
-// 		return (fprintf(stderr, C_RED"%s cd: %s\n", M, A), 1);
-// 	target = path[1];
-// 	if (!target || !ft_strcmp(target, "~"))
-// 	{
-// 		while (curr)
-// 		{
-// 			if (!ft_strcmp(curr->name, "HOME"))
-// 			{
-// 				target = curr->value;
-// 				break ;
-// 			}
-// 			curr = curr->next;
-// 		}
-// 		if (!target)
-// 			fprintf(stderr, C_RED"%s HOME not set\n", M);
-// 	}
-// 	return (change_dir(shell, target));
-// }
 
 int	pwd(void)
 {

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/02 21:00:02 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/02 21:29:53 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	ft_env(t_env **env)
 		printf("%s=%s\n", curr->name, curr->value);
 		curr = curr->next;
 	}
-	printf("\n");
 	return (0);
 }
 

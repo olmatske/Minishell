@@ -6,9 +6,13 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/02 21:01:10 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/02 21:38:20 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+// tiny casing instead of minishell? or tiny missile? miniscule skeleton? Pip?
+// OopsieShell, ShellYeahSure, Bashtard, Shell!AtTheTerminal, BashMeMaybe, ShellYeah,
+// Schroedinger's Shell
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
