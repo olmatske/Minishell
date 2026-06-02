@@ -133,3 +133,11 @@ mandatory cases
 - [x]  heredoc should give out a comment on the ctrl + d 
 		bash: warning: here-document at line 42 delimited by end-of-file (wanted `EOF')
 		check that this is a standard warning. if yes should pass the delimiter and - how to count the lines
+
+Minishell$ cat << "$US"E"R"
+> dd
+> dd
+> $USER
+
+dd
+ddMinishell$ 
