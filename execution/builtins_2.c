@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 13:41:29 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/02 21:45:53 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/03 18:17:56 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 
 	if (!cmd->cmd->args[1])
 	{
-		fprintf(stdout, "exit\n");
+		// fprintf(stdout, "exit\n"); // -> correct with tester but not bash
 		exit_status = shell->exit;
 	}
 	else if (!isnumstr(cmd->cmd->args[1]))
@@ -38,6 +38,7 @@ int	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 		exit_status = ft_atoi(cmd->cmd->args[1]);
 	rl_clear_history();
 	free_all(shell, env, cmd);
+	fprintf(stdout, "exit\n"); // -> correct with bash but not with tester
 	exit(exit_status);
 }
 
