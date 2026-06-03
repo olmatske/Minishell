@@ -109,14 +109,14 @@
 		^\Quit (core dumped) on the line
 		and give a prompt on a new line
 - [ ]  !! heredoc woks partially! without a command at the front it does not work
-the info after the delimeter should not be added to the history. adds only the main command. 
-check for the NULL at the beginning
-Minishell$ << EOF
-> lkjsd
-> sadkjf
-> EOF
-(null): command not found
-Minishell$ 
+		the info after the delimeter should not be added to the history. adds only the main command. 
+		check for the NULL at the beginning
+		Minishell$ << EOF
+		> lkjsd
+		> sadkjf
+		> EOF
+		(null): command not found
+		Minishell$ 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
