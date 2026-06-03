@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:25 by anshuval          #+#    #+#             */
-/*   Updated: 2026/05/31 22:33:50 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/03 22:06:02 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ static char	*dollars_and_quotes(char *value, t_env *env, int *had_quotes,
 	new_line = NULL;
 	while (value[i])
 	{
-		if (quote_status(value[i], &in_double, &in_single) == YES)
+		if (i == 0 && value[i] == '~' && (value[i + 1] == '\0'
+				|| value[i + 1] == '/'))
+			new_line = tilde(env, &i, new_line);
+		else if (quote_status(value[i], &in_double, &in_single) == YES)
 		{
 			*had_quotes = YES;
 			i++;
