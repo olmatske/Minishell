@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/02 21:38:20 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/03 20:36:42 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void		free_cmd_list(t_cmd_node *cmd_list);
 void		free_env_list(t_env **head);
 void		free_redir_list(t_redir *redir);
 int			env_list_length(t_env *head);
+char		*search_env(t_env *env, char *name);
 
 ////////////////////////////////////////////////////////////////////////////////
 int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);

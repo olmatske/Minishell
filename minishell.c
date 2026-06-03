@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/03 15:51:15 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/03 20:38:02 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,20 @@ char	*get_input_line(const char *prompt)
 static void	execute(char **line, t_env *copied_env, t_shell *shell)
 {
 	t_cmd_node	*cmd_list;
+	char		*status;
 
 	if (isatty(STDIN_FILENO))
 		add_history(*line);
+	status = NULL;
 	cmd_list = main_parsing(line, copied_env);
 	if (cmd_list != NULL)
 		shell_loop(shell, cmd_list);
+	else
+	{
+		status = search_env(copied_env, "?");
+		if (status)
+			shell->exit = ft_atoi(status);
+	}
 	free_cmd_list(cmd_list);
 }
 
@@ -85,13 +93,14 @@ static void	minishell_loop(t_env *copied_env, t_shell *shell)
 			execute(&line, copied_env, shell);
 		free(line);
 	}
-	free_all(shell, NULL, NULL);
+
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_env		*copied_env;
 	t_shell		*shell;
+	int			exit_code;
 
 	(void)argv;
 	copied_env = NULL;
@@ -107,7 +116,9 @@ int	main(int argc, char **argv, char **envp)
 	if (copied_env == NULL)
 		ft_error("Failed to copy environment.\n", 1);
 	minishell_loop(copied_env, shell);
+	exit_code = shell->exit;
+	free_all(shell, NULL, NULL);
 	rl_clear_history(); // changed from rl_clear_history to clear_history
 	free_env_list(&copied_env);
-	return (0);
+	return (exit_code);
 }
