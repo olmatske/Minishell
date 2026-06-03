@@ -196,5 +196,5 @@ ddMinishell$
 - [ ] when sending signals to a shell that is in a shell, our minishell apllies them to all shell levels, which is wrong.
 	Instead it should only apply the lsignals to the latest shell level
 		+ inconsistent newlines in signals
-- [ ] add print "exit" when Ctr+D 
+- [x] add print "exit" when Ctr+D 
 

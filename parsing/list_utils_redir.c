@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 14:56:40 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/31 14:01:29 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/03 16:34:42 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ void	redir_builder(char **target_name, t_token *current)
 	if (current->next == NULL || current->next->type == IN
 		|| current->next->type == OUT || current->next->type == APPEND
 		|| current->next->type == HEREDOC)
-		ft_error("Syntax error near unsexpected token 'newline'\n", 2);
+	{
+		ft_putstr_fd("Syntax error near unsexpected token 'newline'\n", 2);
+		return ;
+	}
 	*target_name = ft_strdup(current->next->value);
 	if (*target_name == NULL)
 		ft_error("Error: Memory allocation failed\n", 1);

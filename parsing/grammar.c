@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:52:47 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/02 17:26:05 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/03 16:50:38 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ char	*read_full_command(char *line)
 		next = readline("> ");
 		if (g_signal == 130 || next == NULL)
 		{
-			if(next == NULL && g_signal != 130)
+			if (next == NULL && g_signal != 130)
 				print_quote_warning(line);
 			free(next);
 			free(line);
