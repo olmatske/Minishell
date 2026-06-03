@@ -18,7 +18,7 @@ mandatory cases
 		Minishell: cat: numeric argument required
 		"
 		misses the exit word
-- [?]  exit with one or more numeric arguments -> what do you mean by that?
+- [X]  exit with one or more numeric arguments -> what do you mean by that?
 		!! ours exits with 
 		cat: 3: No such file or directory. the actual exits and gives a window 
 		the process...terminated with exit code 3 !! to check - is exit treated as a builtin
@@ -43,7 +43,7 @@ mandatory cases
 		and give a prompt on a new line
 - [x]  running ctrl-D after a blocking command (like grep b) should just give a prompt on a new line
 		without writing anything
-- [ ]  !!!doesnt work!!! running ctrl-\ after a blocking command (like grep b) should write 
+- [X]  !!!doesnt work!!! running ctrl-\ after a blocking command (like grep b) should write 
 		^\Quit (core dumped) on the line
 		and give a prompt on a new line
 - [x]  history is working
@@ -84,7 +84,7 @@ mandatory cases
 		[1]+  Stopped                 ./minishell
 		Minishell$ /bin/echo """""""'"$USER"'""""""
 		> "
-- [ ]  !! heredoc woks partially! without a command at the front it does not work
+- [X]  !! heredoc woks partially! without a command at the front it does not work
 		the info after the delimeter should not be added to the history. adds only the main command. 
 		check for the NULL at the beginning
 		Minishell$ << EOF
@@ -93,7 +93,7 @@ mandatory cases
 		> EOF
 		(null): command not found
 		Minishell$ 
-- [?]  env prints out the ?=0 at the end ???? in some cases. why?? not always. no logic on that -> never seen that
+- [X]  env prints out the ?=0 at the end ???? in some cases. why?? not always. no logic on that -> never seen that
 - [x]  delete the GNL from everywhere - header, makefile and itself. it is not used anywhere
 
 
@@ -147,3 +147,9 @@ Minishell$ cat << "$US"E"R"
 
 dd
 ddMinishell$ 
+
+- [ ] when sending signals to a shell that is in a shell, our minishell apllies them to all shell levels, which is wrong.
+	Instead it should only apply the lsignals to the latest shell level
+		+ inconsistent newlines in signals
+- [ ] add print "exit" when Ctr+D 
+

@@ -103,6 +103,20 @@
 		-> close the fd if a signal comes throgh during heredoc!!!
 - [ ] open fd in child proccess is not supposed to happen!!
 
+- [ ] print quotes in export!
+- [ ] add exit after exiting with a set number
+- [ ]  !!!doesnt work!!! running ctrl-\ after a blocking command (like grep b) should write 
+		^\Quit (core dumped) on the line
+		and give a prompt on a new line
+- [ ]  !! heredoc woks partially! without a command at the front it does not work
+the info after the delimeter should not be added to the history. adds only the main command. 
+check for the NULL at the beginning
+Minishell$ << EOF
+> lkjsd
+> sadkjf
+> EOF
+(null): command not found
+Minishell$ 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
