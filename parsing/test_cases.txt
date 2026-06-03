@@ -142,6 +142,12 @@ lines 107-122
   }
 
 
+
+- [ ]  ~ expansion during the substitution phase!!!!!!!!!!!!!
+- [x]  exit code 0 should be substituted by the exit code in any case - 
+		the main returns 0. should be returning the actual exit code
+- [x]  if there is nothing in cmd list then it should return an exit code
+- [ ]  the $"..." should be discarding the $ sign and should only read smth in the "" - $"HOME" should be just HOME
 - [??]  nshuval@2-C-2:~/Documents/Minishell$ cat << EOF
 		> $USER
 		> KK
