@@ -103,8 +103,10 @@
 		-> close the fd if a signal comes throgh during heredoc!!!
 - [ ] open fd in child proccess is not supposed to happen!!
 
-- [ ] print quotes in export!
-- [ ] add exit after exiting with a set number
+
+
+- [X] print quotes in export!
+- [X] add exit after exiting with a set number
 - [ ]  !!!doesnt work!!! running ctrl-\ after a blocking command (like grep b) should write 
 		^\Quit (core dumped) on the line
 		and give a prompt on a new line

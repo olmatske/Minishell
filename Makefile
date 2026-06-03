@@ -6,7 +6,7 @@
 #    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/06/02 21:25:35 by olmatske         ###   ########.fr        #
+#    Updated: 2026/06/03 17:55:52 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,7 @@ $(LIBFT):
 clean:
 	$(RM) $(OBJECTS)
 
-fclean:123`
+fclean:
 	$(RM) $(NAME) $(OBJECTS)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
