@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/02 20:56:05 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/03 15:51:15 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,11 @@ static void	minishell_loop(t_env *copied_env, t_shell *shell)
 			update_shell_status(&copied_env, shell);
 		}
 		if (line == NULL)
+		{
+			if (isatty(STDIN_FILENO))
+				ft_putstr_fd("exit\n", 1);
 			break ;
+		}
 		if (line[0] != '\0' && is_it_space_only(line) != 1)
 			execute(&line, copied_env, shell);
 		free(line);

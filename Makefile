@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/06/02 21:25:35 by olmatske         ###   ########.fr        #
+#    Updated: 2026/06/03 15:40:10 by anshuval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,7 @@ $(LIBFT):
 clean:
 	$(RM) $(OBJECTS)
 
-fclean:123`
+fclean:
 	$(RM) $(NAME) $(OBJECTS)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
