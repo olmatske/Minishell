@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   externals.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/04 18:45:23 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:17:00 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	handle_abortion(int status)
 	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
-			ft_putendl_fd("^\\Quit (core dumped)", STDERR_FILENO);
+			ft_putendl_fd(C_RED"Quit (core dumped)", STDERR_FILENO);
 		else if (WTERMSIG(status) == SIGINT)
 			ft_putchar_fd('\n', STDERR_FILENO);
 		return (128 + WTERMSIG(status));
