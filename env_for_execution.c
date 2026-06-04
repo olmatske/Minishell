@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:23:09 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/03 17:55:35 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:48:46 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	join(char **arr, t_env *current, int i)
 	return (arr[i] == NULL);
 }
 
-char	**env_array_for_execution(t_env *copied_env)
+char	**env_array_for_export(t_env *copied_env)
 {
 	char	**env_array;
 	t_env	*current;
@@ -70,6 +70,33 @@ char	**env_array_for_execution(t_env *copied_env)
 	while (current)
 	{
 		if (join(env_array, current, i))
+			return (free_env_array(env_array), NULL);
+		current = current->next;
+		i++;
+	}
+	return (env_array);
+}
+
+char	**env_array_for_execution(t_env *copied_env)
+{
+	char	**env_array;
+	char	*tmp;
+	t_env	*current;
+	int		i;
+
+	env_array = ft_calloc(env_list_length(copied_env) + 1, sizeof(char *));
+	if (!env_array)
+		return (NULL);
+	current = copied_env;
+	i = 0;
+	while (current)
+	{
+		tmp = ft_strjoin(current->name, "=");
+		if (!tmp)
+			return (free_env_array(env_array), NULL);
+		env_array[i] = ft_strjoin(tmp, current->value);
+		free(tmp);
+		if (!env_array[i])
 			return (free_env_array(env_array), NULL);
 		current = current->next;
 		i++;

@@ -55,9 +55,9 @@
 	-> likely because of the uninitialized shell exit status
 - [X] just cd does not rerout to $HOME
 - [X] echo status must be 1 if cd nonexistentpath
-- [] export PATH -> declare -x PATH (no ="")
+- [X] export PATH -> declare -x PATH (no ="")
 - [X] pipes don't work apparently (env | grep TEST) -> they do
-- [] fix export so that it sees the difference between export PATH and export PATH= !!
+- [X] fix export so that it sees the difference between export PATH and export PATH= !!
 - [X] env gets permanently sorted after export
 - [X] grep "NAME" goes into infinite loop
 		~/42/Minishell (execution*) » ./minishell                                               oli@Olgas-MacBook-Air

@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 17:56:23 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 18:03:15 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_error("Failed to copy environment.\n", 1);
 	minishell_loop(copied_env, shell);
 	exit_code = shell->exit;
-	free_all(shell, NULL, NULL);
+	free_all(0, shell, NULL, NULL);
 	rl_clear_history(); // changed from rl_clear_history to clear_history
 	free_env_list(&copied_env);
 	return (exit_code);

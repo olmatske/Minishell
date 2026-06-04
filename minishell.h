@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/03 20:36:42 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:59:55 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int			main(int argc, char **argv, char **envp);
 t_env		*shell_env(char **envp);
 t_cmd_node	*main_parsing(char **line, t_env *copied_env);
 char		**env_array_for_execution(t_env *copied_env);
-char		**env_array_without_value(t_env *copied_env); // check!!
+char		**env_array_for_export(t_env *copied_env);
 char		**free_env_array(char **env_array);
 void		ft_error(char *s, int exit_code);
 void		ft_perror(char *s);
@@ -131,7 +131,7 @@ char		*search_env(t_env *env, char *name);
 
 ////////////////////////////////////////////////////////////////////////////////
 int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);
-void		free_all(t_shell *shell, t_env **env, t_cmd_node *cmd);
+void		free_all(int free_env, t_shell *shell, t_env **env, t_cmd_node *cmd);
 int			ft_strcmp(char *a, char *b);
 void		update_shell_status(t_env **env, t_shell *shell);
 void		free_redir_list(t_redir *redir);
