@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 19:42:15 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 19:57:32 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	execute(char **line, t_env *copied_env, t_shell *shell)
 	{
 		if (g_signal == 130)
 		{
-			shell->exit == 130;
+			shell->exit = 130;
 			exit_status(copied_env, 130);
 		}
 		else
