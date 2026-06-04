@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/04 17:25:30 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 18:45:47 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void		update_shell_status(t_env **env, t_shell *shell);
 void		update_pwd(t_env **env, char *new_path, char *old_path);
 int			echo_n_check(char **str);
 
-// executor.c //////////////////////////////////////////////////////////////////
+// pipes.c //////////////////////////////////////////////////////////////////
 void		child_loop(int i, int cmd_count, int *pipe_fd, int prev_read);
 void		parent_loop(int i, int cmd_count, int *pipe_fd, int *prev_read);
 int			pipe_loop(t_pipex *p);
@@ -68,6 +68,7 @@ int			exec_pipeline(t_shell *shell, t_cmd_node *cmd_list);
 
 // externals.c /////////////////////////////////////////////////////////////////
 int			exec_external(t_shell *shell, t_cmd *cmd, t_env *env);
+int			handle_abortion(int status);
 
 // garbage_collector.c /////////////////////////////////////////////////////////
 void		*gc_malloc(t_shell *shell, size_t size);

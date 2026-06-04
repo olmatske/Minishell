@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/06/04 17:23:14 by anshuval         ###   ########.fr        #
+#    Updated: 2026/06/04 18:40:40 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ PARSING =	main.c \
 EXECUTION =	execution/builtins_1.c \
 			execution/builtins_2.c \
 			execution/wrappers.c \
-			execution/executor.c \
+			execution/pipes.c \
 			execution/externals.c \
 			execution/garbage_collector.c \
 			execution/orchestrator.c \
