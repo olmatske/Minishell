@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/04 17:14:06 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:24:26 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	handle_abortion(int status)
 {
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
-	if (WIFSIGNALED(status) == SIGQUIT)
+	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 			ft_putendl_fd("^\\Quit (core dumped)", STDERR_FILENO);
@@ -40,7 +40,7 @@ static void	child_exec(t_cmd *cmd, char *path, char **arr)
 		return (free_split(arr), exit(126));
 	}
 	signal(SIGINT, SIG_DFL);
-	signel(SIGQUIT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	execve(path, cmd->args, arr);
 	saved_errno = errno;
 	fprintf(stderr, C_RED"%s %s: %s\n", M, path, strerror(saved_errno));
