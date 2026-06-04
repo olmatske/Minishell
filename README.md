@@ -1,7 +1,6 @@
 *This project has been created as part of the 42 curriculum by anshuval, olmatske.*
 
-# ✧･ﾟ: *✧･ﾟ:*🐚 Minishell 🐚*:･ﾟ✧*:･ﾟ✧
-# aka Bashtard
+# ✧･ﾟ: *✧･ﾟ:*🐚 Minishell 🐚*:･ﾟ✧*:･ﾟ✧ ...aka Bashtard
 
 ## Description
 Minishell is a compact and simplified version of the bash shell. It consists of:
@@ -47,3 +46,66 @@ No code or code logic was AI generated.
 - https://en.wikipedia.org/wiki/Wait_(system_call)
 - gitbook
 - AI in execution was only used to help decode leaks, understand and sometimes find bugs and help fix up norminette. AI was mostly used for repetative tasks to speed up the progress. Every bit of logic has been thought through and written by olmatske, aka a human.
+
+
+# Checklists and Roadmaps
+
+### Parsing
+
+### Execution
+
+**Roadmap**
+
+
+- [X] start with: echo hi (> hi.txt)
+- [X] continue with built ins
+- [X] anything without env vars
+- [X] figure out env stuff
+ - [X] files
+	- [X] < "input" redirects input: cat < file.txt outputs file content to shell
+	- [X] > "overwrite" redirects input into a file
+		-> signals for exiting write mode!
+	- [X] << "heredoc" should be given a delimiter, then read the input until a line containing the
+			delimiter is seen. However, it doesn’t have to update the history!
+	- [X] >> "append" should redirect output in append mode.
+		-> [X] signals for exiting write mode!
+- [X] externals
+	- [X] absolute path
+	- [X] relative path
+	- [X] command
+		-> search until :
+		-> yoink the string
+		-> append yoinked string + '/' + command
+		-> check if it exists
+			> if no iterate further and repeat process
+			> if yes, return path
+- [X] Pipes
+- [X] PreZero (Garbage Collector)
+- [X] heredoc last
+- [X] link to main
+	- [X] norm
+- [X] change builtin.c
+	- [X] envp to struct
+	- [X] args
+- [X] exit
+- [X] add functions to header and clean up
+- [X] increment and execute commands if pipes
+- [X] norminette
+- [X] garbage collecter
+	-> cutsom mallox, mallocs and remembers in an array and frees at the end
+	- [X] gc_malloc — allocates memory and registers it
+	- [X] gc_free — frees a single pointer and removes it from the list
+	- [X] gc_free_all — frees every tracked pointer (call on exit or error)
+	- [X] gc_add — adds a pointer to the tracking list\
+	- [X] gc_calloc - same as gc_malloc but fills space with NULL
+- [X] execve are for external!!!!
+- [X] grep hi <./test_files/infile_big <./test_files/infile
+	-> LEAKS!!! was only the readline leaks
+- [X] update $PWD when changing directories
+- [X] leaks when doing just cd
+- [X] Minishell$ pwd
+- [X] Norminette
+- [X] isatty(STDIN_FILENO) before readline, if it's not 0 you use readline, else gnl
+- [X] file creation ->	"> text.txt" does not create file, but it should
+- [X] Heredoc
+- [X] remove fsanitizer from Makefile

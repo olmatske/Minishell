@@ -84,33 +84,18 @@
 - [X] update old pwd and new pwd in env after calling cd !!!
 - [X] apparently storing exit code in env is wrong
 - [X] Ctrl+\ doesn't work
-
-- [ ] open fd nach signals bei heredoc
-		-> close the fd if a signal comes throgh during heredoc!!!
-- [ ] open fd in child proccess is not supposed to happen!!
-- [ ] after compiling and make fclean-ing this happens:
-		 deleted:    libft/libft.a
-        deleted:    minishell
-
 - [X] echo "fail" > dev/full -> /dev/full: No space left on device 
 - [X] cat > > -> syntax error near unexpected token '>'
 - [X] exits!!!
 - [X] update old pwd and new pwd in env after calling cd !!!
 - [X] apparently storing exit code in env is wrong
 - [X] Ctrl+\ doesn't work
-
-- [ ] open fd nach signals bei heredoc
-		-> close the fd if a signal comes throgh during heredoc!!!
-- [ ] open fd in child proccess is not supposed to happen!!
-
-
-
 - [X] print quotes in export!
 - [X] add exit after exiting with a set number
-- [ ]  !!!doesnt work!!! running ctrl-\ after a blocking command (like grep b) should write 
+- [X]  !!!doesnt work!!! running ctrl-\ after a blocking command (like grep b) should write 
 		^\Quit (core dumped) on the line
 		and give a prompt on a new line
-- [ ]  !! heredoc woks partially! without a command at the front it does not work
+- [X]  !! heredoc woks partially! without a command at the front it does not work
 		the info after the delimeter should not be added to the history. adds only the main command. 
 		check for the NULL at the beginning
 		Minishell$ << EOF
@@ -131,7 +116,7 @@
 	- [X] < "input" redirects input: cat < file.txt outputs file content to shell
 	- [X] > "overwrite" redirects input into a file
 		-> signals for exiting write mode!
-	- [ ] << "heredoc" should be given a delimiter, then read the input until a line containing the
+	- [X] << "heredoc" should be given a delimiter, then read the input until a line containing the
 			delimiter is seen. However, it doesn’t have to update the history!
 	- [X] >> "append" should redirect output in append mode.
 		-> [ ] signals for exiting write mode!
@@ -148,7 +133,7 @@
 			> if yes, return path
 - [X] Pipes
 - [X] PreZero (Garbage Collector)
-- [ ] heredoc last
+- [X] heredoc last
 - [X] link to main
 	- [X] norm
 - [X] change builtin.c
@@ -175,12 +160,12 @@
 - [X] update $PWD when changing directories
 - [X] leaks when doing just cd
 
-# - [X] Minishell$ pwd
-# - [X] Norminette
-# - [ ] isatty(STDIN_FILENO) before readline, if it's not 0 you use readline, else gnl
-# - [ ] file creation ->	"> text.txt" does not create file, but it should
-# - [ ] Heredoc
-# - [ ] remove fsanitizer from Makefile
+- [X] Minishell$ pwd
+- [X] Norminette
+- [X] isatty(STDIN_FILENO) before readline, if it's not 0 you use readline, else gnl
+- [X] file creation ->	"> text.txt" does not create file, but it should
+- [X] Heredoc
+- [X] remove fsanitizer from Makefile
 
 minishell:
 Minishell$ export PATH=""

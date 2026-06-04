@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 15:24:03 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 18:04:14 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 19:15:51 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	print_quote_warning(char *line)
 		quote_status(line[i], &in_double, &in_single);
 		i++;
 	}
-	ft_putstr_fd("Bashtard: unexpected EOF while looking for matching `", 2);
+	ft_putstr_fd(C_RED"Bashtard: unexpected EOF while looking for matching `", 2);
 	if (in_double)
 		ft_putchar_fd('\"', 2);
 	if (in_single)
 		ft_putchar_fd('\'', 2);
-	ft_putstr_fd("'\nBashtard: syntax error: unexpected end of file\n", 2);
+	ft_putstr_fd(C_RED"'\nBashtard: syntax error: unexpected end of file\n", 2);
 }

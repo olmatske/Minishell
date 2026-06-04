@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_for_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/23 14:23:09 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 16:48:46 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 19:02:54 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "execution.h"
 
 char	**free_env_array(char **env_array)
 {

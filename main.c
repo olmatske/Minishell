@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 18:03:15 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 19:10:27 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	g_signal = 0;
 
 static t_shell	*shell_init(t_shell *shell, t_env **env)
 {
-	if (!shell) // added
+	if (!shell)
 	{
 		shell = malloc(sizeof(t_shell));
 		if (!shell)
@@ -103,7 +103,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argv;
 	copied_env = NULL;
-	shell = shell_init(NULL, &copied_env); // prev after else statement in while loop
+	shell = shell_init(NULL, &copied_env);
 	if (argc != 1)
 	{
 		printf("This Bashtard does not start unless you type in only ./bashtard.\n");
@@ -116,7 +116,7 @@ int	main(int argc, char **argv, char **envp)
 	minishell_loop(copied_env, shell);
 	exit_code = shell->exit;
 	free_all(0, shell, NULL, NULL);
-	rl_clear_history(); // changed from rl_clear_history to clear_history
+	rl_clear_history();
 	free_env_list(&copied_env);
 	return (exit_code);
 }

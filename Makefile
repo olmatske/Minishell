@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/06/04 18:40:40 by olmatske         ###   ########.fr        #
+#    Updated: 2026/06/04 19:00:53 by anshuval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ SUPP_FILE = sub.sub
 VALGRIND_FLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(SUPP_FILE)
 
 PARSING =	main.c \
-			env_for_execution.c \
 			parsing/all_about_errors.c \
 			parsing/builtins.c \
 			parsing/cmd_building.c \
@@ -40,6 +39,7 @@ PARSING =	main.c \
 			parsing/validation.c 
 
 EXECUTION =	execution/builtins_1.c \
+			execution/env_for_execution.c \
 			execution/builtins_2.c \
 			execution/wrappers.c \
 			execution/pipes.c \

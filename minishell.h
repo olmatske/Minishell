@@ -3,16 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 16:59:55 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 19:09:59 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-// tiny casing instead of minishell? or tiny missile? miniscule skeleton? Pip?
-// OopsieShell, ShellYeahSure, Bashtard, Shell!AtTheTerminal, BashMeMaybe, ShellYeah,
-// Schroedinger's Shell
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -34,7 +30,6 @@
 # include <readline/history.h>
 # include "get_next_line/get_next_line.h"
 # include "./libft/libft.h"
-// # include "./execution/execution.h"
 
 #ifdef __APPLE__
 # ifndef rl_clear_history
@@ -45,7 +40,7 @@
 extern int	g_signal;
 
 typedef enum e_out_type {
-	IN_FILE, // -> input
+	IN_FILE,
 	OUT_APPEND,
 	OUT_OVERWRITE
 }	t_out_type;
@@ -106,7 +101,7 @@ typedef struct s_pipex {
 	pid_t		*pids;
 	int			i;
 	int			cmd_count;
-	int			pipe_fd[2];	// pipe_fd[0] read - pipde_fd[1] write
+	int			pipe_fd[2];
 	int			prev_read;
 }	t_pipex;
 
