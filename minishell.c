@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/03 20:38:02 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:40:55 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static t_shell	*shell_init(t_shell *shell, t_env **env)
 char	*get_input_line(const char *prompt)
 {
 	char	*line;
+	char	*trimmed;
 
 	if (isatty(STDIN_FILENO))
 		line = readline(prompt);
@@ -39,8 +40,6 @@ char	*get_input_line(const char *prompt)
 		line = get_next_line(STDIN_FILENO);
 		if (line != NULL)
 		{
-			char	*trimmed;
-
 			trimmed = ft_strtrim(line, "\n");
 			free(line);
 			line = trimmed;

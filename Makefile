@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
+#    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/06/03 18:32:48 by olmatske         ###   ########.fr        #
+#    Updated: 2026/06/04 16:51:30 by anshuval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
 BASE_CFLAGS = -Wall -Werror -Wextra -g3
 SANITIZE ?= -fsanitize=address
-VALGRIND_FLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes
+SUPP_FILE = sub.sub
+VALGRIND_FLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=$(SUPP_FILE)
 
 PARSING =	minishell.c \
 			env_for_execution.c \
