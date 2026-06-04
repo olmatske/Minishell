@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 15:24:03 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 21:31:32 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:34:43 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	print_quote_warning(char *line)
 		i++;
 	}
 	ft_putstr_fd(C_RED"Bashtard: unexpected EOF while looking "
-		"for matching `"C_RESET, 2);
+		"for matching `"R, 2);
 	if (in_double)
 		ft_putchar_fd('\"', 2);
 	if (in_single)
 		ft_putchar_fd('\'', 2);
-	ft_putstr_fd(C_RED"'\nBashtard: syntax error: unexpected end of file\n"C_RESET, 2);
+	ft_putstr_fd(C_RED"'\nBashtard: syntax error: unexpected end of file\n"R, 2);
 }

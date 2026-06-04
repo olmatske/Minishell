@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/27 14:56:40 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/04 21:32:15 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:34:43 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	redir_builder(char **target_name, t_token *current)
 		|| current->next->type == OUT || current->next->type == APPEND
 		|| current->next->type == HEREDOC)
 	{
-		ft_putstr_fd(C_RED"Syntax error near unsexpected token 'newline'\n"C_RESET, 2);
+		ft_putstr_fd(C_RED"Syntax error near unsexpected token 'newline'\n"R, 2);
 		return ;
 	}
 	*target_name = ft_strdup(current->next->value);

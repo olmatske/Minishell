@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/30 15:32:58 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 21:32:07 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:34:43 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_eof_warning(char *delimiter)
 	ft_putstr_fd(C_RED"Bashtard: warning: here-document ", STDERR_FILENO);
 	ft_putstr_fd(C_RED"delimited by end-of-file (wanted '", STDERR_FILENO);
 	ft_putstr_fd(delimiter, STDERR_FILENO);
-	ft_putstr_fd(C_RED"')\n"C_RESET, STDERR_FILENO);
+	ft_putstr_fd(C_RED"')\n"R, STDERR_FILENO);
 }
 
 static char	*create_filename(int counter)

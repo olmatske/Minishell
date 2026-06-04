@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:25 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 21:32:22 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:34:43 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ static int	check_ambiguous_redirect(char *new, char *old, t_token *prev,
 		if (prev != NULL && (prev->type == IN || prev->type == OUT
 				|| prev->type == APPEND || prev->type == HEREDOC))
 		{
-			ft_putstr_fd(C_RED"Bashtard: "C_RESET, STDERR_FILENO);
+			ft_putstr_fd(C_RED"Bashtard: "R, STDERR_FILENO);
 			ft_putstr_fd(old, STDERR_FILENO);
-			ft_putstr_fd(C_RED": ambiguous redirect\n"C_RESET, STDERR_FILENO);
+			ft_putstr_fd(C_RED": ambiguous redirect\n"R, STDERR_FILENO);
 			free(new);
 			exit_status(env, 1);
 			return (-1);

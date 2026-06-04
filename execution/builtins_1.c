@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/04 21:29:40 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:34:43 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_env(t_env **env)
 static int	export_error(t_shell *shell, char *arg, char *name)
 {
 	shell->exit = 1;
-	fprintf(stderr, C_RED"%s '%s': %s\n"C_RESET, M, arg, I);
+	fprintf(stderr, C_RED"%s '%s': %s\n"R, M, arg, I);
 	free(name);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 18:50:43 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 21:32:40 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:34:43 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	validate_redirect(t_token *list)
 			if (current->next == NULL || current->next->type != WORD)
 			{
 				ft_putstr_fd(C_RED"Bashtard: syntax error around REDIRECTION "
-					"sign\n"C_RESET, 2);
+					"sign\n"R, 2);
 				return (-1);
 			}
 		}
@@ -48,7 +48,7 @@ static int	validate_pipes(t_token *list)
 	if (current && current->type == PIPE)
 	{
 		ft_putstr_fd(C_RED"Bashtard: syntax error near "
-			"unexpected token `|'\n"C_RESET, 2);
+			"unexpected token `|'\n"R, 2);
 		return (-1);
 	}
 	while (current)
@@ -58,7 +58,7 @@ static int	validate_pipes(t_token *list)
 			if (current->next == NULL || current->next->type == PIPE)
 			{
 				ft_putstr_fd(C_RED"Bashtard: syntax error near "
-					"unexpected token `|'\n"C_RESET, 2);
+					"unexpected token `|'\n"R, 2);
 				return (-1);
 			}
 		}
