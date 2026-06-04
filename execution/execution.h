@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/04 18:45:47 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 19:38:57 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define A	"too many arguments"
 # define FD	"No such file or directory"
 # define N	"numeric argument required"
+# define F	"fork failure"
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -100,7 +101,8 @@ int			ft_strcmp(char *a, char *b);
 char		*gc_strdup(t_shell *shell, const char *s1);
 char		*gc_strjoin(t_shell *shell, char const *s1, char const *s2);
 int			isnumstr(const char *str);
-void		free_all(int free_env, t_shell *shell, t_env **env, t_cmd_node *cmd);
+void		free_all(int free_env, t_shell *shell,
+				t_env **env, t_cmd_node *cmd);
 
 // homeless_functions.c ////////////////////////////////////////////////////////
 void		free_split(char **str);
