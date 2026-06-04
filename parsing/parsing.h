@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/02 17:31:11 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/03 22:07:42 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ t_cmd_node	*create_empty_cmd_node(void);
 void		free_args(char **args);
 void		free_list_token(t_token **head);
 char		*append_char(char *old_w, char c);
-char		*search_env(t_env *env, char *name);
 char		*append_str(char *old_w, char *suffix);
 void		check_for_builtin(t_cmd_node *node);
 void		just_copy(char *old_w, int *i, char **new_w);
@@ -79,5 +78,6 @@ void		search_dollar_or_copy(char *line, int *i, char **expand,
 				t_env *env);
 void		exit_status(t_env *env, int status);
 void		print_quote_warning(char *line);
+char		*tilde(t_env *env, int *i, char *new_line);
 
 #endif

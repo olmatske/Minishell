@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 15:24:03 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/02 17:30:37 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/03 16:50:25 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,3 @@ void	print_quote_warning(char *line)
 		ft_putchar_fd('\'', 2);
 	ft_putstr_fd("'\nMinishell: syntax error: unexpected end of file\n", 2);
 }
-

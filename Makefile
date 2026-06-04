@@ -6,15 +6,16 @@
 #    By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/06/03 17:55:52 by olmatske         ###   ########.fr        #
+#    Updated: 2026/06/03 18:32:48 by olmatske         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
-SUPP_FILE = leak.supp
-LSAN = LSAN_OPTIONS=suppressions=$(SUPP_FILE)
+BASE_CFLAGS = -Wall -Werror -Wextra -g3
+SANITIZE ?= -fsanitize=address
+VALGRIND_FLAGS = --leak-check=full --show-leak-kinds=all --track-origins=yes
 
 PARSING =	minishell.c \
 			env_for_execution.c \
@@ -60,7 +61,7 @@ OBJECTS = $(PARSING:.c=.o) $(EXECUTION:.c=.o) $(GNL:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS = $(BASE_CFLAGS) $(SANITIZE)
 
 RM = rm -rf
 
@@ -79,6 +80,7 @@ clean:
 	$(RM) $(OBJECTS)
 
 fclean:
+fclean:
 	$(RM) $(NAME) $(OBJECTS)
 	$(MAKE) -C $(LIBFT_DIR) fclean
 
@@ -89,4 +91,8 @@ re:
 run: $(NAME)
 	$(LSAN) ./$(NAME)
 
-.PHONY: all clean fclean re
+valgrind: fclean
+	$(MAKE) SANITIZE= all
+	valgrind $(VALGRIND_FLAGS) ./$(NAME)
+
+.PHONY: all clean fclean re run valgrind

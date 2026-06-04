@@ -96,8 +96,59 @@ mandatory cases
 - [X]  env prints out the ?=0 at the end ???? in some cases. why?? not always. no logic on that -> never seen that
 - [x]  delete the GNL from everywhere - header, makefile and itself. it is not used anywhere
 
+in  exec_external 
+pid = fork();
+  	if (pid < 0)
+  		return (free_split(arr), fprintf(stderr, C_RED"%s fork failure\n", M), 1);
+  	if (pid == 0)
+  		child_exec(cmd, path, arr);
++ 	signal(SIGINT, SIG_IGN);   /* Ignore signals in the parent process */
++ 	signal(SIGQUIT, SIG_IGN);
+  	waitpid(pid, &status, 0);
++ 	replace_signals();         /* Restore default signal handlers */
+  	free_split(arr);
+  	if (WIFEXITED(status))
+  		return (WEXITSTATUS(status));
++ 	else if (WIFSIGNALED(status))
++ 		return (128 + WTERMSIG(status));
+  	return (0);
 
-- [ ]  nshuval@2-C-2:~/Documents/Minishell$ cat << EOF
+in exector.c 
+lines 107-122
+  int	exec_pipeline(t_shell *shell, t_cmd_node *cmd_list)
+  {
+  	t_pipex	*p;
++ 	int		res;
+  
+  	p = pipex_init(shell, cmd_list);
+  	if (!p)
+  		return (1);
++ 	signal(SIGINT, SIG_IGN);   /* Ignore signals in parent during pipeline */
++ 	signal(SIGQUIT, SIG_IGN);
+  	while (p->i < p->cmd_count)
+  	{
+  		if (pipe_loop(p) == 1)
++ 		{
++ 			replace_signals();
+  			return (1);
++ 		}
+  		p->curr = p->curr->next;
+  		p->i++;
+  	}
+- 	return (wait_pipeline(shell, p));
++ 	res = wait_pipeline(shell, p);
++ 	replace_signals();         /* Restore default signal handlers */
++ 	return (res);
+  }
+
+
+
+- [ ]  ~ expansion during the substitution phase!!!!!!!!!!!!!
+- [x]  exit code 0 should be substituted by the exit code in any case - 
+		the main returns 0. should be returning the actual exit code
+- [x]  if there is nothing in cmd list then it should return an exit code
+- [ ]  the $"..." should be discarding the $ sign and should only read smth in the "" - $"HOME" should be just HOME
+- [??]  nshuval@2-C-2:~/Documents/Minishell$ cat << EOF
 		> $USER
 		> KK
 		> $$USER
@@ -134,7 +185,7 @@ mandatory cases
 		bash: warning: here-document at line 42 delimited by end-of-file (wanted `EOF')
 		check that this is a standard warning. if yes should pass the delimiter and - how to count the lines
 
-- [ ]  when closing echo "hello with the ctrl d does not give out the bash notification
+- [x]  when closing echo "hello with the ctrl d does not give out the bash notification
 anshuval@3-G-10:~/Documents/Minishell$ echo "hello
 > 
 bash: unexpected EOF while looking for matching `"'
@@ -151,5 +202,5 @@ ddMinishell$
 - [ ] when sending signals to a shell that is in a shell, our minishell apllies them to all shell levels, which is wrong.
 	Instead it should only apply the lsignals to the latest shell level
 		+ inconsistent newlines in signals
-- [ ] add print "exit" when Ctr+D 
+- [x] add print "exit" when Ctr+D 
 
