@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 11:28:33 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/02 20:50:38 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:18:26 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ t_pipex	*pipex_init(t_shell *shell, t_cmd_node *cmd_list)
 
 	p = gc_malloc(shell, sizeof(t_pipex));
 	p->curr = cmd_list;
+	p->head = cmd_list;
 	p->shell = shell;
 	p->cmd_count = pipe_count(cmd_list);
 	p->pids = gc_malloc(shell, sizeof(pid_t) * p->cmd_count);
