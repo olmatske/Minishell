@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 19:53:33 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:33:32 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define C_CYAN "\001\033[1;36m\002"
 # define C_RESET "\001\033[0m\002"
 # define C_RED "\001\033[1;31m\002"
+# define R		C_RESET
 
 # include <stdlib.h>
 # include <unistd.h>
@@ -105,6 +106,7 @@ typedef struct s_shell
 typedef struct s_pipex
 {
 	t_cmd_node	*curr;
+	t_cmd_node	*head;
 	t_shell		*shell;
 	pid_t		*pids;
 	int			i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 19:57:32 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:34:43 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	minishell_loop(t_env *copied_env, t_shell *shell)
 	while (1)
 	{
 		g_signal = 0;
-		line = get_input_line(C_CYAN"Bashtard$ " C_RESET);
+		line = get_input_line(C_CYAN"Bashtard$ " R);
 		if (g_signal == 130)
 		{
 			shell->exit = 130;
