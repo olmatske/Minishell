@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 19:10:27 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 19:42:15 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,17 @@ static void	execute(char **line, t_env *copied_env, t_shell *shell)
 		shell_loop(shell, cmd_list);
 	else
 	{
-		status = search_env(copied_env, "?");
-		if (status)
-			shell->exit = ft_atoi(status);
+		if (g_signal == 130)
+		{
+			shell->exit == 130;
+			exit_status(copied_env, 130);
+		}
+		else
+		{
+			status = search_env(copied_env, "?");
+			if (status)
+				shell->exit = ft_atoi(status);
+		}
 	}
 	free_cmd_list(cmd_list);
 }
@@ -92,7 +100,6 @@ static void	minishell_loop(t_env *copied_env, t_shell *shell)
 			execute(&line, copied_env, shell);
 		free(line);
 	}
-
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -106,7 +113,8 @@ int	main(int argc, char **argv, char **envp)
 	shell = shell_init(NULL, &copied_env);
 	if (argc != 1)
 	{
-		printf("This Bashtard does not start unless you type in only ./bashtard.\n");
+		printf("This Bashtard does not start unless you type in only "
+			"./bashtard.\n");
 		free(shell);
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 16:47:55 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/03 22:07:42 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 19:50:54 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 # define YES	1
 # define NO		0
 
-typedef enum e_token_type {
+typedef enum e_token_type
+{
 	WORD,
 	PIPE,
 	IN,
@@ -32,7 +33,8 @@ typedef enum e_token_type {
 	HEREDOC
 }	t_token_type;
 
-typedef struct s_token {
+typedef struct s_token
+{
 	char			*value;
 	int				was_quoted;
 	t_token_type	type;
@@ -76,7 +78,6 @@ void		end_interrupt_prompt(int copy_stdin);
 char		*join_prefix(char *base, char *s1, char *s2);
 void		search_dollar_or_copy(char *line, int *i, char **expand,
 				t_env *env);
-void		exit_status(t_env *env, int status);
 void		print_quote_warning(char *line);
 char		*tilde(t_env *env, int *i, char *new_line);
 
