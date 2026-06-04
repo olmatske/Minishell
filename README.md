@@ -32,7 +32,8 @@ make
 ### Parsing
 - bash
 - [Bash_tutorial] (https://www.w3schools.com/bash/)
-- Gemini and Copilot - AI was used for explanation of the bash behaviour in separate cases
+- Gemini and Copilot - AI was used for research and explanation of complex bash behaviour, especially in edge cases.
+No code or code logic was AI generated. 
 
 ### Execution
 - Stak Overflow
