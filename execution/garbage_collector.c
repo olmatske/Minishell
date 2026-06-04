@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 15:32:56 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/29 11:57:00 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 21:48:56 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	*gc_calloc(t_shell *shell, size_t count, size_t size)
 
 int	gc_add(t_shell *shell, void *ptr)
 {
-	pre_zero	*new;
+	t_pre_zero	*new;
 
-	new = malloc(sizeof(pre_zero));
+	new = malloc(sizeof(t_pre_zero));
 	if (!new)
 		return (-1);
 	new->ptr = ptr;
@@ -60,8 +60,8 @@ int	gc_add(t_shell *shell, void *ptr)
 
 void	gc_single_free(t_shell *shell, void *ptr)
 {
-	pre_zero	*curr;
-	pre_zero	*prev;
+	t_pre_zero	*curr;
+	t_pre_zero	*prev;
 
 	curr = shell->gc;
 	prev = NULL;
@@ -82,8 +82,8 @@ void	gc_single_free(t_shell *shell, void *ptr)
 
 void	gc_free_all(t_shell *shell)
 {
-	pre_zero	*curr;
-	pre_zero	*kill;
+	t_pre_zero	*curr;
+	t_pre_zero	*kill;
 
 	if (!shell)
 		return ;

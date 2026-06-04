@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 21:33:32 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 22:01:24 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,12 @@ typedef struct s_pre_zero
 {
 	void				*ptr;
 	struct s_pre_zero	*next;
-}	pre_zero;
+}	t_pre_zero;
 
 typedef struct s_shell
 {
 	t_env		**env;
-	pre_zero	*gc;
+	t_pre_zero	*gc;
 	int			exit;
 }	t_shell;
 
