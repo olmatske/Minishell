@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 13:41:29 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/04 17:00:19 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 19:39:28 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,10 @@ int	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 		exit_status = shell->exit;
 	else if (!isnumstr(cmd->cmd->args[1]))
 	{
-		fprintf(stderr, "exit\n"C_RED"%s exit: %s: %s\n", M, cmd->cmd->args[1], N);
+		fprintf(stderr, "exit\n"C_RED"%s exit: %s: %s\n",
+			M, cmd->cmd->args[1], N);
 		rl_clear_history();
 		free_all(1, shell, env, cmd);
-		// if (env)
-		// 	free_env_list(env);
 		exit (2);
 	}
 	else if (cmd->cmd->args[2])
@@ -37,9 +36,7 @@ int	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 		exit_status = ft_atoi(cmd->cmd->args[1]);
 	rl_clear_history();
 	free_all(1, shell, env, cmd);
-	// if (env)
-	// 	free_env_list(env);
-	fprintf(stdout, "exit\n"); // -> correct with bash but not with tester
+	fprintf(stdout, "exit\n");
 	exit(exit_status);
 }
 

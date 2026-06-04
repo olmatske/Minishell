@@ -72,7 +72,6 @@ int	wait_pipeline(t_shell *shell, t_pipex *p)
 			last_status = status;
 		p->i++;
 	}
-	
 	shell->exit = handle_abortion(last_status);
 	return (update_shell_status(shell->env, shell), 0);
 }
@@ -80,16 +79,24 @@ int	wait_pipeline(t_shell *shell, t_pipex *p)
 int	exec_pipeline(t_shell *shell, t_cmd_node *cmd_list)
 {
 	t_pipex	*p;
+	int		restore;
 
 	p = pipex_init(shell, cmd_list);
 	if (!p)
 		return (1);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	while (p->i < p->cmd_count)
 	{
 		if (pipe_loop(p) == 1)
+		{
+			replace_signals();
 			return (1);
+		}
 		p->curr = p->curr->next;
 		p->i++;
 	}
-	return (wait_pipeline(shell, p));
+	restore = wait_pipeline(shell, p);
+	replace_signals();
+	return (restore);
 }

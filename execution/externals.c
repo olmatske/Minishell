@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/04 18:45:23 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 19:37:31 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,21 @@ int	exec_external(t_shell *shell, t_cmd *cmd, t_env *env)
 	arr = env_array_for_execution(env);
 	if (!arr)
 		return (fprintf(stderr, C_RED"%s malloc failure\n", M), 1);
-	if (decide_path(cmd))
-		path = cmd->args[0];
-	else
+	path = cmd->args[0];
+	if (!decide_path(cmd))
 		path = resolve_path(shell, cmd, arr);
 	if (!path)
 		return (free_split(arr),
 			fprintf(stderr, C_RED"%s: %s", cmd->args[0], C), 127);
 	pid = fork();
 	if (pid < 0)
-		return (free_split(arr), fprintf(stderr, C_RED"%s fork failure\n", M), 1);
+		return (free_split(arr), fprintf(stderr, C_RED"%s %s\n", M, F), 1);
 	if (pid == 0)
 		child_exec(cmd, path, arr);
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 	waitpid(pid, &status, 0);
+	replace_signals();
 	free_split(arr);
 	return (handle_abortion(status));
 }
