@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 18:50:43 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/03 16:25:47 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:53:33 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	validate_redirect(t_token *list)
 		{
 			if (current->next == NULL || current->next->type != WORD)
 			{
-				ft_putstr_fd("Minishell: syntax error around REDIRECTION "
+				ft_putstr_fd("Bashtard: syntax error around REDIRECTION "
 					"sign\n", 2);
 				return (-1);
 			}
@@ -47,7 +47,7 @@ static int	validate_pipes(t_token *list)
 	current = list;
 	if (current && current->type == PIPE)
 	{
-		ft_putstr_fd("Minishell: syntax error near "
+		ft_putstr_fd("Bashtard: syntax error near "
 			"unexpected token `|'\n", 2);
 		return (-1);
 	}
@@ -57,7 +57,7 @@ static int	validate_pipes(t_token *list)
 		{
 			if (current->next == NULL || current->next->type == PIPE)
 			{
-				ft_putstr_fd("Minishell: syntax error near "
+				ft_putstr_fd("Bashtard: syntax error near "
 					"unexpected token `|'\n", 2);
 				return (-1);
 			}

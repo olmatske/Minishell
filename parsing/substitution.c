@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:25 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/03 22:06:02 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:53:45 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	check_ambiguous_redirect(char *new, char *old, t_token *prev,
 		if (prev != NULL && (prev->type == IN || prev->type == OUT
 				|| prev->type == APPEND || prev->type == HEREDOC))
 		{
-			ft_putstr_fd("Minishell: ", STDERR_FILENO);
+			ft_putstr_fd("Bashtard: ", STDERR_FILENO);
 			ft_putstr_fd(old, STDERR_FILENO);
 			ft_putstr_fd(": ambiguous redirect\n", STDERR_FILENO);
 			free(new);

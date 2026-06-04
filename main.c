@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 16:40:55 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:56:23 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	minishell_loop(t_env *copied_env, t_shell *shell)
 	while (1)
 	{
 		g_signal = 0;
-		line = get_input_line(C_CYAN"Minishell$ " C_RESET);
+		line = get_input_line(C_CYAN"Bashtard$ " C_RESET);
 		if (g_signal == 130)
 		{
 			shell->exit = 130;
@@ -106,8 +106,7 @@ int	main(int argc, char **argv, char **envp)
 	shell = shell_init(NULL, &copied_env); // prev after else statement in while loop
 	if (argc != 1)
 	{
-		printf("Minishell does not accept arguments. "
-			"Type in only ./Minishell to enter Minishell\n");
+		printf("This Bashtard does not start unless you type in only ./bashtard.\n");
 		free(shell);
 		return (1);
 	}
