@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 18:24:25 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 17:53:45 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 18:43:22 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,12 @@ int	variable_substitution(t_token **token_list, t_env *copied_env)
 		{
 			if (substitute_word(token_list, current, prev, copied_env) == -1)
 				return (-1);
+		}
+		if ((prev == NULL && *token_list != current)
+			|| (prev != NULL && prev->next != current))
+		{
+			current = next;
+			continue ;
 		}
 		prev = current;
 		current = next;
