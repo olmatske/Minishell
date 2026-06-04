@@ -6,11 +6,26 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 15:41:47 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/02 21:00:02 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:14:06 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execution.h"
+
+static int	handle_abortion(int status)
+{
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	if (WIFSIGNALED(status) == SIGQUIT)
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			ft_putendl_fd("^\\Quit (core dumped)", STDERR_FILENO);
+		else if (WTERMSIG(status) == SIGINT)
+			ft_putchar_fd('\n', STDERR_FILENO);
+		return (128 + WTERMSIG(status));
+	}
+	return (1);
+}
 
 static void	child_exec(t_cmd *cmd, char *path, char **arr)
 {
@@ -24,6 +39,8 @@ static void	child_exec(t_cmd *cmd, char *path, char **arr)
 		fprintf(stderr, C_RED"%s: Is a directory\n", path);
 		return (free_split(arr), exit(126));
 	}
+	signal(SIGINT, SIG_DFL);
+	signel(SIGQUIT, SIG_DFL);
 	execve(path, cmd->args, arr);
 	saved_errno = errno;
 	fprintf(stderr, C_RED"%s %s: %s\n", M, path, strerror(saved_errno));
@@ -57,7 +74,5 @@ int	exec_external(t_shell *shell, t_cmd *cmd, t_env *env)
 		child_exec(cmd, path, arr);
 	waitpid(pid, &status, 0);
 	free_split(arr);
-	if (WIFEXITED(status))
-		return (WEXITSTATUS(status));
-	return (0);
+	return (handle_abortion(status));
 }
