@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all_about_errors.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/13 15:24:03 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/03 16:50:25 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:26:32 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	print_quote_warning(char *line)
 		quote_status(line[i], &in_double, &in_single);
 		i++;
 	}
-	ft_putstr_fd("Minishell: unexpected EOF while looking for matching `", 2);
+	ft_putstr_fd("Bashtard: unexpected EOF while looking for matching `", 2);
 	if (in_double)
 		ft_putchar_fd('\"', 2);
 	if (in_single)
 		ft_putchar_fd('\'', 2);
-	ft_putstr_fd("'\nMinishell: syntax error: unexpected end of file\n", 2);
+	ft_putstr_fd("'\nBashtard: syntax error: unexpected end of file\n", 2);
 }

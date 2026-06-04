@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/04 17:02:48 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:25:30 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define PATHLEN	4096
 
 # define C	"command not found\n"
-# define M	"Minishell:"
+# define M	"Bashtard:"
 # define I	"not a valid identifier"
 # define A	"too many arguments"
 # define FD	"No such file or directory"
