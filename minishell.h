@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:30:44 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 16:51:55 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 16:59:55 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ char		*search_env(t_env *env, char *name);
 
 ////////////////////////////////////////////////////////////////////////////////
 int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);
-void		free_all(t_shell *shell, t_env **env, t_cmd_node *cmd);
+void		free_all(int free_env, t_shell *shell, t_env **env, t_cmd_node *cmd);
 int			ft_strcmp(char *a, char *b);
 void		update_shell_status(t_env **env, t_shell *shell);
 void		free_redir_list(t_redir *redir);

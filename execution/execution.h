@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/02 20:46:31 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/04 17:02:48 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void		gc_free_all(t_shell *shell);
 // orchestrator ////////////////////////////////////////////////////////////////
 int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);
 int			exec_single_cmd(t_shell *shell, t_env *env, t_cmd_node *cmd_list);
-void		free_all(t_shell *shell, t_env **env, t_cmd_node *cmd);
+void		free_all(int freenv, t_shell *shell, t_env **env, t_cmd_node *cmd);
 
 // pipe_helpers.c //////////////////////////////////////////////////////////////
 int			open_file(char *file, int mode);
@@ -99,7 +99,7 @@ int			ft_strcmp(char *a, char *b);
 char		*gc_strdup(t_shell *shell, const char *s1);
 char		*gc_strjoin(t_shell *shell, char const *s1, char const *s2);
 int			isnumstr(const char *str);
-void		free_all(t_shell *shell, t_env **env, t_cmd_node *cmd);
+void		free_all(int free_env, t_shell *shell, t_env **env, t_cmd_node *cmd);
 
 // homeless_functions.c ////////////////////////////////////////////////////////
 void		free_split(char **str);
