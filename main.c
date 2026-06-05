@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/05 13:15:39 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/05 13:29:03 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc != 1)
 	{
 		printf("This Bashtard does not start unless you type in only "
-			"./bashtard.\n");
+			"./minishell.\n");
 		free(shell);
 		return (1);
 	}
