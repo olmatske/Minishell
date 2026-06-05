@@ -19,7 +19,7 @@ To start the shell, compile the shell using the following line of commands:
 
 ```bash
 make
-./bashtard
+./minishell
 ```
 
 ## Resources

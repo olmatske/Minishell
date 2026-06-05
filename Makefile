@@ -6,11 +6,11 @@
 #    By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/26 17:13:09 by olmatske          #+#    #+#              #
-#    Updated: 2026/06/04 19:00:53 by anshuval         ###   ########.fr        #
+#    Updated: 2026/06/05 13:27:28 by anshuval         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = bashtard
+NAME = minishell
 LIBFT_DIR = ./libft
 LIBFT = $(LIBFT_DIR)/libft.a
 BASE_CFLAGS = -Wall -Werror -Wextra -g3
