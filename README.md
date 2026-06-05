@@ -152,8 +152,8 @@ validation:
 		the main returns 0. should be returning the actual exit code
 - [X]  if there is nothing in cmd list then it should return an exit code
 - [X]  the $"..." should be discarding the $ sign and should only read smth in the "" - $"HOME" should be just HOME
-- [ ]  nshuval@2-C-2:~/Documents/Minishell$ cat << EOF
-			in bash $$USER expands to shell pid!!!!!!!!!!!!!!!! and i do not have an allowed function for it!!!
+		- [-]  nshuval@2-C-2:~/Documents/Minishell$ cat << EOF				-> not possible with minishell instructions!
+			in bash $$USER expands to shell pid!!!!!!!!!!!!!!!! and i do not have an allowed function for it!!! 
 - [X]  check exits for ft_error!!!! especially for redirections
 - [X]  the unclosed quotes are not interrupted by ctrl C
 - [X]  cat << "$US"E"R” !!! delimiter $USER does not work. ctrl+c does not end the heredoc as expected.

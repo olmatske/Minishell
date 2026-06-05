@@ -1,8 +1,8 @@
 # M I N I S H E L L
 
 ### Questions
-- [ ] what are built in commands?
-- [ ] hwo do pipes work exactly?
+- [X] what are built in commands?
+- [X] hwo do pipes work exactly?
 --------------------------------------------------------------------------------
 ### Functions
 - [X] built ins
@@ -10,7 +10,7 @@
 	- [X] echo
 		- [X] fix -n
 	- [X] echo -n (do not output the trailing newline)
-	- [X] env ([ ] redo and only use the env struct)
+	- [X] env ([X] redo and only use the env struct)
 	- [X] export
 		- [X] fix updating variable if it exists
 	- [X] unset
@@ -18,7 +18,7 @@
 	- [X] externals paths etc
 - [X] expander
 - [X] external functions
-- [ ] heredoc
+- [X] heredoc
 	-> cat << EOF
 		hello
 		world
@@ -112,14 +112,14 @@
 - [X] continue with built ins
 - [X] anything without env vars
 - [X] figure out env stuff
- - [ ] files
+- [X] files
 	- [X] < "input" redirects input: cat < file.txt outputs file content to shell
 	- [X] > "overwrite" redirects input into a file
 		-> signals for exiting write mode!
 	- [X] << "heredoc" should be given a delimiter, then read the input until a line containing the
 			delimiter is seen. However, it doesn’t have to update the history!
 	- [X] >> "append" should redirect output in append mode.
-		-> [ ] signals for exiting write mode!
+		-> [X] signals for exiting write mode!
 
 - [X] externals
 	- [X] absolute path
@@ -153,7 +153,7 @@
 	- [X] gc_add — adds a pointer to the tracking list\
 	- [X] gc_calloc - same as gc_malloc but fills space with NULL
 
-- [ ] execve are for external!!!!
+- [X] execve are for external!!!!
 
 - [X] grep hi <./test_files/infile_big <./test_files/infile
 	-> LEAKS!!! was only the readline leaks
