@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 13:41:29 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/04 21:34:43 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/05 14:23:41 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 		exit_status = shell->exit;
 	else if (!isnumstr(cmd->cmd->args[1]))
 	{
-		fprintf(stderr, "exit\n"C_RED"%s exit: %s: %s\n"R,
-			M, cmd->cmd->args[1], N);
+		printf("exit\n");
+		ft_puterr("exit", cmd->cmd->args[1], N);
 		rl_clear_history();
 		free_all(1, shell, env, cmd);
 		exit (2);
@@ -29,14 +29,14 @@ int	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 	else if (cmd->cmd->args[2])
 	{
 		exit_status = 1;
-		fprintf(stderr, C_RED"%s %s\n"R, M, A);
+		ft_puterr(A, NULL, NULL);
 		return (1);
 	}
 	else
 		exit_status = ft_atoi(cmd->cmd->args[1]);
 	rl_clear_history();
 	free_all(1, shell, env, cmd);
-	fprintf(stdout, "exit\n");
+	printf("exit\n");
 	exit(exit_status);
 }
 
@@ -70,7 +70,7 @@ static int	change_dir(t_shell *shell, char *target)
 		return (perror("pre chdir: getcwd"), 1);
 	if (chdir(target) == -1)
 	{
-		fprintf(stderr, C_RED"%s cd: %s: %s\n"R, M, target, FD);
+		ft_puterr("cd", target, FD);
 		shell->exit = 1;
 		return (1);
 	}
@@ -88,14 +88,14 @@ int	cd(char **path, t_env *env, t_shell *shell)
 	if (!path || !path[0])
 		return (1);
 	if (path[1] && path[2])
-		return (fprintf(stderr, C_RED"%s cd: %s\n"R, M, A), 1);
+		return (ft_puterr("cd", A, NULL), 1);
 	target = path[1];
 	if (!target)
 		expansion = expand_tilde("~", env);
 	else
 		expansion = expand_tilde(target, env);
 	if (!expansion)
-		return (fprintf(stderr, C_RED"%s HOME not set\n"R, M), 1);
+		return (ft_puterr("HOME not set", NULL, NULL), 1);
 	shell->exit = change_dir(shell, expansion);
 	free(expansion);
 	return (shell->exit);

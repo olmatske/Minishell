@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 11:28:33 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/04 21:18:26 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/05 14:20:00 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,25 @@ char	*expand_tilde(char *arg, t_env *env)
 	if (!home)
 		return (NULL);
 	return (home);
+}
+
+void	ft_puterr(char *s1, char *s2, char *s3)
+{
+	write(STDERR_FILENO, C_RED, ft_strlen(C_RED));
+	write(STDERR_FILENO, M, ft_strlen(M));
+	write(STDERR_FILENO, ": ", 2);
+	if (s1)
+		write(STDERR_FILENO, s1, ft_strlen(s1));
+	if (s2)
+	{
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, s2, ft_strlen(s2));
+	}
+	if (s3)
+	{
+		write(STDERR_FILENO, ": ", 2);
+		write(STDERR_FILENO, s3, ft_strlen(s3));
+	}
+	write(STDERR_FILENO, "\n", 1);
+	write(STDERR_FILENO, R, ft_strlen(R));
 }

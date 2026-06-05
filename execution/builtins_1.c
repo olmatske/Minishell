@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:52:51 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/04 21:34:43 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/05 14:11:01 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,14 @@ int	ft_env(t_env **env)
 static int	export_error(t_shell *shell, char *arg, char *name)
 {
 	shell->exit = 1;
-	fprintf(stderr, C_RED"%s '%s': %s\n"R, M, arg, I);
+	write(STDERR_FILENO, C_RED, ft_strlen(C_RED));
+	write(STDERR_FILENO, M, ft_strlen(M));
+	write(STDERR_FILENO, " '", 2);
+	write(STDERR_FILENO, arg, ft_strlen(arg));
+	write(STDERR_FILENO, "': ", 3);
+	write(STDERR_FILENO, I, ft_strlen(I));
+	write(STDERR_FILENO, R, ft_strlen(R));
+	write(STDERR_FILENO, "\n", 1);
 	free(name);
 	return (1);
 }
