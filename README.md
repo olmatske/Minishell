@@ -186,7 +186,6 @@ validation:
 		> 
 		bash: unexpected EOF while looking for matching `"'
 		bash: syntax error: unexpected end of file
-- [ ]  check for bash memory leaks with $HOME or $HOME$ (still reacheable...)
 
 ### Execution
 
