@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 13:41:29 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/05 14:36:26 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/05 15:36:38 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ int	echo(char **str)
 	int	i;
 	int	n;
 
-	i = 1;
-	n = echo_n_check(str);
-	if (n)
-		i = 2;
+	i = echo_n_check(str);
+	if (i > 1)
+		n = 1;
+	else
+		n = 0;
 	while (str[i])
 	{
 		printf("%s", str[i]);

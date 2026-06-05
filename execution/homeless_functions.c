@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   homeless_functions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/29 11:28:33 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/05 14:44:43 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/05 14:53:21 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_puterr(char *s1, char *s2, char *s3, int flag)
 	if (flag == 1)
 	{
 		write(STDERR_FILENO, M, ft_strlen(M));
-		write(STDERR_FILENO, ": ", 1);
+		write(STDERR_FILENO, ": ", 2);
 	}
 	if (s1)
 		write(STDERR_FILENO, s1, ft_strlen(s1));

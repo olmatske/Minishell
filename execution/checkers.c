@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkers.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
+/*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/22 12:15:53 by olmatske          #+#    #+#             */
-/*   Updated: 2026/05/31 15:15:26 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/05 15:37:51 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,9 @@ int	echo_n_check(char **str)
 {
 	int	i;
 	int	k;
-	int	found;
 
 	i = 1;
 	k = 0;
-	found = 0;
 	while (str[i])
 	{
 		if (str[i][0] != '-')
@@ -75,12 +73,9 @@ int	echo_n_check(char **str)
 		while (str[i][k] == 'n')
 			k++;
 		if (str[i][k] == '\0' && k > 1)
-		{
 			i++;
-			found = 1;
-		}
 		else
 			break ;
 	}
-	return (found);
+	return (i);
 }
