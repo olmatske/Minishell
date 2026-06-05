@@ -36,6 +36,8 @@ void	parent_loop(int i, int cmd_count, int *pipe_fd, int *prev_read)
 
 int	pipe_loop(t_pipex *p)
 {
+	int	exit_status;
+
 	if (p->i < p->cmd_count - 1 && pipe(p->pipe_fd) == -1)
 		return (perror("pipes"), 1);
 	p->pids[p->i] = fork();
@@ -50,13 +52,9 @@ int	pipe_loop(t_pipex *p)
 			free_all(1, p->shell, p->shell->env, p->head);
 			exit (1);
 		}
-		if (p->curr->cmd->redir
-			&& wrapper_redirections(p->curr->cmd->redir) != 0)
-		{
-			free_all(1, p->shell, p->shell->env, p->head);
-			exit(1);
-		}
-		exit(execution(p->shell, p->curr, p->shell->env));
+		exit_status = (execution(p->shell, p->curr, p->shell->env));
+		free_all(1, p->shell, p->shell->env, p->head);
+		exit(exit_status);
 	}
 	else
 		parent_loop(p->i, p->cmd_count, p->pipe_fd, &p->prev_read);
