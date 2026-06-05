@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/15 13:41:29 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/05 14:23:41 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/05 14:36:26 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 	else if (!isnumstr(cmd->cmd->args[1]))
 	{
 		printf("exit\n");
-		ft_puterr("exit", cmd->cmd->args[1], N);
+		ft_puterr("exit", cmd->cmd->args[1], N, 1);
 		rl_clear_history();
 		free_all(1, shell, env, cmd);
 		exit (2);
@@ -29,7 +29,7 @@ int	ft_exit(t_shell *shell, t_env **env, t_cmd_node *cmd)
 	else if (cmd->cmd->args[2])
 	{
 		exit_status = 1;
-		ft_puterr(A, NULL, NULL);
+		ft_puterr(A, NULL, NULL, 1);
 		return (1);
 	}
 	else
@@ -70,7 +70,7 @@ static int	change_dir(t_shell *shell, char *target)
 		return (perror("pre chdir: getcwd"), 1);
 	if (chdir(target) == -1)
 	{
-		ft_puterr("cd", target, FD);
+		ft_puterr("cd", target, FD, 1);
 		shell->exit = 1;
 		return (1);
 	}
@@ -88,14 +88,14 @@ int	cd(char **path, t_env *env, t_shell *shell)
 	if (!path || !path[0])
 		return (1);
 	if (path[1] && path[2])
-		return (ft_puterr("cd", A, NULL), 1);
+		return (ft_puterr("cd", A, NULL, 1), 1);
 	target = path[1];
 	if (!target)
 		expansion = expand_tilde("~", env);
 	else
 		expansion = expand_tilde(target, env);
 	if (!expansion)
-		return (ft_puterr("HOME not set", NULL, NULL), 1);
+		return (ft_puterr("HOME not set", NULL, NULL, 1), 1);
 	shell->exit = change_dir(shell, expansion);
 	free(expansion);
 	return (shell->exit);

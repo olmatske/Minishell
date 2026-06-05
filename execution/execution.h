@@ -6,7 +6,7 @@
 /*   By: olmatske <olmatske@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 17:11:42 by olmatske          #+#    #+#             */
-/*   Updated: 2026/06/05 14:20:59 by olmatske         ###   ########.fr       */
+/*   Updated: 2026/06/05 14:42:49 by olmatske         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # define PATHLEN	4096
 
-# define C	"command not found\n"
-# define M	"Bashtard:"
+# define C	"command not found"
+# define M	"Bashtard"
 # define I	"not a valid identifier"
 # define A	"too many arguments"
 # define FD	"No such file or directory"
@@ -108,7 +108,7 @@ void		free_all(int free_env, t_shell *shell,
 void		free_split(char **str);
 t_pipex		*pipex_init(t_shell *shell, t_cmd_node *cmd_list);
 char		*expand_tilde(char *arg, t_env *env);
-void		ft_puterr(char *s1, char *s2, char *s3);
+void		ft_puterr(char *s1, char *s2, char *s3, int flag);
 
 // orchestrator.c //////////////////////////////////////////////////////////////
 int			shell_loop(t_shell *shell, t_cmd_node *cmd_list);
