@@ -6,7 +6,7 @@
 /*   By: anshuval <anshuval@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 15:33:42 by anshuval          #+#    #+#             */
-/*   Updated: 2026/06/04 22:11:01 by anshuval         ###   ########.fr       */
+/*   Updated: 2026/06/05 13:15:39 by anshuval         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ static void	minishell_loop(t_env *copied_env, t_shell *shell)
 {
 	char		*line;
 
-	replace_signals();
+	if (isatty(STDIN_FILENO))
+		replace_signals();
 	while (1)
 	{
 		g_signal = 0;
